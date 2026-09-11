@@ -3,8 +3,6 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
-import { FavoriteAnimalForm } from "@/components/favorite-animal-form";
-import { FavouriteColourForm } from "@/components/favourite-colour-form";
 import { Suspense } from "react";
 
 async function UserDetails() {
@@ -16,40 +14,6 @@ async function UserDetails() {
   }
 
   return JSON.stringify(data.claims, null, 2);
-}
-
-async function FavoriteAnimalSection() {
-  const supabase = await createClient();
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-
-  if (userError || !userData?.user) {
-    redirect("/auth/login");
-  }
-
-  const { data } = await supabase
-    .from("favorite_animals")
-    .select("animal")
-    .eq("user_id", userData.user.id)
-    .maybeSingle();
-
-  return <FavoriteAnimalForm initialAnimal={data?.animal ?? null} />;
-}
-
-async function FavouriteColourSection() {
-  const supabase = await createClient();
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-
-  if (userError || !userData?.user) {
-    redirect("/auth/login");
-  }
-
-  const { data } = await supabase
-    .from("favourite_colours")
-    .select("colour")
-    .eq("user_id", userData.user.id)
-    .maybeSingle();
-
-  return <FavouriteColourForm initialColour={data?.colour ?? null} />;
 }
 
 export default function ProtectedPage() {
@@ -69,18 +33,6 @@ export default function ProtectedPage() {
             <UserDetails />
           </Suspense>
         </pre>
-      </div>
-      <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your favorite animal</h2>
-        <Suspense>
-          <FavoriteAnimalSection />
-        </Suspense>
-      </div>
-      <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your favourite colour</h2>
-        <Suspense>
-          <FavouriteColourSection />
-        </Suspense>
       </div>
       <div>
         <h2 className="font-bold text-2xl mb-4">Next steps</h2>
