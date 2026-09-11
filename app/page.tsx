@@ -18,7 +18,7 @@ export default function Home() {
         </div>
       </nav>
       <div className="flex-1 flex items-center justify-center">
-        <h1 className="text-5xl font-semibold">hello</h1>
+        <h1 className="text-7xl font-black text-red-600">add caveman!</h1>
       </div>
     </main>
   );
