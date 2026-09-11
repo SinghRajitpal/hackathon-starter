@@ -39,7 +39,7 @@ export function PhoneNumberForm() {
         <Input
           id="phone"
           type="tel"
-          placeholder="+1 555 555 5555"
+          placeholder="+41 XXXXXXXXX"
           required
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
