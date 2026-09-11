@@ -1,6 +1,7 @@
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { AuthButton } from "@/components/auth-button";
 import { FavoriteAnimalForm } from "@/components/favorite-animal-form";
+import { PhoneNumberForm } from "@/components/phone-number-form";
 import { createClient } from "@/lib/supabase/server";
 import { hasEnvVars } from "@/lib/utils";
 import { Suspense } from "react";
@@ -43,6 +44,7 @@ export default function Home() {
         <Suspense>
           <FavoriteAnimalSection />
         </Suspense>
+        <PhoneNumberForm />
       </div>
     </main>
   );
