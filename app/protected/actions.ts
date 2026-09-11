@@ -29,3 +29,29 @@ export async function saveFavoriteAnimal(_prevState: unknown, formData: FormData
   revalidatePath("/");
   return { error: null };
 }
+
+export async function saveFavouriteColour(_prevState: unknown, formData: FormData) {
+  const colour = formData.get("colour");
+
+  if (typeof colour !== "string" || colour.trim().length === 0) {
+    return { error: "Enter a colour." };
+  }
+
+  const supabase = await createClient();
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !userData?.user) {
+    return { error: "Unauthorized." };
+  }
+
+  const { error } = await supabase
+    .from("favourite_colours")
+    .upsert({ colour: colour.trim() }, { onConflict: "user_id" });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  revalidatePath("/");
+  return { error: null };
+}

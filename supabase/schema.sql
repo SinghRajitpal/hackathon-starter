@@ -48,3 +48,19 @@ create policy "own rows" on public.phone_numbers
   for all to authenticated
   using ((select auth.uid()) = user_id)
   with check ((select auth.uid()) = user_id);
+
+-- favourite_colours: one favourite colour per user
+create table public.favourite_colours (
+  id bigint generated always as identity primary key,
+  user_id uuid not null default auth.uid() references auth.users (id),
+  colour text not null,
+  created_at timestamptz not null default now(),
+  unique (user_id)
+);
+
+alter table public.favourite_colours enable row level security;
+
+create policy "own rows" on public.favourite_colours
+  for all to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);

@@ -1,6 +1,7 @@
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { AuthButton } from "@/components/auth-button";
 import { FavoriteAnimalForm } from "@/components/favorite-animal-form";
+import { FavouriteColourForm } from "@/components/favourite-colour-form";
 import { PhoneNumberForm } from "@/components/phone-number-form";
 import { createClient } from "@/lib/supabase/server";
 import { hasEnvVars } from "@/lib/utils";
@@ -23,6 +24,23 @@ async function FavoriteAnimalSection() {
   return <FavoriteAnimalForm initialAnimal={data?.animal ?? null} />;
 }
 
+async function FavouriteColourSection() {
+  const supabase = await createClient();
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !userData?.user) {
+    return null;
+  }
+
+  const { data } = await supabase
+    .from("favourite_colours")
+    .select("colour")
+    .eq("user_id", userData.user.id)
+    .maybeSingle();
+
+  return <FavouriteColourForm initialColour={data?.colour ?? null} />;
+}
+
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">
@@ -43,6 +61,9 @@ export default function Home() {
         <p className="text-lg text-foreground/70">Henri</p>
         <Suspense>
           <FavoriteAnimalSection />
+        </Suspense>
+        <Suspense>
+          <FavouriteColourSection />
         </Suspense>
         <PhoneNumberForm />
       </div>
