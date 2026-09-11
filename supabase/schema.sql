@@ -17,3 +17,19 @@
 --   for all to authenticated
 --   using ((select auth.uid()) = user_id)
 --   with check ((select auth.uid()) = user_id);
+
+-- favorite_animals: one favorite animal per user
+create table public.favorite_animals (
+  id bigint generated always as identity primary key,
+  user_id uuid not null default auth.uid() references auth.users (id),
+  animal text not null,
+  created_at timestamptz not null default now(),
+  unique (user_id)
+);
+
+alter table public.favorite_animals enable row level security;
+
+create policy "own rows" on public.favorite_animals
+  for all to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
