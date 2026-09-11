@@ -17,3 +17,18 @@
 --   for all to authenticated
 --   using ((select auth.uid()) = user_id)
 --   with check ((select auth.uid()) = user_id);
+
+-- Phone number capture on the home page (efraim-backend-test branch)
+create table public.phone_numbers (
+  id bigint generated always as identity primary key,
+  user_id uuid not null default auth.uid() references auth.users (id),
+  phone text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table public.phone_numbers enable row level security;
+
+create policy "own rows" on public.phone_numbers
+  for all to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
