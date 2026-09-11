@@ -1,6 +1,6 @@
 # Hackathon Starter
 
-Next.js + Supabase app for our 3-person hackathon team. Every push to `main` deploys to Vercel automatically.
+Next.js + Supabase app for our hackathon team. Every push to `main` deploys to Vercel automatically.
 
 Built from the official [`with-supabase`](https://github.com/vercel/next.js/tree/canary/examples/with-supabase) template: email/password sign-up, login, password reset, and a protected page are already wired up.
 
