@@ -1,5 +1,6 @@
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { AuthButton } from "@/components/auth-button";
+import { CookieClicker } from "@/components/cookie-clicker";
 import { FavoriteAnimalForm } from "@/components/favorite-animal-form";
 import { FavouriteColourForm } from "@/components/favourite-colour-form";
 import { PhoneNumberForm } from "@/components/phone-number-form";
@@ -66,6 +67,7 @@ export default function Home() {
           <FavouriteColourSection />
         </Suspense>
         <PhoneNumberForm />
+        <CookieClicker />
       </div>
     </main>
   );
