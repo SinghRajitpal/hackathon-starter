@@ -17,8 +17,9 @@ export default function Home() {
           )}
         </div>
       </nav>
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex flex-col items-center justify-center">
         <h1 className="text-5xl font-semibold">hello</h1>
+        <p className="text-lg text-foreground/70 mt-2">rajit</p>
       </div>
     </main>
   );
