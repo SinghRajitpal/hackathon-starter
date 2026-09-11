@@ -20,6 +20,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col items-center justify-center">
         <h1 className="text-7xl font-black text-red-600">add caveman!</h1>
         <p className="text-lg text-foreground/70 mt-2">rajit</p>
+        <p className="text-lg text-foreground/70">Henri</p>
       </div>
     </main>
   );
