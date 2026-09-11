@@ -1,5 +1,6 @@
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { AuthButton } from "@/components/auth-button";
+import { CookieClicker } from "@/components/cookie-clicker";
 import { hasEnvVars } from "@/lib/utils";
 import { Suspense } from "react";
 
@@ -21,6 +22,7 @@ export default function Home() {
         <h1 className="text-7xl font-black text-red-600">add caveman!</h1>
         <p className="text-lg text-foreground/70 mt-2">rajit</p>
         <p className="text-lg text-foreground/70">Henri</p>
+        <CookieClicker />
       </div>
     </main>
   );
