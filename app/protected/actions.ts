@@ -26,6 +26,6 @@ export async function saveFavoriteAnimal(_prevState: unknown, formData: FormData
     return { error: error.message };
   }
 
-  revalidatePath("/protected");
+  revalidatePath("/");
   return { error: null };
 }
