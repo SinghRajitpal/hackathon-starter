@@ -43,3 +43,7 @@ next-env.d.ts
 
 # supabase cli
 supabase/.temp
+
+# data pipeline
+data/pipeline/__pycache__
+data/raw

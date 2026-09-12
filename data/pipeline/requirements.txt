@@ -1,0 +1,6 @@
+pandas>=2.2
+yfinance>=0.2.40
+requests>=2.31
+lxml>=5.2
+wikirate4py>=1.2
+kaggle>=1.6
