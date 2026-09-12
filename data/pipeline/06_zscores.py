@@ -5,8 +5,10 @@ a company against its actual peers instead of the whole index (comparing a
 bank's Net Debt/EBITDA to a tech company's is meaningless -- see README).
 
 Also derives one variable not computed upstream: emissions intensity per $
-revenue (scope1_2_total_tco2e / annualized quarterly revenue), since the
-environmental fetch only produced the absolute total.
+revenue (scope1_2_total_tco2e / annualized quarterly revenue). Scope 1 in
+the input file is already blended (EPA GHGRP preferred over Wikirate/GRI
+where both exist -- see 08_fetch_epa_scope1.py); scope1_source in the raw
+file records which one was used per row but isn't itself scored/shipped.
 
 Input: data/out/sp500_esg_financials.csv (output of 05_merge.py)
 Output: data/out/sp500_esg_financials_zscores.csv -- all original columns
@@ -18,7 +20,7 @@ unstable to be meaningful below that).
 import numpy as np
 import pandas as pd
 
-IN_PATH = "../out/sp500_esg_financials.csv"  # output of 05_merge.py
+IN_PATH = "../out/sp500_esg_financials_raw.csv"
 OUT_PATH = "../out/sp500_esg_financials_zscores.csv"
 MIN_GROUP_SIZE = 3
 ID_COLUMNS = ["ticker", "company_name", "sector", "sub_industry"]
@@ -36,14 +38,9 @@ CONTROVERSY_ORDER = {
 }
 
 ZSCORE_VARS = [
-    # raw financial inputs
-    "revenue_q",
-    "net_income_q",
-    "ebitda_q",
-    "total_assets_q",
-    "net_debt_q",
-    "free_cash_flow_q",
-    # financial ratios
+    # financial ratios (independent raw inputs like revenue/assets are
+    # intentionally excluded -- not comparable across differently-sized
+    # companies the way a ratio is)
     "asset_turnover",
     "profit_to_revenue",
     "fcf_to_revenue",
