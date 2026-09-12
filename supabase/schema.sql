@@ -82,3 +82,42 @@ begin
     execute format('update public.sp500_esg_zscores set %I = NULL where %I = ''NaN''', col, col);
   end loop;
 end $$;
+
+-- sp500_esg_raw: the actual values behind sp500_esg_zscores (revenue,
+-- employee counts, emissions in tonnes, etc.), not standardized scores.
+-- Same exclusion as the z-scores table: independent raw financial inputs
+-- (revenue, assets, EBITDA, etc. on their own) are dropped, keeping only the
+-- four ratios -- they aren't comparable across differently-sized companies
+-- the way a ratio is, so there's no reason to carry them into either table.
+create table public.sp500_esg_raw (
+  ticker text primary key,
+  company_name text not null,
+  sector text not null,
+  sub_industry text not null,
+  quarter_end date,
+  asset_turnover double precision,
+  profit_to_revenue double precision,
+  fcf_to_revenue double precision,
+  net_debt_to_ebitda double precision,
+  full_time_employees double precision,
+  controversy_level text,
+  total_esg_risk_score double precision,
+  controversy_score_ordinal double precision,
+  wikirate_matched boolean,
+  scope1_source text,
+  scope1_year integer,
+  scope1_tco2e double precision,
+  scope2_year integer,
+  scope2_tco2e double precision,
+  scope1_2_total_tco2e double precision,
+  renewable_fuel_pct double precision,
+  renewable_fuel_pct_year integer,
+  emissions_intensity_per_revenue double precision,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.sp500_esg_raw enable row level security;
+
+create policy "public read access" on public.sp500_esg_raw
+  for select to authenticated, anon
+  using (true);

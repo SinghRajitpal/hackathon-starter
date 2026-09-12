@@ -1,23 +1,32 @@
 # S&P 500 financials / social / environmental dataset
 
-`out/sp500_esg_financials_zscores.csv` is the deliverable: one row per
-current S&P 500 constituent, with identifiers plus a sector-relative
-z-score column for each variable (z = (value - sector mean) / sector std,
-grouped by GICS sector -- comparing a bank's leverage ratio to a tech
-company's isn't meaningful otherwise). This file ships z-scores only --
-no raw values -- by design.
+Two deliverables, both one row per current S&P 500 constituent:
 
-Built by the scripts in `pipeline/`, run in order (`01_` through `08_`, then
-`06_` again to rescore -- see below). Requires Python 3.11+; install deps
-with `pip install -r pipeline/requirements.txt`. Intermediate per-source
-CSVs (universe/financials/social/environmental) are not kept in this repo,
-except `sp500_esg_financials_raw.csv`, which is kept alongside the z-scores
-file since it has the actual values, not just standardized scores.
+- `out/sp500_esg_financials_zscores.csv` -- identifiers plus a
+  sector-relative z-score column for each variable (z = (value - sector
+  mean) / sector std, grouped by GICS sector -- comparing a bank's leverage
+  ratio to a tech company's isn't meaningful otherwise). Z-scores only, no
+  raw values.
+- `out/sp500_esg_financials_raw.csv` -- the actual underlying values (revenue
+  ratios, employee counts, emissions in tonnes, etc.) behind those z-scores.
+  Same exclusion as the z-scores file: independent raw financial inputs
+  (revenue, assets, EBITDA on their own) are dropped, keeping only the four
+  ratios -- not comparable across differently-sized companies the way a
+  ratio is.
 
-Also loaded into Supabase: `public.sp500_esg_zscores` (see
-`supabase/schema.sql`), via `07_load_supabase.py` (direct Postgres
-connection -- Supabase's REST API can't run DDL, and its "Direct connection"
-host is IPv6-only, so use the **session pooler** connection string).
+Built by the scripts in `pipeline/`, run in order (`01_` through `09_`, with
+`06_` run again after `08_` to rescore with the blended EPA+Wikirate Scope 1
+-- see below). Requires Python 3.11+; install deps with
+`pip install -r pipeline/requirements.txt`. Other intermediate per-source
+CSVs (universe/financials/social/environmental/epa) are not kept in this
+repo -- only the two final files above are.
+
+Also loaded into Supabase: `public.sp500_esg_zscores` and
+`public.sp500_esg_raw` (see `supabase/schema.sql`), via
+`07_load_supabase.py` / `09_load_supabase_raw.py` respectively (direct
+Postgres connection -- Supabase's REST API can't run DDL, and its "Direct
+connection" host is IPv6-only, so use the **session pooler** connection
+string).
 
 ## Credentials needed to re-run the pipeline
 
