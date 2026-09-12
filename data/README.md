@@ -1,10 +1,11 @@
 # S&P 500 financials / social / environmental dataset
 
 `out/sp500_esg_financials_zscores.csv` is the deliverable: one row per
-current S&P 500 constituent, with the raw variables plus a sector-relative
-z-score column for each (z = (value - sector mean) / sector std, grouped by
-GICS sector -- comparing a bank's leverage ratio to a tech company's isn't
-meaningful otherwise).
+current S&P 500 constituent, with identifiers plus a sector-relative
+z-score column for each variable (z = (value - sector mean) / sector std,
+grouped by GICS sector -- comparing a bank's leverage ratio to a tech
+company's isn't meaningful otherwise). This file ships z-scores only --
+no raw values -- by design.
 
 Built by the scripts in `pipeline/`, run in order (`01_` through `06_`).
 Requires Python 3.11+; install deps with `pip install -r pipeline/requirements.txt`.
@@ -30,29 +31,33 @@ them.
 
 **Identifiers**: `ticker`, `company_name`, `sector`, `sub_industry`
 
-**Financials & Operating** (most recently reported quarter, single quarter
-not trailing-twelve-months): `asset_turnover`, `profit_to_revenue`,
-`fcf_to_revenue`, `net_debt_to_ebitda`, plus the raw inputs they're computed
-from (`revenue_q`, `net_income_q`, `ebitda_q`, `total_assets_q`, `net_debt_q`,
-`free_cash_flow_q`, `quarter_end`). Source: yfinance, live at run time.
+**Everything else is a `<variable>_zscore` column**, computed within each
+row's GICS sector (z = (value - sector mean) / sector std). Null if the
+underlying value was null, or if the sector had fewer than 3 non-null values
+for that variable. The underlying variables, by source:
 
-**Social**: `full_time_employees` (yfinance, live) and `controversy_level` /
-`total_esg_risk_score` (Kaggle "S&P 500 ESG Risk Ratings" dataset,
-Sustainalytics-sourced -- Yahoo's own live ESG endpoint was discontinued, so
-this one is a snapshot as of that Kaggle dataset's last update, not live).
+- **Financials & Operating** (most recently reported quarter, single quarter
+  not trailing-twelve-months, source: yfinance live at run time):
+  `revenue_q`, `net_income_q`, `ebitda_q`, `total_assets_q`, `net_debt_q`,
+  `free_cash_flow_q`, and the four ratios derived from them --
+  `asset_turnover`, `profit_to_revenue`, `fcf_to_revenue`, `net_debt_to_ebitda`.
+- **Social**: `full_time_employees` (yfinance, live) and
+  `total_esg_risk_score` / `controversy_score_ordinal` (Kaggle "S&P 500 ESG
+  Risk Ratings" dataset, Sustainalytics-sourced -- Yahoo's own live ESG
+  endpoint was discontinued, so this one is a snapshot as of that Kaggle
+  dataset's last update, not live; controversy is mapped from its original
+  text categories to a 0-5 ordinal scale before scoring).
+- **Environmental** (source: Wikirate API, most recently disclosed fiscal
+  year per company -- inherently 1-4yr lagged since no source publishes
+  real-time emissions): `scope1_tco2e`, `scope2_tco2e`,
+  `scope1_2_total_tco2e`, `emissions_intensity_per_revenue` (derived:
+  scope1+2 divided by annualized quarterly revenue -- approximate, since the
+  emissions year and the financial quarter are different periods), and
+  `renewable_fuel_pct` (disabled in the current run -- see Known gaps, so its
+  z-score is all-null).
 
-**Environmental**: `scope1_tco2e`, `scope2_tco2e`, `scope1_2_total_tco2e`,
-`emissions_intensity_per_revenue` (derived: scope1+2 divided by annualized
-quarterly revenue -- approximate, since the emissions year and the financial
-quarter are different periods), `renewable_fuel_pct` (disabled in the
-current run -- see Known gaps). Source: Wikirate API, most recently
-disclosed fiscal year per company -- inherently 1-4yr lagged since no source
-publishes real-time emissions. A YoY emissions trend variable was originally
-built but removed at the user's request in favor of latest-value-only data.
-
-**Z-scores**: one `<variable>_zscore` column per variable above, computed
-within each row's GICS sector. Null if the underlying value is null, or if
-the sector has fewer than 3 non-null values for that variable.
+A YoY emissions trend variable was originally built but removed at the
+user's request in favor of latest-value-only data.
 
 ## Known gaps
 

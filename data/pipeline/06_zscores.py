@@ -18,9 +18,13 @@ unstable to be meaningful below that).
 import numpy as np
 import pandas as pd
 
-IN_PATH = "../out/sp500_esg_financials.csv"
+IN_PATH = "../out/sp500_esg_financials.csv"  # output of 05_merge.py
 OUT_PATH = "../out/sp500_esg_financials_zscores.csv"
 MIN_GROUP_SIZE = 3
+ID_COLUMNS = ["ticker", "company_name", "sector", "sub_industry"]
+
+# Pure pipeline debug artifacts, not data -- dropped before scoring/shipping.
+DEBUG_COLUMNS = ["fetch_error_x", "fetch_error_y", "employees_fetch_error"]
 
 CONTROVERSY_ORDER = {
     "None Controversy Level": 0,
@@ -32,16 +36,35 @@ CONTROVERSY_ORDER = {
 }
 
 ZSCORE_VARS = [
+    # raw financial inputs
+    "revenue_q",
+    "net_income_q",
+    "ebitda_q",
+    "total_assets_q",
+    "net_debt_q",
+    "free_cash_flow_q",
+    # financial ratios
     "asset_turnover",
     "profit_to_revenue",
     "fcf_to_revenue",
     "net_debt_to_ebitda",
+    # social
     "full_time_employees",
     "total_esg_risk_score",
     "controversy_score_ordinal",
+    # environmental
+    "scope1_tco2e",
+    "scope2_tco2e",
     "scope1_2_total_tco2e",
+    "renewable_fuel_pct",
     "emissions_intensity_per_revenue",
 ]
+
+# Excluded on purpose: identifiers (ticker/company_name/sector/sub_industry),
+# dates and year labels (quarter_end, scope1_year, scope2_year,
+# renewable_fuel_pct_year), and the wikirate_matched data-quality flag --
+# none of these are "how does this company compare to peers" variables, so a
+# z-score of them wouldn't mean anything.
 
 
 def sector_zscore(df: pd.DataFrame, column: str) -> pd.Series:
@@ -57,6 +80,7 @@ def sector_zscore(df: pd.DataFrame, column: str) -> pd.Series:
 
 def main():
     df = pd.read_csv(IN_PATH)
+    df = df.drop(columns=[c for c in DEBUG_COLUMNS if c in df.columns])
 
     df["controversy_score_ordinal"] = df["controversy_level"].map(CONTROVERSY_ORDER)
 
@@ -69,12 +93,17 @@ def main():
     for var in ZSCORE_VARS:
         df[f"{var}_zscore"] = sector_zscore(df, var)
 
+    # Ship z-scores only, not the raw values -- per requirement, this is a
+    # sector-relative comparison dataset, not a raw-data dataset.
+    zscore_cols = [f"{var}_zscore" for var in ZSCORE_VARS]
+    df = df[ID_COLUMNS + zscore_cols]
+
     df.to_csv(OUT_PATH, index=False)
 
     print(f"Wrote {len(df)} rows to {OUT_PATH}")
-    for var in ZSCORE_VARS:
-        n = df[f"{var}_zscore"].notna().sum()
-        print(f"  {var}_zscore: {n}/{len(df)} non-null")
+    for col in zscore_cols:
+        n = df[col].notna().sum()
+        print(f"  {col}: {n}/{len(df)} non-null")
 
 
 if __name__ == "__main__":
