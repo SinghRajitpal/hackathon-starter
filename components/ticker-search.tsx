@@ -20,7 +20,10 @@ export function TickerSearch() {
       .from("sp500_esg_zscores")
       .select("ticker, company_name")
       .order("ticker")
-      .then(({ data }) => setCompanies(data ?? []));
+      .then(({ data, error }) => {
+        if (error) console.error(error);
+        setCompanies(data ?? []);
+      });
   }, []);
 
   const q = query.trim().toLowerCase();
