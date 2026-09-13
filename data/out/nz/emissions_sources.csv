@@ -129,8 +129,8 @@ BG,Wikirate/GRI,combustion,1722634.0,,Wikirate GRI 305-1 / 305-2
 BG,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 BG,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 BG,Wikirate/GRI,scope2,1549444.0,,Wikirate GRI 305-1 / 305-2
-CCL,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-CCL,Wikirate/GRI,combustion,10319475.0,,Wikirate GRI 305-1 / 305-2
+CCL,10-K fleet,fleet,8411920.569337772,,Latest 10-K fuel disclosure x EPA Emission Factors Hub 2025 Table 2
+CCL,Wikirate/GRI,combustion,1907554.4306622278,,Wikirate GRI 305-1 / 305-2
 CCL,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 CCL,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 CCL,Wikirate/GRI,scope2,66246.0,,Wikirate GRI 305-1 / 305-2
