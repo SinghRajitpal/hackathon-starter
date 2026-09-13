@@ -258,3 +258,41 @@ def topsis_scores(X: pd.DataFrame, w: pd.Series) -> pd.DataFrame:
         out[f"contrib_{col}"] = (gaps_to_ideal[col] / total_gap).fillna(0.0)
 
     return out
+
+
+def rank_stability(
+    X: pd.DataFrame,
+    w: pd.Series,
+    n_draws: int = 1000,
+    concentration: float = 200.0,
+    seed: int = 42,
+) -> pd.DataFrame:
+    """Section 10: perturbs w via n_draws Dirichlet draws centred on the
+    entropy weights (higher `concentration` = tighter draws around w)
+    and recomputes the ranking each time. Companies whose rank barely
+    moves are robustly placed; companies whose rank swings widely are
+    weight-sensitive. Computed once per pipeline run, not per request."""
+    rng = np.random.default_rng(seed)
+    alpha = w.reindex(X.columns).to_numpy() * concentration
+    ranks = np.empty((n_draws, len(X)), dtype=int)
+
+    for i in range(n_draws):
+        w_draw = pd.Series(rng.dirichlet(alpha), index=X.columns)
+        draw_scores = topsis_scores(X, w_draw)["score"]
+        ranks[i] = draw_scores.rank(ascending=False, method="min").to_numpy()
+
+    return pd.DataFrame(
+        {"min_rank": ranks.min(axis=0), "max_rank": ranks.max(axis=0)},
+        index=X.index,
+    )
+
+
+def weight_vs_equal_delta(X: pd.DataFrame, w: pd.Series) -> pd.Series:
+    """Section 10: |rank under entropy weights - rank under equal
+    weights| per company -- the direct answer to "does the weighting
+    even matter?". Blueprint reports how many companies move by more
+    than 25 places; callers filter/count that threshold themselves."""
+    w_equal = pd.Series(1.0 / len(w), index=w.index)
+    rank_entropy = topsis_scores(X, w)["score"].rank(ascending=False, method="min")
+    rank_equal = topsis_scores(X, w_equal)["score"].rank(ascending=False, method="min")
+    return (rank_entropy - rank_equal).abs()
