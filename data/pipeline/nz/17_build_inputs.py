@@ -16,6 +16,7 @@ from pathlib import Path
 import pandas as pd
 
 from nzlib.build import SCOPE1_CATEGORIES, fill_de_ben, median_generation_mix, merge_emissions, present
+from nzlib.corrections import apply_scope1_corrections
 from nzlib.deben import de_ben
 from nzlib.impute import impute_scope2, sector_category_shares
 
@@ -25,6 +26,7 @@ FINANCIALS_PATH = OUT_DIR / "financials_ttm.csv"
 GHGRP_PATH = OUT_DIR / "ghgrp_categories.csv"
 CT_PATH = OUT_DIR / "ct_categories.csv"
 FLEET_PATH = OUT_DIR / "fleet.csv"
+SCOPE1_CORRECTIONS_PATH = Path("maps/scope1_corrections.csv")
 INPUTS_PATH = OUT_DIR / "company_inputs.csv"
 SOURCES_PATH = OUT_DIR / "emissions_sources.csv"
 LATEST_GHGRP_YEAR = 2023
@@ -60,6 +62,10 @@ def build_frames() -> tuple[pd.DataFrame, pd.DataFrame]:
         UNIVERSE_PATH,
         usecols=["ticker", "company_name", "sector", "sub_industry", "scope1_tco2e", "scope1_source", "scope2_tco2e"],
     )
+    if SCOPE1_CORRECTIONS_PATH.exists():
+        universe, scope1_corrected = apply_scope1_corrections(universe, pd.read_csv(SCOPE1_CORRECTIONS_PATH))
+    else:
+        scope1_corrected = set()
     financials = pd.read_csv(FINANCIALS_PATH).set_index("ticker")
 
     # ghgrp_categories.csv carries an extra `reported_total` column (EPA's own total, used only by
@@ -96,6 +102,8 @@ def build_frames() -> tuple[pd.DataFrame, pd.DataFrame]:
             sector_shares=shares.get(u["sector"]),
         )
         flags.extend(ct_flags.get(ticker, []))
+        if ticker in scope1_corrected:
+            flags.append("scope1-corrected")
         if fleet_status.get(ticker) == "not-disclosed":
             flags.append("fleet-fuel-not-disclosed")
 

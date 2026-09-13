@@ -162,8 +162,8 @@ CI,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 CI,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 CI,Wikirate/GRI,scope2,116420.0,,Wikirate GRI 305-1 / 305-2
 CSCO,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-CSCO,Wikirate/GRI,combustion,4995417.988126557,,Wikirate GRI 305-1 / 305-2
-CSCO,Wikirate/GRI,process,18004582.011873446,,Wikirate GRI 305-1 / 305-2
+CSCO,Wikirate/GRI,combustion,7586.736771445599,,Wikirate GRI 305-1 / 305-2
+CSCO,Wikirate/GRI,process,27344.263228554406,,Wikirate GRI 305-1 / 305-2
 CSCO,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 CMS,GHGRP,combustion,17169054.104000002,2023.0,EPA GHGRP 2023 data summary spreadsheets
 CMS,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -335,8 +335,8 @@ HSY,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 HSY,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 HSY,Wikirate/GRI,scope2,262618.0,,Wikirate GRI 305-1 / 305-2
 HPE,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-HPE,Wikirate/GRI,combustion,996401.9269340333,,Wikirate GRI 305-1 / 305-2
-HPE,Wikirate/GRI,process,3591251.0730659673,,Wikirate GRI 305-1 / 305-2
+HPE,Wikirate/GRI,combustion,8644.245040323347,,Wikirate GRI 305-1 / 305-2
+HPE,Wikirate/GRI,process,31155.75495967666,,Wikirate GRI 305-1 / 305-2
 HPE,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 HLT,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
 HLT,Wikirate/GRI,combustion,554015.0,,Wikirate GRI 305-1 / 305-2
@@ -359,7 +359,7 @@ HII,GHGRP,combustion,49672.026,2023.0,EPA GHGRP 2023 data summary spreadsheets
 HII,GHGRP,process,34.7,2023.0,EPA GHGRP 2023 data summary spreadsheets
 HII,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 ITW,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-ITW,Wikirate/GRI,combustion,9.4,,Wikirate GRI 305-1 / 305-2
+ITW,Wikirate/GRI,combustion,111371.0,,Wikirate GRI 305-1 / 305-2
 ITW,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 ITW,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 ITW,Wikirate/GRI,scope2,1418758.0,,Wikirate GRI 305-1 / 305-2
@@ -515,8 +515,8 @@ MOS,Wikirate/GRI,process,597401.6592775903,,Wikirate GRI 305-1 / 305-2
 MOS,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 MOS,Wikirate/GRI,scope2,1300000.0,,Wikirate GRI 305-1 / 305-2
 NEM,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-NEM,Wikirate/GRI,combustion,2.5347928296119795,,Wikirate GRI 305-1 / 305-2
-NEM,Wikirate/GRI,process,0.5752071703880204,,Wikirate GRI 305-1 / 305-2
+NEM,Wikirate/GRI,combustion,1296738.0681391188,,Wikirate GRI 305-1 / 305-2
+NEM,Wikirate/GRI,process,294261.93186088116,,Wikirate GRI 305-1 / 305-2
 NEM,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 NEM,Wikirate/GRI,scope2,1580000.0,,Wikirate GRI 305-1 / 305-2
 NEE,GHGRP,combustion,40497897.718,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -738,7 +738,7 @@ TSN,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 TSN,GHGRP,fugitive,743738.75,2023.0,EPA GHGRP 2023 data summary spreadsheets
 UAL,10-K fleet,fleet,45464250.0,,Latest 10-K fuel disclosure x EPA Emission Factors Hub 2025 Table 2
 UPS,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-UPS,Wikirate/GRI,combustion,12000.0,,Wikirate GRI 305-1 / 305-2
+UPS,Wikirate/GRI,combustion,14499000.0,,Wikirate GRI 305-1 / 305-2
 UPS,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 UPS,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 UPS,Wikirate/GRI,scope2,870.0,,Wikirate GRI 305-1 / 305-2
