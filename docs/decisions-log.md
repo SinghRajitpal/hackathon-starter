@@ -64,7 +64,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Rule | Value |
 |---|---|
 | Active share (long-only) | Σ \|portfolio − benchmark\| ÷ 2 |
-| Stress results and the book | When a stress result exists for the current costs, mandate and thresholds, positions that flip under ±50% costs are halved in both books and the CSV (PDF §11); capital changes do not invalidate the result |
+| Stress results and the book | When a stress result exists for the current costs, mandate and thresholds, positions that flip under ±50% costs are halved in the stressed mandate's book and the CSV, not the other book (PDF §11); capital changes do not invalidate the result |
 | Stress run | 1,000 Dirichlet draws, seed 42, run on button press in the browser (~0.5 s for 503 companies) |
 | Cost scenario control | low / mid / high columns of `nz_mac_costs`; missing categories fall back to PDF §12 mid-points with a warning |
 | DE/BEN banner | Shown only when every company is unclassified (P4 not loaded) |

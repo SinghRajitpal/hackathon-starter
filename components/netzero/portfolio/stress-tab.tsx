@@ -92,7 +92,7 @@ export function StressTab({
         with all costs −50% and +50%, with each cost category doubled on its own, and under {DRAWS} random perturbations
         of the entropy weights. A pick is robust if it keeps its direction in every cost scenario and in at least{" "}
         {formatPercent(DRAW_SURVIVAL_THRESHOLD)} of weight draws. Positions that flip sign under a 50% cost change are
-        halved in both books and in the CSV.
+        halved in the stressed mandate&apos;s book and in the CSV; the other book is unaffected.
       </p>
       <div>
         <Button onClick={run} disabled={running || !hasBook}>
