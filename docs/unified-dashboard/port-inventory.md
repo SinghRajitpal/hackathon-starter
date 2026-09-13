@@ -61,6 +61,13 @@ The unified functions do not exist yet in either branch:
 | **Gemini client** | Three versions exist and conflict in real logic. Main reads the key from Vault via RPC `get_gemini_api_key` and calls REST. Tool 1 reads `GEMINI_API_KEY` from env, calls REST, and defaults to `gemini-2.5-flash`. Tool 2 reads Vault via RPC `get_secret` and uses the `@google/genai` SDK. **Needs a user decision.** |
 | **Admin client and env** | Main reads `SUPABASE_SERVICE_ROLE_KEY`, but `.env.local` has only `SUPABASE_SECRET_KEY`, which Tool 2 reads. **Needs a user decision.** |
 
+## Decisions
+
+- **2026-09-13, Gemini key and client:** each tool keeps its own setup (user's choice).
+  - Tool 1 reads `GEMINI_API_KEY` and `GEMINI_MODEL` from env, and its client lives in `features/sustainability/`.
+  - Tool 2 reads the key from Vault using `SUPABASE_SECRET_KEY`, and its client lives in `features/netzero/`.
+  - Main's `lib/gemini/client.ts` and `lib/supabase/admin.ts` stay as they are.
+
 ## Known defects to fix while porting
 
 - Tool 1's `sp500_esg_gemini_analysis` has anon INSERT and UPDATE policies with `using (true)`, so anyone can overwrite cached analyses. Write with the admin client and drop those policies once the user approves a database change.
