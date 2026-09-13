@@ -16,6 +16,7 @@ from score_engine import (
     REFERENCE_RANGES,
     entropy_divergence,
     entropy_weights,
+    topsis_scores,
 )
 
 
@@ -233,3 +234,57 @@ def test_entropy_weights_winsorises_thin_tail_before_weighting():
     winsorised = thin_tail.clip(thin_tail.quantile(0.025), thin_tail.quantile(0.975))
     winsorised_d_thin_tail = raw_divergence(winsorised)
     assert winsorised_d_thin_tail < raw_d_thin_tail
+
+
+def test_topsis_scores_matches_worked_example():
+    # Section 12: same A-D normalised matrix. Expected scores: A=66.0,
+    # B=82.3, C=29.8, D=77.2. Weights derived from entropy_divergence
+    # directly (unrounded ~0.707/0.210/0.083) rather than the section
+    # 12 text's rounded 0.71/0.21/0.08 -- using the rounded figures
+    # drifts the score by ~0.1 for B/D, which is rounding error in the
+    # worked example's own display, not a bug in topsis_scores (A's
+    # D+ = 0.343 matches the worked example exactly either way).
+    X = pd.DataFrame({
+        "intensity": [0.70, 0.90, 0.25, 0.85],
+        "fcf_margin": [0.60, 0.75, 0.40, 0.70],
+        "controversy": [0.50, 0.60, 0.40, 0.50],
+    }, index=["A", "B", "C", "D"])
+    d = entropy_divergence(X)
+    w = d / d.sum()
+
+    result = topsis_scores(X, w)
+
+    assert result["score"].round(1).tolist() == [66.0, 82.3, 29.8, 77.2]
+    # section 12: for A, D+ = 0.343
+    assert result.loc["A", "d_plus"] == pytest.approx(0.343, abs=0.001)
+
+
+def test_topsis_scores_decomposition_matches_worked_example():
+    # Section 12: for A, 54% of its distance from the ideal comes from
+    # the intensity axis, 28% from FCF margin, 18% from controversy.
+    X = pd.DataFrame({
+        "intensity": [0.70],
+        "fcf_margin": [0.60],
+        "controversy": [0.50],
+    }, index=["A"])
+    w = pd.Series({"intensity": 0.71, "fcf_margin": 0.21, "controversy": 0.08})
+
+    result = topsis_scores(X, w)
+
+    assert result.loc["A", "contrib_intensity"] == pytest.approx(0.54, abs=0.01)
+    assert result.loc["A", "contrib_fcf_margin"] == pytest.approx(0.28, abs=0.01)
+    assert result.loc["A", "contrib_controversy"] == pytest.approx(0.18, abs=0.01)
+
+
+def test_topsis_scores_perfect_company_scores_100():
+    X = pd.DataFrame({"a": [1.0], "b": [1.0]})
+    w = pd.Series({"a": 0.5, "b": 0.5})
+    result = topsis_scores(X, w)
+    assert result["score"].iloc[0] == pytest.approx(100.0)
+
+
+def test_topsis_scores_worst_company_scores_0():
+    X = pd.DataFrame({"a": [0.0], "b": [0.0]})
+    w = pd.Series({"a": 0.5, "b": 0.5})
+    result = topsis_scores(X, w)
+    assert result["score"].iloc[0] == pytest.approx(0.0)

@@ -230,3 +230,31 @@ def entropy_weights(X: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
             w[under] = w[under] + excess * (w[under] / under_sum)
 
     return w, d
+
+
+def topsis_scores(X: pd.DataFrame, w: pd.Series) -> pd.DataFrame:
+    """Section 8: ideal point A+ is all-ones, anti-ideal A- is all-zeros.
+    D+/D- are the weighted Euclidean distances to each; score is
+    100 * D- / (D+ + D-), so 100 means sitting exactly on the ideal
+    (never actually reached -- see blueprint section 8).
+
+    Also computes the per-axis decomposition that backs the explanation
+    layer (blueprint section 8): the squared weighted gap to the ideal,
+    wj*(1-xij)^2, as a share of the company's total D+^2 -- the "how
+    much of this company's distance from the ideal does each variable
+    explain" number."""
+    w = w.reindex(X.columns)
+    gaps_to_ideal = w * (1.0 - X) ** 2
+    gaps_to_antiideal = w * X ** 2
+
+    d_plus = np.sqrt(gaps_to_ideal.sum(axis=1))
+    d_minus = np.sqrt(gaps_to_antiideal.sum(axis=1))
+    score = 100.0 * d_minus / (d_plus + d_minus)
+
+    out = pd.DataFrame({"d_plus": d_plus, "d_minus": d_minus, "score": score}, index=X.index)
+
+    total_gap = gaps_to_ideal.sum(axis=1)
+    for col in X.columns:
+        out[f"contrib_{col}"] = (gaps_to_ideal[col] / total_gap).fillna(0.0)
+
+    return out
