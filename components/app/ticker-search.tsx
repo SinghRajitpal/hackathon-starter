@@ -58,57 +58,66 @@ export function TickerSearch() {
   }
 
   return (
-    <form role="search" onSubmit={onSubmit} className="relative w-full max-w-2xl">
-      <input
-        type="search"
-        role="combobox"
-        aria-label="Search S&P 500 tickers"
-        aria-expanded={showList}
-        aria-controls={listId}
-        aria-autocomplete="list"
-        aria-activedescendant={showList ? `${listId}-${active}` : undefined}
-        placeholder="Search a ticker or company, e.g. AAPL or Apple"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setActive(0);
-          setOpen(true);
-        }}
-        onKeyDown={onKeyDown}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setOpen(false)}
-        className="h-16 w-full rounded-full border bg-card px-7 text-lg shadow-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
-      />
-      {showList && (
-        <ul
-          id={listId}
-          role="listbox"
-          className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border bg-popover text-popover-foreground shadow-lg"
+    <div className="flex w-full max-w-2xl flex-col items-center gap-4">
+      <form role="search" onSubmit={onSubmit} className="relative w-full">
+        <input
+          type="search"
+          role="combobox"
+          aria-label="Search S&P 500 tickers"
+          aria-expanded={showList}
+          aria-controls={listId}
+          aria-autocomplete="list"
+          aria-activedescendant={showList ? `${listId}-${active}` : undefined}
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setActive(0);
+            setOpen(true);
+          }}
+          onKeyDown={onKeyDown}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setOpen(false)}
+          className="h-16 w-full rounded-full border bg-card px-7 text-lg shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        />
+        {showList && (
+          <ul
+            id={listId}
+            role="listbox"
+            className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border bg-popover text-popover-foreground shadow-lg"
+          >
+            {results.map((c, i) => (
+              <li
+                key={c.ticker}
+                id={`${listId}-${i}`}
+                role="option"
+                aria-selected={i === active}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  go(c.ticker);
+                }}
+                onMouseEnter={() => setActive(i)}
+                className={`flex cursor-pointer items-center gap-4 px-6 py-3 ${i === active ? "bg-accent" : ""}`}
+              >
+                <span className="w-16 shrink-0 font-mono text-sm font-semibold">{c.ticker}</span>
+                <span className="truncate text-sm text-muted-foreground">{c.company_name}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </form>
+      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+        <span>Try</span>
+        <button
+          type="button"
+          onClick={() => go("NVDA")}
+          className="rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-medium text-foreground transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          {results.map((c, i) => (
-            <li
-              key={c.ticker}
-              id={`${listId}-${i}`}
-              role="option"
-              aria-selected={i === active}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                go(c.ticker);
-              }}
-              onMouseEnter={() => setActive(i)}
-              className={`flex cursor-pointer items-center gap-4 px-6 py-3 ${i === active ? "bg-accent" : ""}`}
-            >
-              <span className="w-16 shrink-0 font-mono text-sm font-semibold">{c.ticker}</span>
-              <span className="truncate text-sm text-muted-foreground">{c.company_name}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+          Nvidia
+        </button>
+      </div>
       {loadFailed && (
-        <p className="mt-3 text-center text-sm text-destructive">
-          Could not load the ticker list. Type a ticker and press Enter.
-        </p>
+        <p className="text-center text-sm text-destructive">Could not load the ticker list. Type a ticker and press Enter.</p>
       )}
-    </form>
+    </div>
   );
 }
