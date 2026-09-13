@@ -1,10 +1,21 @@
-import { TickerSearch } from "@/components/ticker-search";
+import { LandingNav } from "@/components/landing/nav";
+import { Hero } from "@/components/landing/hero";
+import { SustainabilityScoreSection } from "@/components/landing/sustainability-score-section";
+import { NetZeroSection } from "@/components/landing/net-zero-section";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <main className="min-h-screen flex flex-col items-center gap-8 px-5 py-16">
-      <h1 className="text-4xl font-bold text-center">ETHack</h1>
-      <TickerSearch />
-    </main>
+    <div
+      className="min-h-screen text-white"
+      style={{
+        background:
+          "radial-gradient(ellipse 80% 60% at 50% 0%, #1b2050 0%, #0b0d22 60%)",
+      }}
+    >
+      <LandingNav />
+      <Hero />
+      <SustainabilityScoreSection />
+      <NetZeroSection />
+    </div>
   );
 }
