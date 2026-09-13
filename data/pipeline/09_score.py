@@ -10,9 +10,14 @@ ranking (blueprint section 9) -- not a second weighting pass. No
 company is excluded and no imputation is ever surfaced downstream.
 Both of section 10's robustness outputs (rank stability and
 weight-vs-equal-weights delta) are dropped per a 2026-09-13 user
-decision -- see score_engine.py's module docstring. The score always
-uses the real entropy weights only; equal weighting is never applied,
-including as a comparison.
+decision -- see score_engine.py's module docstring.
+
+The score uses score_engine.MANUAL_WEIGHTS, a user-directed manual
+override, NOT the entropy_weights() output -- see score_engine.py's
+module docstring for the full derivation (Financial pillar cut from
+73.33% to 53%, entirely out of asset_turnover). entropy_weights() is
+still computed and printed below purely for traceability, since it's
+the baseline MANUAL_WEIGHTS was derived from.
 
 Input: data/out/sp500_esg_financials_raw.csv (output of 05_merge.py,
 08_fetch_epa_scope1.py)
@@ -21,6 +26,7 @@ Output: data/out/sp500_esg_scores.csv
 import pandas as pd
 
 from score_engine import (
+    MANUAL_WEIGHTS,
     PILLARS,
     REFERENCE_RANGES,
     entropy_weights,
@@ -55,7 +61,9 @@ def main():
     df["env_intensity_per_million"] = df["emissions_intensity_per_revenue"] * 1e6
 
     X, imputed = normalize_all(df)
-    w, _d = entropy_weights(X)
+    w_entropy, _d = entropy_weights(X)  # traceability only, not used for scoring
+    w = pd.Series(MANUAL_WEIGHTS).reindex(X.columns)
+    w = w / w.sum()
     scored = topsis_scores(X, w)
     pillars = pillar_scores(X, w)
 
@@ -97,7 +105,8 @@ def main():
 
     print(f"Wrote {len(out)} rows to {OUT_PATH}")
     print(f"Wrote correlation matrix to {CORRELATION_OUT_PATH}")
-    print(f"Weights: {dict(w.round(4))}")
+    print(f"Manual weights (used for scoring): {dict(w.round(4))}")
+    print(f"Entropy weights (traceability only, not used): {dict(w_entropy.round(4))}")
     print(f"Companies with >=1 imputed variable: {imputed.any(axis=1).sum()}/{len(out)} (not surfaced downstream)")
 
 

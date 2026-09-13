@@ -19,7 +19,7 @@ export function WeightVector({ weights }: { weights: WeightRow }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="text-xs font-semibold text-muted-foreground">
-        Weight vector (entropy-derived, same for every company)
+        Weight vector (manually adjusted from the entropy baseline -- Financial pillar capped at 53%, cut entirely from asset turnover; same for every company)
       </div>
       <div className="flex flex-col gap-1">
         {AXES.map((axis) => {
