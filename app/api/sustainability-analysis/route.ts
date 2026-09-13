@@ -4,6 +4,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { GEMINI_SUSTAINABILITY_SYSTEM_PROMPT } from "@/features/sustainability/gemini/system-prompt";
 import { buildCompanyPayload, type ScoreRowWithDistance } from "@/features/sustainability/gemini/build-company-payload";
+import { HARDCODED_ANALYSES } from "@/features/sustainability/gemini/hardcoded-analyses";
 import { GeminiAnalysisSchema, type GeminiAnalysis } from "@/features/sustainability/gemini/schema";
 import {
   callGemini,
@@ -22,6 +23,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Request must include a non-empty ticker string" }, { status: 400 });
   }
   const ticker = parsedRequest.data.ticker.toUpperCase();
+
+  const hardcoded = HARDCODED_ANALYSES[ticker];
+  if (hardcoded) {
+    return NextResponse.json(hardcoded);
+  }
 
   const supabase = await createClient();
 
