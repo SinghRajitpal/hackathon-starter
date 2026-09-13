@@ -103,3 +103,12 @@ Scope: US facilities only; companies without GHGRP rows in both years are exclud
 - 2026-09-13, float-cap ÷ (price × shares_outstanding) checked across all 503 rows of `financials_ttm.csv` before and after `10_ttm_financials.py --recap-only` (checked by: Claude Code session), before: 57 rows above 1.2× (up to 3.9x for GOOGL) — sample GOOGL 4.14T, GOOG 4.10T, BRK-B 1.09T, IBKR 151B, NKE 53.4B; result: after recap the max ratio across all 503 rows is 1.0000000000000002 (float rounding only), 0 rows remaining above 1.0; action: none further needed, CSV committed as `data:`.
 - 2026-09-13, UNP, CSX, FDX, UPS 10-Ks fetched directly from EDGAR and searched for `gallons`/`fuel consum`/`metric ton` (checked by: Claude Code session), sample: full filing text (330k-600k characters each); result: none discloses an absolute fuel-consumption amount (UNP/CSX: ratio only; FDX: SAF offtake + savings figure only; UPS: price/cost narrative only) — the existing `not-disclosed` status is correct; action: none, no code change.
 - 2026-09-13, `13_fleet_fuel.py --tickers CCL,RCL,NCLH` rerun after the metric-ton fix (checked by: Claude Code session), sample: 3 tickers, 15 Gemini calls (5 retries each); result: all 3 failed with 429 `RESOURCE_EXHAUSTED` (free-tier daily quota for gemini-3.5-flash, limit 20/day, already spent), reproduced independently outside the pipeline; action: left `fleet.csv` status as `error` for these 3 (not fabricated, not reverted); rerun once the daily quota resets.
+
+## P4 data rules (13 Sep 2026)
+
+| Rule | Value |
+|---|---|
+| DE/BEN scope | Energy, Utilities, Materials, Industrials, Consumer Discretionary, Consumer Staples measured; other sectors DE = BEN = 0, status `unclassified` (PDF §15). |
+| DE/BEN imputation | In-scope company without usable segments or note → sector median of measured DE and BEN, BEN capped at 1 − DE, flag `de-ben-imputed` (PDF §5). |
+| Generation mix missing | Utility segment labelled `electricity_generation` without a disclosed mix → median utility mix, flag `generation-mix-imputed`. |
+| Segment choice | ProductOrService preferred when it reconciles to TTM revenue within 10%; else BusinessSegments; a non-reconciling set must cover ≥ 50% of revenue, otherwise the segment note is read. |
