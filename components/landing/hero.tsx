@@ -22,7 +22,7 @@ export function Hero() {
             portfolio ready for either outcome.
           </p>
           <Link
-            href="/app"
+            href="/dashboard"
             className="inline-block origin-left rounded-full bg-white px-10 py-5 text-2xl font-medium text-[#0b0d22] transition-transform duration-200 hover:scale-110"
           >
             get started →
