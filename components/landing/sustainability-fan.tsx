@@ -113,13 +113,6 @@ export function SustainabilityFan() {
         pointer.current.active = false;
       }}
     >
-      <defs>
-        <radialGradient id="fan-glow" cx="50%" cy="100%" r="60%">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.9)" />
-          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-        </radialGradient>
-      </defs>
-      <circle cx="0" cy="0" r="70" fill="url(#fan-glow)" />
       {lines.map((line, i) => (
         <g
           key={i}

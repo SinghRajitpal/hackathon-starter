@@ -33,8 +33,8 @@ export function LandingNav() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0b0d22]/80 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <span className="text-lg font-semibold tracking-tight text-white">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+        <span className="text-2xl font-semibold tracking-tight text-white">
           meridian
         </span>
         <nav className="hidden items-center gap-8 text-sm text-slate-300 sm:flex">
@@ -52,7 +52,7 @@ export function LandingNav() {
         </nav>
         <Link
           href="/app"
-          className="inline-block origin-center rounded-full bg-white px-4 py-1.5 text-sm font-medium text-[#0b0d22] transition-transform duration-200 hover:scale-110"
+          className="inline-block origin-center rounded-full bg-white px-6 py-2.5 text-base font-medium text-[#0b0d22] transition-transform duration-200 hover:scale-110"
         >
           Get started
         </Link>
