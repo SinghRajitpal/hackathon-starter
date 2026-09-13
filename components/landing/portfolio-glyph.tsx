@@ -13,6 +13,18 @@ const HOLDINGS = [
 const RADIUS = 70;
 const STROKE = 26;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+const TICK_INNER = RADIUS - STROKE / 2 - 6;
+const TICK_OUTER = RADIUS + STROKE / 2 + 6;
+
+const BOUNDARIES = (() => {
+  const degrees: number[] = [];
+  let cumulativePct = 0;
+  for (const holding of HOLDINGS) {
+    degrees.push((cumulativePct / 100) * 360);
+    cumulativePct += holding.pct;
+  }
+  return degrees;
+})();
 
 export function PortfolioGlyph() {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -46,6 +58,25 @@ export function PortfolioGlyph() {
                 cursor: "pointer",
                 transition: "opacity 200ms ease, stroke-width 200ms ease",
               }}
+            />
+          );
+        })}
+        {BOUNDARIES.map((deg, i) => {
+          const rad = (deg * Math.PI) / 180;
+          const cos = Math.cos(rad);
+          const sin = Math.sin(rad);
+          return (
+            <line
+              key={i}
+              x1={TICK_INNER * cos}
+              y1={TICK_INNER * sin}
+              x2={TICK_OUTER * cos}
+              y2={TICK_OUTER * sin}
+              stroke="white"
+              strokeWidth={2}
+              strokeLinecap="round"
+              opacity={0.7}
+              pointerEvents="none"
             />
           );
         })}

@@ -23,7 +23,7 @@ export function Hero() {
           </p>
           <Link
             href="/app"
-            className="inline-block origin-left rounded-full bg-white px-8 py-4 text-xl font-medium text-[#0b0d22] transition-transform duration-200 hover:scale-110"
+            className="inline-block origin-left rounded-full bg-white px-10 py-5 text-2xl font-medium text-[#0b0d22] transition-transform duration-200 hover:scale-110"
           >
             get started →
           </Link>
