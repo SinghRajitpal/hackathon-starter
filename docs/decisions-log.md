@@ -16,7 +16,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | D6 | Gemini 3.5 Flash (2.5 Flash unavailable to new API keys), temperature 0, JSON schema, no thinking tokens, cached responses | $0 / cheapest viable |
 | D7 | Utilities: generation revenue × 10-K fuel mix (fossil → DE, renewable → BEN) | Segment revenue cannot split generation by fuel |
 | D8 | Earnings = sum of last 4 reported quarters | §4 needs annual EBITDA |
-| D9 | MAC values researched from IEA/McKinsey; out-of-range figures need team approval | §4 requires confirmation |
+| D9 | MAC values researched from IEA/McKinsey; out-of-range figures need team approval. Confirmed 2026-09-13: scope2 mid=20 USD/t sourced from McKinsey Global Energy Perspective 2025 (power-sector decarbonization cost curve); fugitive mid=20 USD/t sourced from IEA Global Methane Tracker 2025 — both inside the PDF §4 range, no approval needed. Combustion, process and fleet retain the PDF §4 indicative mid-points (120/150/200) — no in-range confirming public figure was found for those abatement routes. Out-of-range literature was found but not used, noted for the method tab only: green-hydrogen heat abatement ≈ USD 500–1,250/t (far above the combustion range); cement/steel CCUS abatement ≈ USD 33–120/t (below the process floor). Full research notes and URLs kept alongside the MAC research working files. | §4 requires confirmation |
 | D10 | Emissions: GHGRP (US) + Climate TRACE (non-US) + Wikirate Scope 2 | §4 sources |
 | D11 | Missing Scope 2 → sector-median intensity × revenue; no emissions → sector-median TBR; flagged | Mirrors §5 imputation |
 | D12 | Fleets from 10-K fuel disclosures × EPA Emission Factors Hub 2025 | Climate TRACE has no owner-level fleets |
