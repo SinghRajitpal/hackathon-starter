@@ -1,6 +1,6 @@
 import { sectorDispersion } from "./dispersion";
 import { buildLongOnly, type LongOnlyBook, type LoWeight } from "./longOnly";
-import { buildLongShort, type LongShortBook } from "./longShort";
+import { buildLongShort, LS_LIMITS, type LongShortBook } from "./longShort";
 import { dirichletSample, mulberry32 } from "./rng";
 import { groupBySector, prepareScenario, scoreScenario, type PreparedScenario } from "./scenario";
 import { CATEGORIES, CATEGORY_LABEL, type CompanyInput, type MacVector, type ScenarioConfig } from "./types";
@@ -30,6 +30,18 @@ export const DRAW_SURVIVAL_THRESHOLD = 0.9;
 
 export type Signs = Map<string, number>;
 
+/** [gap] A long-only position counts as a pick only once its active weight reaches 1bp; smaller tilts are noise. */
+export const PICK_ACTIVE_THRESHOLD = 0.0001;
+
+/** Signs of the long-only tilt's picks: active weights below PICK_ACTIVE_THRESHOLD are not picks. */
+export function longOnlySigns(book: LongOnlyBook): Signs {
+  const signs: Signs = new Map();
+  for (const w of book.weights.values()) {
+    if (Math.abs(w.active) >= PICK_ACTIVE_THRESHOLD) signs.set(w.ticker, Math.sign(w.active));
+  }
+  return signs;
+}
+
 /** Direction of every position for the configured mandate: +1 long/overweight, −1 short/underweight. */
 export function bookSigns(
   prepared: PreparedScenario,
@@ -43,9 +55,7 @@ export function bookSigns(
   if (config.mandate === "long-short") {
     for (const p of buildLongShort(scores, dispersion).positions) signs.set(p.ticker, p.side === "long" ? 1 : -1);
   } else {
-    for (const w of buildLongOnly(scores, companies, dispersion).weights.values()) {
-      if (Math.abs(w.active) > 1e-9) signs.set(w.ticker, Math.sign(w.active));
-    }
+    for (const [ticker, sign] of longOnlySigns(buildLongOnly(scores, companies, dispersion))) signs.set(ticker, sign);
   }
   return signs;
 }
@@ -143,7 +153,7 @@ export function halveLongShort(book: LongShortBook, flipped: Set<string>): LongS
   }
   const gross = positions.reduce((a, p) => a + p.weight, 0);
   const net = positions.reduce((a, p) => a + (p.side === "long" ? p.weight : -p.weight), 0);
-  return { ...book, positions, gross, net, cash: 2 - gross, sectorGross };
+  return { ...book, positions, gross, net, cash: LS_LIMITS.gross - gross, sectorGross };
 }
 
 /** PDF §11 for the tilt: halve flipped active weights, offset the change inside the sector so sector weight holds. */

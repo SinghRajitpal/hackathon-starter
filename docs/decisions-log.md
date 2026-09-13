@@ -54,6 +54,8 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Dirichlet concentration | α = 100 × entropy weight, seed 42, 1,000 draws |
 | Survival | all = same direction in every MAC run; most = at least half; few = fewer |
 | Robust pick | survives all MAC runs and ≥ 90% of weight draws |
+| Long-only pick threshold | a position counts as a pick for the sensitivity test only once its active weight reaches 1bp (0.0001); smaller tilts are treated as noise |
+| Halving flipped positions | trims the opposite leg to keep neutrality (gross falls) rather than re-scaling the halved leg up |
 
 ## Hand checks
 
