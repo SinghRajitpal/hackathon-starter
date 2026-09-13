@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo } from "react";
 
 import { BurdenSection } from "@/components/netzero/sections/burden-section";
@@ -7,6 +8,7 @@ import { InputsSection } from "@/components/netzero/sections/inputs-section";
 import { PositionSection } from "@/components/netzero/sections/position-section";
 import { ScoreSection } from "@/components/netzero/sections/score-section";
 import { SectorContextSection } from "@/components/netzero/sections/sector-context-section";
+import { StressSection } from "@/components/netzero/sections/stress-section";
 import { defaultConfig, macVector } from "@/lib/netzero/config";
 import { runEngine } from "@/lib/netzero/engine";
 import type { ScenarioData } from "@/lib/netzero/types";
@@ -52,7 +54,11 @@ export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: Scena
         tbrIqrThreshold={run.config.tbrIqrThreshold}
         scoreIqrThreshold={run.config.scoreIqrThreshold}
       />
+      <StressSection ticker={ticker} companies={data.companies} config={run.config} />
       <InputsSection company={company} flags={score.flags} />
+      <Link href={`/portfolio?ticker=${encodeURIComponent(ticker)}`} className="text-sm font-medium underline">
+        Open in portfolio →
+      </Link>
     </div>
   );
 }
