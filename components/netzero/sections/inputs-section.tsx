@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { formatPercent, formatTonnes, formatUsd } from "@/lib/netzero/format";
 import { CATEGORIES, CATEGORY_LABEL, type CompanyInput } from "@/lib/netzero/types";
 
-export function InputsSection({ company }: { company: CompanyInput }) {
+export function InputsSection({ company, flags }: { company: CompanyInput; flags: string[] }) {
   return (
     <section className="flex flex-col gap-2">
       <h3 className="text-sm font-semibold">Scenario inputs</h3>
@@ -28,9 +28,7 @@ export function InputsSection({ company }: { company: CompanyInput }) {
           </Fragment>
         ))}
       </dl>
-      {company.flags.length > 0 && (
-        <p className="text-xs text-muted-foreground">Flags: {company.flags.join(", ")}</p>
-      )}
+      {flags.length > 0 && <p className="text-xs text-muted-foreground">Flags: {flags.join(", ")}</p>}
     </section>
   );
 }

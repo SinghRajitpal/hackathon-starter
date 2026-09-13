@@ -41,7 +41,7 @@ export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: Scena
     <div className="flex flex-col gap-6">
       <ScoreSection score={score} model={model} />
       <BurdenSection company={company} score={score} sectorMedianTbr={sectorMedianTbr} mac={run.config.mac} />
-      <InputsSection company={company} />
+      <InputsSection company={company} flags={score.flags} />
     </div>
   );
 }
