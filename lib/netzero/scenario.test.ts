@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { defaultConfig, macVector } from "./config";
 import { runEngine } from "./engine";
 import { MID_MAC, PDF_EXAMPLE_CONFIG, PDF_UTILITIES, syntheticUniverse } from "./fixtures";
-import { ratios, runScenario } from "./scenario";
+import { prepareScenario, ratios, runScenario, scoreScenario } from "./scenario";
 import type { CompanyInput, MacRow } from "./types";
 
 function baseCompany(overrides: Partial<CompanyInput>): CompanyInput {
@@ -45,6 +45,24 @@ describe("PDF §12 worked example", () => {
     expect(scores.get("U4")!.rank).toBe(1);
     expect(scores.get("U5")!.rank).toBe(5);
     expect(scores.get("U4")!.topPercent).toBe(20);
+  });
+});
+
+describe("scoreScenario weight override (§11 perturbation)", () => {
+  const prepared = prepareScenario(PDF_UTILITIES, PDF_EXAMPLE_CONFIG);
+
+  it("uses a same-length sector override, so the DE-only weighting ranks U4 first and U5 last", () => {
+    const { scores } = scoreScenario(prepared, new Map([["Utilities", [0, 1, 0]]]));
+    expect(scores.get("U4")!.rank).toBe(1);
+    expect(scores.get("U5")!.rank).toBe(5);
+  });
+
+  it("ignores a wrong-length override and falls back to the model weights", () => {
+    const { scores: withWrongLength } = scoreScenario(prepared, new Map([["Utilities", [1]]]));
+    const { scores: withoutOverride } = scoreScenario(prepared);
+    for (const ticker of prepared.sectors[0].tickers) {
+      expect(withWrongLength.get(ticker)!.score).toBeCloseTo(withoutOverride.get(ticker)!.score, 9);
+    }
   });
 });
 
