@@ -96,36 +96,6 @@ export function CompanyDetail({ row }: { row: CompanyDetailRow }) {
             Pillar weight shares: Environmental {(environmental * 100).toFixed(0)}%, Social{" "}
             {(social * 100).toFixed(0)}%, Financial/Operational {(financial * 100).toFixed(0)}%
           </div>
-
-          <div>
-            <div className="text-xs font-semibold text-muted-foreground mb-1">
-              Variables
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="text-left text-muted-foreground">
-                    <th className="pr-2 py-1">Variable</th>
-                    <th className="pr-2 py-1">Value</th>
-                    <th className="pr-2 py-1">Unit</th>
-                    <th className="pr-2 py-1">Direction</th>
-                    <th className="py-1">Source</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {AXES.map((axis) => (
-                    <tr key={axis.key}>
-                      <td className="pr-2 py-1">{axis.label}</td>
-                      <td className="pr-2 py-1 font-mono">{row[`${axis.key}_raw`].toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>
-                      <td className="pr-2 py-1 text-muted-foreground">{axis.unit}</td>
-                      <td className="pr-2 py-1 text-muted-foreground">{axis.direction}</td>
-                      <td className="py-1 text-muted-foreground">{axis.source}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </CardContent>
       </Card>
     </div>
