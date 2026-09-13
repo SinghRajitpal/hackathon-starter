@@ -13,7 +13,7 @@ import {
 export type MacPoint = "low" | "mid" | "high";
 
 /** PDF §12 mid-points; used only when a category is missing from nz_mac_costs. */
-export const FALLBACK_MID_MAC: MacVector = { scope2: 30, combustion: 120, fleet: 200, process: 150, fugitive: 15 };
+export const FALLBACK_MID_MAC: MacVector = { scope2: 20, combustion: 120, fleet: 200, process: 150, fugitive: 20 };
 
 export function macVector(rows: MacRow[], point: MacPoint = "mid"): { mac: MacVector; missing: Category[] } {
   const byCategory = new Map(rows.map((r) => [r.category, r]));

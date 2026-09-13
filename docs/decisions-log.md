@@ -75,3 +75,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 ## Hand checks
 
 Record each check as: date, what was checked, sample, result, action.
+
+### [decision] Engine fallback MAC mid-points match maps/mac_costs.csv
+- **Rule:** When `nz_mac_costs` is missing a category, the engine falls back to scope2 20, combustion 120, fleet 200, process 150, fugitive 20 USD/t — the confirmed mid-points in `data/pipeline/nz/maps/mac_costs.csv`.
+- **Why:** The earlier placeholders (scope2 30, fugitive 15) predated the MAC research; keeping them would make bills differ depending on whether the Supabase load succeeded.
