@@ -5,11 +5,20 @@ import re
 # Patterns are in priority order: earlier patterns fill the section budget first.
 SEGMENT_PATTERNS = [r"segment information", r"reportable segments", r"business segments", r"segment reporting"]
 GENERATION_MIX_PATTERNS = [
+    # Specific section-header phrasings first, so a numeric table wins a find_sections slot before
+    # the generic '(generation|fuel|energy) mix' pattern below can grab one on a marketing sentence
+    # that happens to contain the word "mix" but no table (e.g. NEE's "...achieve a more economical
+    # fuel mix..." boilerplate, far from FPL's actual generation-by-fuel disclosure).
     r"fuel/technology mix",
-    r"(generation|fuel|energy) mix",
-    r"sources of (electric )?generation",
+    r"sources of (energy supply|electric generation|generation)",
+    r"(generation|energy) sources by (type|fuel)",
+    r"actual (system|net) output by (energy|fuel) source",
     r"generation by (fuel|source)",
     r"(coal|natural gas|nuclear|renewable)[^.]{0,80}% of (our |total )?(generation|net generation|energy)",
+    r"(generation|fuel|energy) mix",
+    # Fallback: bare "<fuel> NN%" table rows with no surrounding "mix"/"sources of" phrase at all
+    # (e.g. AEP's "Coal and Lignite 43% Nuclear 19% Natural Gas 22% Renewables 16%").
+    r"\b(coal|lignite|natural gas|nuclear|renewables?|hydro|wind|solar|oil)\b[^%\n]{0,25}\d{1,3}(?:\.\d+)?\s*%",
 ]
 FLEET_FUEL_PATTERNS = [
     r"gallons consumed",

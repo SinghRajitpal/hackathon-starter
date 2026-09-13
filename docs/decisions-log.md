@@ -207,3 +207,82 @@ shares should exclude fabless sub-industries when splitting Wikirate-only Scope 
 | DE/BEN imputation | In-scope company without usable segments or note → sector median of measured DE and BEN, BEN capped at 1 − DE, flag `de-ben-imputed` (PDF §5). |
 | Generation mix missing | Utility segment labelled `electricity_generation` without a disclosed mix → median utility mix, flag `generation-mix-imputed`. |
 | Segment choice | ProductOrService preferred when it reconciles to TTM revenue within 10%; else BusinessSegments; a non-reconciling set must cover ≥ 50% of revenue, otherwise the segment note is read. |
+
+## Generation-mix fix (13 Sep 2026)
+
+**Symptom:** `16_segment_notes.py`'s mix loop extracted a generation mix for only 2 of 31 utilities
+(DUK, EVRG); the other 29 came back `not-found`, so `17_build_inputs.py` gave all 29 the median of
+just those two mixes for PDF §5's demand-exposure term.
+
+**Diagnosis (no Gemini, just `find_sections` against the cached 10-K text of NEE, SO, AEP, D, EXC,
+XEL):** excerpts *were* found for 5 of 6 (only EXC genuinely has none — see below), but they were the
+**wrong** excerpts. `GENERATION_MIX_PATTERNS`' most generic pattern, `(generation|fuel|energy) mix`,
+matched incidental marketing sentences (e.g. NEE's "...to achieve a more economical fuel mix...")
+that were nowhere near a numeric table, and — because `find_sections`' `max_sections=2` budget filled
+up on those before more specific patterns ever ran — the real disclosure table (AEP's "Coal and
+Lignite 43% ... Nuclear 19% ... Natural Gas 22% ... Renewables 16%", SO's per-subsidiary "Sources of
+generation (percent)" tables, Dominion's "Sources of Energy Supply" header) was never selected. AEP's
+and Dominion's bare `<fuel> NN%` table rows and Dominion's/AEP's own section headers weren't matched
+by any pattern at all. EXC is the one genuine non-bug: post-2022 spin-off of Constellation (CEG), EXC
+is wires-only with no owned generation, so `not-found`/zero-generation is correct for EXC and needs no
+fix.
+
+**Fix (`nzlib/edgar.py`, `16_segment_notes.py`, TDD — new tests added first in `tests/test_edgar.py`
+and `tests/test_segment_notes_mix.py`):**
+- Reordered `GENERATION_MIX_PATTERNS` so specific section-header phrasings (`sources of (energy
+  supply|electric generation|generation)`, `(generation|energy) sources by (type|fuel)`, `actual
+  (system|net) output by (energy|fuel) source`) run *before* the generic `(generation|fuel|energy)
+  mix` pattern, and added a bare `<fuel> NN%` fallback pattern for tables with no "mix"/"sources of"
+  wording nearby at all.
+- Widened the mix excerpt budget from `window=8_000, max_sections=2` to `window=10_000,
+  max_sections=3` (`MIX_WINDOW`/`MIX_MAX_SECTIONS` in `16_segment_notes.py`) — a holding company's
+  table (Southern Company's Alabama/Georgia/Mississippi Power sections, Dominion's Virginia
+  Power/DESC/Contracted Energy sections) needs more than one narrow window.
+- Rewrote `mix_prompt()` to: accept capacity (MW) when generation (MWh) isn't given and record
+  `basis`; sum multiple subsidiaries' amounts together when given in the same unit; and explicitly
+  exclude purchased power, wholesale/market purchases and battery storage from both the
+  fossil/renewable/nuclear amounts and the total divided by (kept the existing strict `MIX_SCHEMA` and
+  `SHARE_SUM_LIMIT` sum check as-is — did not switch away from the 10-K + Gemini method).
+- Extracted the mix step into a pure, unit-tested `extract_mix(gemini, company, text)` function, and
+  added a `--mix-only` CLI flag (skips the untagged-segment-notes loop entirely; `segment_notes.csv`
+  and `note_status.csv` are left untouched) so the mix step can be re-run alone.
+
+**Rerun:** `GEMINI_MODEL=gemini-3.5-flash-lite uv run python 16_segment_notes.py --mix-only`, 27
+Gemini calls (cache misses), no 429s. Raw result: 14/31 `extracted` (up from 2/31).
+
+**Hand sanity-check against general knowledge (PDF §5 demand-exposure input, so a wrong mix matters)
+— 7 of the 14 raw extractions were obviously wrong and were reverted to `not-found` by hand in
+`generation_mix.csv` (no further Gemini calls); the other 7 (including the pre-existing DUK/EVRG)
+check out:**
+
+| Ticker | Verdict | Why |
+|---|---|---|
+| AEP | Keep | `Coal and Lignite 43% Nuclear 19% Natural Gas 22% Renewables 16%` — shares sum to the table exactly; matches AEP's known coal/gas-heavy profile. |
+| SO | Keep | `Sources of generation (percent) — Gas 51 Coal 20 Nuclear 19 Wind/Solar/Other 8 Hydro 2` — exact match; matches Southern Company's known large gas+coal share. |
+| DUK | Keep | Same table as the original (pre-fix) extraction; shares are a few points off an exact recomputation from the quote but directionally right (fossil/nuclear-heavy, small renewables). |
+| EVRG | Keep | Unchanged from the original extraction; already validated. |
+| SRE | Keep | Looked wrong at first glance (100% fossil) but verified against the 10-K: SDG&E's *entire* owned electric generation really is a single 1,217 MW gas fleet — all its wind/solar/other capacity is PPA (purchased), not owned. 100% fossil-of-owned-generation is correct, not an error. |
+| EIX | Keep | Also looked wrong at first (nuclear share for a utility with no operating reactors) but SCE does hold a minority stake in Palo Verde; the 10-K's "~18% of delivered power is from SCE's own generation (9% nuclear, ~5% hydro, <1% solar, ~5% gas)" breakdown is what got extracted, consistent within rounding. |
+| NEE | Keep, with a caveat | Cross-checked independently by combining FPL's and NEER's quoted MW capacity figures by hand — the reported shares match that combined calculation closely. Caveat: this is a **capacity** basis (`basis=capacity_mw`), so it understates nuclear's and overstates renewables' true share of *generation* (wind/solar run at ~30-35% capacity factor vs nuclear's ~90%+), which is why nuclear looks smaller here than the "large gas and nuclear base" expected from general knowledge of NEE. |
+| CEG | Reverted to not-found | Reported 100% nuclear / 0% fossil, but the same 10-K explicitly discusses "the acquisition of Calpine" (a large natural-gas generation company) — Constellation's fleet is no longer nuclear-only. The extraction only found the nuclear-fleet paragraph and missed the (now large) gas fleet. |
+| PEG | Reverted to not-found | Reported 100% nuclear. The quoted table is explicitly headed "PSEG Power's share of installed **nuclear** generating capacity" in Item 2 Properties — a nuclear-only sub-table; PSE&G's substantial gas capacity and owned solar (158 MW, mentioned two paragraphs earlier in the same filing) were never captured. |
+| VST | Reverted to not-found | Reported ~54% fossil / ~46% nuclear from Vistra's "East" segment production volumes only; the filing has a separate "Texas" segment (its larger, more fossil-heavy segment) that was ignored. Recomputing from both segments' quoted GWh gives ~74% fossil / ~25% nuclear — Vistra is fossil-dominant, not near-parity. |
+| PNW | Reverted to not-found | Reported ~49% nuclear from a capacity table that includes Four Corners (a **coal** plant) mislabeled into the nuclear total; recomputing from the same quoted MW figures gives ~18% nuclear (matching APS's known, and much smaller, Palo Verde ownership share) and ~75% fossil. |
+| ETR | Reverted to not-found | Verified against the actual "Utility" row (`CT/CCGT 38% Legacy Gas 8% Nuclear 28% Coal 5% Renewables 3%` plus purchased power/MISO columns correctly excluded) — the model's reported fossil (61%) and nuclear (36%) don't match this row (should be ~51%/~28%); an 8-10 point categorization error. |
+| LNT | Reverted to not-found | The quote correctly identified the right owned-generation line items (`Gas 12,440, Wind 5,370, Solar 2,811, Coal 7,724`, correctly excluding the filing's separate "Purchased power" wind/other lines) but the reported shares (38% fossil / 62% renewable) are roughly the *opposite* of what those same numbers compute to (~71% fossil / ~29% renewable) — an arithmetic error, not a sourcing error. |
+| XEL | Reverted to not-found | Xcel's actual company-wide fuel-mix disclosure is a chart/image ("Total electric energy generation by source..." followed immediately by unrelated narrative in the extracted text — the numbers are in a graphic, not text), so there is no real table to extract from the 10-K text. The quoted MW figures don't match the filing's real per-subsidiary tables and don't reconcile to the reported shares either — best treated as fabricated. |
+
+**Extracted after fix: 7/31** (AEP, DUK, EIX, EVRG, NEE, SO, SRE) vs 2/31 before. D and 22 others
+remain `not-found` (D's filing does have a usable "Sources of Energy Supply" table for its Virginia
+Power subsidiary, per the diagnosis above, but the model conservatively declined given three different
+subsidiaries' breakdowns in the same excerpt window rather than guess which to use — safer than a wrong
+extraction, left as `not-found` for the sector-median imputation to cover). No 429/quota errors during
+the rerun.
+
+**Concern for the team:** `gemini-3.5-flash-lite`'s own arithmetic (computing a share from quoted raw
+figures) was unreliable in this run — see LNT, PNW, ETR, VST, XEL above, several of which quoted the
+*correct* source figures but computed the wrong share from them. A more robust version of this prompt
+would have the model return only the raw per-fuel figures it found (schema: category + amount + quote,
+no share fields) and compute fossil/renewable/nuclear shares deterministically in Python; not done here
+to stay within the scope of this fix (touching only `16_segment_notes.py`/`nzlib/edgar.py`) and because
+the manual sanity-check step already catches the resulting errors before they reach `generation_mix.csv`.
