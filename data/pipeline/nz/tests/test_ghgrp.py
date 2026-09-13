@@ -47,3 +47,67 @@ def test_attribution_uses_majority_owner_once_per_facility():
     out = ghgrp.attribute_to_tickers(facilities, parents, universe)
     assert out["ticker"].tolist() == ["ACME"]
     assert out.loc[0, "total"] == 150.0
+
+
+def empty_aliases() -> pd.DataFrame:
+    return pd.DataFrame(columns=["ticker", "ghgrp_parent_name", "evidence"])
+
+
+def one_facility_parent(parent_name: str) -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "GHGRP FACILITY ID": [1],
+            "PARENT COMPANY NAME": [parent_name],
+            "PARENT CO. PERCENT OWNERSHIP": [100.0],
+        }
+    )
+
+
+def test_match_key_is_space_and_punctuation_insensitive():
+    assert ghgrp.match_key("ExxonMobil") == ghgrp.match_key("Exxon Mobil Corp")
+    # Genuinely different companies must not collapse into the same key.
+    assert ghgrp.match_key("Air Products") != ghgrp.match_key("Air Products & Chemicals Inc")
+
+
+def test_attribution_matches_parent_names_that_differ_only_by_spacing():
+    """'ExxonMobil' vs GHGRP's 'EXXON MOBIL CORP' — was a miss before the space-insensitive join."""
+    facilities = ghgrp.categorize_direct_emitters(direct_emitters_frame())
+    parents = one_facility_parent("Exxon Mobil Corp")
+    universe = pd.DataFrame({"ticker": ["XOM"], "company_name": ["ExxonMobil"]})
+    out = ghgrp.attribute_to_tickers(facilities, parents, universe, aliases=empty_aliases())
+    assert out["ticker"].tolist() == ["XOM"]
+    assert out.loc[0, "total"] == 100.0
+
+
+def test_attribution_uses_hand_checked_alias_for_names_that_share_no_common_key():
+    """'Air Products' vs GHGRP's 'AIR PRODUCTS & CHEMICALS INC' needs the hand-checked alias map."""
+    facilities = ghgrp.categorize_direct_emitters(direct_emitters_frame())
+    parents = one_facility_parent("Air Products & Chemicals Inc")
+    universe = pd.DataFrame({"ticker": ["APD"], "company_name": ["Air Products"]})
+    aliases = pd.DataFrame(
+        {"ticker": ["APD"], "ghgrp_parent_name": ["Air Products & Chemicals Inc"], "evidence": ["test"]}
+    )
+    out = ghgrp.attribute_to_tickers(facilities, parents, universe, aliases=aliases)
+    assert out["ticker"].tolist() == ["APD"]
+    assert out.loc[0, "total"] == 100.0
+
+
+def test_attribution_alias_does_not_leak_to_other_tickers():
+    """An alias for one ticker must not falsely match a different, unrelated company."""
+    facilities = ghgrp.categorize_direct_emitters(direct_emitters_frame())
+    parents = one_facility_parent("Air Products & Chemicals Inc")
+    universe = pd.DataFrame({"ticker": ["APD", "OTHER"], "company_name": ["Air Products", "Other Co"]})
+    aliases = pd.DataFrame(
+        {"ticker": ["APD"], "ghgrp_parent_name": ["Air Products & Chemicals Inc"], "evidence": ["test"]}
+    )
+    out = ghgrp.attribute_to_tickers(facilities, parents, universe, aliases=aliases)
+    assert out["ticker"].tolist() == ["APD"]
+
+
+def test_attribution_without_aliases_argument_still_works():
+    """aliases is optional; omitting it must not break the plain name-matching path."""
+    facilities = ghgrp.categorize_direct_emitters(direct_emitters_frame())
+    parents = one_facility_parent("Acme Corp")
+    universe = pd.DataFrame({"ticker": ["ACME"], "company_name": ["Acme Inc."]})
+    out = ghgrp.attribute_to_tickers(facilities, parents, universe)
+    assert out["ticker"].tolist() == ["ACME"]
