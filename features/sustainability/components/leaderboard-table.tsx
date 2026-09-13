@@ -39,7 +39,7 @@ export function LeaderboardTable({ rows, useSectorRank = false }: { rows: ScoreR
             <tr key={row.ticker} className="hover:bg-accent">
               <td className="px-3 py-2 font-mono">{useSectorRank ? row.sector_rank : row.rank}</td>
               <td className="px-3 py-2">
-                <Link href={`/leaderboard/${row.ticker}`}>
+                <Link href={`/ticker/${encodeURIComponent(row.ticker)}`}>
                   <Badge>{row.ticker}</Badge>
                 </Link>
               </td>

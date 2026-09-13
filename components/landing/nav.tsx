@@ -51,7 +51,7 @@ export function LandingNav() {
           ))}
         </nav>
         <Link
-          href="/app"
+          href="/dashboard"
           className="inline-block origin-center rounded-full bg-white px-6 py-2.5 text-base font-medium text-[#0b0d22] transition-transform duration-200 hover:scale-110"
         >
           Get started

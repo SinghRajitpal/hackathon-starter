@@ -47,9 +47,18 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
+  const publicPrefixes = [
+    "/dashboard",
+    "/ticker",
+    "/market",
+    "/portfolio",
+    "/api/explain",
+    "/api/sustainability-analysis",
+  ];
+
   if (
     request.nextUrl.pathname !== "/" &&
-    !request.nextUrl.pathname.startsWith("/app") &&
+    !publicPrefixes.some((prefix) => request.nextUrl.pathname.startsWith(prefix)) &&
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
     !request.nextUrl.pathname.startsWith("/auth")

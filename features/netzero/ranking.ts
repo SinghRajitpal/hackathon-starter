@@ -17,6 +17,11 @@ export interface NetZeroRankingRow {
   verdict: VerdictBand | null;
 }
 
+/** In-page anchor id for a sector's block in the net-zero ranking. */
+export function sectorAnchor(sector: string): string {
+  return `nz-${sector.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+}
+
 /** Every scored company, grouped by sector (A–Z) and ordered by rank inside it. */
 export function buildNetZeroRanking(data: ScenarioData, model: DashboardModel): NetZeroRankingRow[] {
   const names = new Map(data.companies.map((c) => [c.ticker, c.companyName]));
