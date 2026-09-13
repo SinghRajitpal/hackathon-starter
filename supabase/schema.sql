@@ -121,3 +121,22 @@ alter table public.sp500_esg_raw enable row level security;
 create policy "public read access" on public.sp500_esg_raw
   for select to authenticated, anon
   using (true);
+
+-- Gemini API key stored in Vault (see also: `select vault.create_secret(...)`,
+-- run once outside this file since it contains the actual key value).
+-- get_gemini_api_key() is the only way to read it back out -- granted to
+-- service_role only, so it's callable from trusted server-side code (a
+-- Next.js server action/route using the service role key, or another
+-- Postgres function) but never from the browser via the anon/authenticated
+-- roles PostgREST normally exposes RPCs to.
+create function public.get_gemini_api_key()
+returns text
+language sql
+security definer
+set search_path = ''
+as $$
+  select decrypted_secret from vault.decrypted_secrets where name = 'gemini_api_key';
+$$;
+
+revoke execute on function public.get_gemini_api_key() from public, anon, authenticated;
+grant execute on function public.get_gemini_api_key() to service_role;
