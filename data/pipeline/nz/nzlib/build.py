@@ -50,6 +50,10 @@ def merge_emissions(
 
     def add_ct() -> None:
         for category, value in (ct or {}).items():
+            # 10-K fleet takes precedence over Climate TRACE's own "fleet" key -- both are added
+            # separately right after add_ct() runs, so adding this one too would double count it.
+            if category == "fleet" and fleet is not None:
+                continue
             add(category, present(value), "ClimateTRACE")
         flags.append("ct-equal-split")
 
@@ -72,6 +76,8 @@ def merge_emissions(
     elif ct:
         add_ct()
         add("fleet", fleet, "10-K fleet")
+        # This branch carries only Climate TRACE's non-US assets (no GHGRP), so US Scope 1 is absent.
+        flags.append("scope1-us-missing")
     elif fleet is not None:
         add("fleet", fleet, "10-K fleet")
         flags.append("scope1-fleet-only")
