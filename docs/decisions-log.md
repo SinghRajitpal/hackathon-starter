@@ -59,7 +59,11 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Fleet fuel not disclosed | Companies whose 10-K states no fuel volumes (e.g. UPS) get no fleet emissions and the flag `fleet-fuel-not-disclosed`. Known limitation: their burden is understated. |
 | Emission factors | Constants in `nzlib/fleet.py` citing EPA GHG Emission Factors Hub 2025 Table 2 (kg CO2 per gallon: jet fuel 9.75, aviation gasoline 8.31, diesel 10.21, gasoline 8.78, LPG 5.68, residual fuel oil 11.27; CNG 0.05444 per scf). No `emission_factors.csv`. |
 | Fleet with GHGRP | GHGRP has no mobile sources, so 10-K fleet emissions are added on top of GHGRP categories. |
+| Climate TRACE sources | v7, year 2024, gas co2e_100yr; non-US only; verified owner; equal split over distinct owners (D13). |
+| Climate TRACE owner map | Top 20 candidate-sector emitters (by `scope1_tco2e`) hand-checked on 2026-09-13 by Claude Code session (user pre-approved); 15 of 20 accepted (with named JV/subsidiary exclusions for CVX and CMS), 5 (SO, AEP, PPL, AEE, WEC) had no valid Climate TRACE owner match; XOM added via a controller-verified owner id; other rows only for a single exact normalised-name match. |
 
 ## Hand checks
 
 Record each check as: date, what was checked, sample, result, action.
+
+- 2026-09-13, `maps/ct_owner_candidates.csv` top 20 candidate-sector Scope 1 emitters (checked by: Claude Code session, user pre-approved), 15/20 accepted (Vistra, Duke Energy, NextEra, Xcel, Entergy, Phillips 66, Marathon Petroleum, Dominion, Evergy, Valero, NRG, DTE, CF Industries, Chevron, CMS Energy) and 5/20 rejected for no valid owner match (Southern Company, American Electric Power, PPL, Ameren, WEC Energy Group — candidates were either absent or unrelated look-alike companies, e.g. "Southern Kuzbass Coal Company PJSC" for Southern Company); action: Chevron Phillips / Chevron Phillips Chemical (50/50 JV) and Chevron USA Inc excluded from CVX's owner ids, and "CMS Cepcor Group Utah" / "Shuweihat CMS International Power" (divested JV) excluded from CMS's; 22 further tickers added beyond the top 20 only where `suggested_owner_ids` was a single exact normalised-name match; XOM added via a separately controller-verified owner id (E100000001213) since its `scope1_tco2e` is null in the universe file.
