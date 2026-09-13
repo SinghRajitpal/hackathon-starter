@@ -16,6 +16,9 @@ export type ScoreRow = {
   weight_profit_margin: number;
   weight_fcf_margin: number;
   weight_leverage: number;
+  pillar_environmental_score: number;
+  pillar_social_score: number;
+  pillar_financial_score: number;
 };
 
 export function pillarShares(row: Pick<ScoreRow,
@@ -43,6 +46,9 @@ export function LeaderboardTable({ rows, useSectorRank = false }: { rows: ScoreR
             <th className="px-3 py-2 text-left">Ticker</th>
             <th className="px-3 py-2 text-left">Company</th>
             <th className="px-3 py-2 text-left">Sector</th>
+            <th className="px-3 py-2 text-right">Environmental</th>
+            <th className="px-3 py-2 text-right">Social</th>
+            <th className="px-3 py-2 text-right">Financial</th>
             <th className="px-3 py-2 text-right">Score</th>
           </tr>
         </thead>
@@ -57,6 +63,9 @@ export function LeaderboardTable({ rows, useSectorRank = false }: { rows: ScoreR
               </td>
               <td className="px-3 py-2">{row.company_name}</td>
               <td className="px-3 py-2 text-muted-foreground">{row.sector}</td>
+              <td className="px-3 py-2 text-right text-muted-foreground">{row.pillar_environmental_score.toFixed(0)}</td>
+              <td className="px-3 py-2 text-right text-muted-foreground">{row.pillar_social_score.toFixed(0)}</td>
+              <td className="px-3 py-2 text-right text-muted-foreground">{row.pillar_financial_score.toFixed(0)}</td>
               <td className="px-3 py-2 text-right font-semibold">{row.score.toFixed(1)}</td>
             </tr>
           ))}

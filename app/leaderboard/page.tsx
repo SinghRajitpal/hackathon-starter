@@ -2,19 +2,19 @@ import Link from "next/link";
 
 import { createClient } from "@/lib/supabase/server";
 import { LeaderboardTable, type ScoreRow } from "@/components/leaderboard-table";
-
-const SCORE_COLUMNS =
-  "ticker, company_name, sector, score, rank, sector_rank, weight_env_intensity, weight_esg_risk, weight_controversy, weight_asset_turnover, weight_profit_margin, weight_fcf_margin, weight_leverage";
+import { WeightVector, CorrelationMatrix, type CorrelationRow } from "@/components/weight-and-correlation";
 
 export default async function LeaderboardPage() {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("sp500_esg_scores")
-    .select(SCORE_COLUMNS)
-    .order("rank", { ascending: true });
+  const [{ data, error }, { data: correlationData, error: correlationError }] = await Promise.all([
+    supabase.from("sp500_esg_scores").select("*").order("rank", { ascending: true }),
+    supabase.from("sp500_esg_correlation").select("*"),
+  ]);
 
   if (error) console.error(error);
+  if (correlationError) console.error(correlationError);
   const rows = (data ?? []) as ScoreRow[];
+  const correlationRows = (correlationData ?? []) as CorrelationRow[];
   const sectors = [...new Set(rows.map((r) => r.sector))].sort();
 
   return (
@@ -23,6 +23,10 @@ export default async function LeaderboardPage() {
       <p className="text-sm text-muted-foreground">
         {rows.length} S&P 500 companies, ranked by sustainability score (0-100).
       </p>
+
+      {rows[0] && <WeightVector weights={rows[0]} />}
+      <CorrelationMatrix rows={correlationRows} />
+
       <LeaderboardTable rows={rows} />
       <div className="flex flex-wrap gap-2">
         {sectors.map((sector) => (

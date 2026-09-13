@@ -3,9 +3,6 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { LeaderboardTable, type ScoreRow } from "@/components/leaderboard-table";
 
-const SCORE_COLUMNS =
-  "ticker, company_name, sector, score, rank, sector_rank, weight_env_intensity, weight_esg_risk, weight_controversy, weight_asset_turnover, weight_profit_margin, weight_fcf_margin, weight_leverage";
-
 export default async function SectorLeaderboardPage({
   params,
 }: {
@@ -21,7 +18,7 @@ export default async function SectorLeaderboardPage({
   // weighting pass. Blueprint section 9.
   const { data, error } = await supabase
     .from("sp500_esg_scores")
-    .select(SCORE_COLUMNS)
+    .select("*")
     .eq("sector", decodedSector)
     .order("sector_rank", { ascending: true });
 

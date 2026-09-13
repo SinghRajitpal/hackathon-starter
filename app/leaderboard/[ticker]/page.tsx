@@ -3,9 +3,6 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { CompanyDetail, type CompanyDetailRow } from "@/components/company-detail";
 
-const DETAIL_COLUMNS =
-  "ticker, company_name, sector, score, rank, sector_rank, weight_env_intensity, weight_esg_risk, weight_controversy, weight_asset_turnover, weight_profit_margin, weight_fcf_margin, weight_leverage, contrib_env_intensity, contrib_esg_risk, contrib_controversy, contrib_asset_turnover, contrib_profit_margin, contrib_fcf_margin, contrib_leverage";
-
 export default async function CompanyDetailPage({
   params,
 }: {
@@ -14,9 +11,12 @@ export default async function CompanyDetailPage({
   const { ticker } = await params;
 
   const supabase = await createClient();
+  // select("*"): every column in this table is intended to be
+  // user-facing (no imputed-flag or other internal column exists here
+  // by design -- see score_engine.py's Global Constraints notes).
   const { data, error } = await supabase
     .from("sp500_esg_scores")
-    .select(DETAIL_COLUMNS)
+    .select("*")
     .eq("ticker", ticker.toUpperCase())
     .maybeSingle();
 
