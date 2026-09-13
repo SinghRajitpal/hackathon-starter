@@ -1,25 +1,7 @@
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
-
-export type ScoreRow = {
-  ticker: string;
-  company_name: string;
-  sector: string;
-  score: number;
-  rank: number;
-  sector_rank: number;
-  weight_env_intensity: number;
-  weight_esg_risk: number;
-  weight_controversy: number;
-  weight_asset_turnover: number;
-  weight_profit_margin: number;
-  weight_fcf_margin: number;
-  weight_leverage: number;
-  pillar_environmental_score: number;
-  pillar_social_score: number;
-  pillar_financial_score: number;
-};
+import type { ScoreRow } from "@/features/sustainability/types";
 
 export function pillarShares(row: Pick<ScoreRow,
   | "weight_env_intensity"

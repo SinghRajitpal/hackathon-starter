@@ -1,11 +1,10 @@
 import { AXES } from "@/features/sustainability/variables";
-import type { CompanyDetailRow } from "@/features/sustainability/components/company-detail";
+import type { SustainabilityResult } from "@/features/sustainability/types";
 
 // The row shape the API route actually reads from Supabase (select("*")
-// on sp500_esg_scores) -- a superset of CompanyDetailRow that also
-// carries d_plus, the model's own "distance to the ideal" (blueprint
-// section 8). Extending rather than duplicating the existing type.
-export type ScoreRowWithDistance = CompanyDetailRow & { d_plus: number };
+// on sp500_esg_scores) -- CompanyDetailRow plus d_plus, the model's own
+// "distance to the ideal" (blueprint section 8).
+export type ScoreRowWithDistance = SustainabilityResult;
 
 // Builds the dynamic, company-specific JSON sent to Gemini alongside
 // the static GEMINI_SUSTAINABILITY_SYSTEM_PROMPT. Pure function, no I/O

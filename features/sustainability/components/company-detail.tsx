@@ -1,25 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { CompanyDetailRow } from "@/features/sustainability/types";
 import { AXES } from "@/features/sustainability/variables";
-
-export type CompanyDetailRow = {
-  ticker: string;
-  company_name: string;
-  sector: string;
-  score: number;
-  rank: number;
-  sector_rank: number;
-  percentile_index: number;
-  percentile_sector: number;
-  pillar_environmental_score: number;
-  pillar_social_score: number;
-  pillar_financial_score: number;
-} & {
-  [K in (typeof AXES)[number]["key"] as `weight_${K}`]: number;
-} & {
-  [K in (typeof AXES)[number]["key"] as `contrib_${K}`]: number;
-} & {
-  [K in (typeof AXES)[number]["key"] as `${K}_raw`]: number;
-};
 
 function generateExplanation(row: CompanyDetailRow): string {
   const sorted = [...AXES].sort(

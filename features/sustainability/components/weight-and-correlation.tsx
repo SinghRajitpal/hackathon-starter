@@ -1,5 +1,6 @@
 import { AXES } from "@/features/sustainability/variables";
-import { pillarShares, type ScoreRow } from "@/features/sustainability/components/leaderboard-table";
+import { pillarShares } from "@/features/sustainability/components/leaderboard-table";
+import type { CorrelationRow, ScoreRow } from "@/features/sustainability/types";
 
 type WeightRow = Pick<ScoreRow,
   | "weight_env_intensity"
@@ -10,8 +11,6 @@ type WeightRow = Pick<ScoreRow,
   | "weight_fcf_margin"
   | "weight_leverage"
 >;
-
-export type CorrelationRow = { variable_a: string; variable_b: string; r: number };
 
 export function WeightVector({ weights }: { weights: WeightRow }) {
   const { environmental, social, financial } = pillarShares(weights);
