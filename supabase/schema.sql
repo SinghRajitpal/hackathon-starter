@@ -82,3 +82,54 @@ begin
     execute format('update public.sp500_esg_zscores set %I = NULL where %I = ''NaN''', col, col);
   end loop;
 end $$;
+
+-- sp500_esg_scores: entropy-weighted TOPSIS sustainability score (0-100)
+-- and rank for every S&P 500 constituent, computed by
+-- data/pipeline/09_score.py per sustainability-evaluator-blueprint-v1.4.
+-- Public reference data, not per-user -- loaded via service role,
+-- read-only for regular clients. Every company is scored and ranked;
+-- none are excluded for missing data (imputed silently with a sector
+-- median and a small disclosure penalty -- see score_engine.py). No
+-- column here indicates which values were imputed, by design.
+create table public.sp500_esg_scores (
+  ticker text primary key,
+  company_name text not null,
+  sector text not null,
+  sub_industry text not null,
+  score double precision not null,
+  rank integer not null,
+  sector_rank integer not null,
+  d_plus double precision not null,
+  d_minus double precision not null,
+  weight_env_intensity double precision not null,
+  weight_esg_risk double precision not null,
+  weight_controversy double precision not null,
+  weight_asset_turnover double precision not null,
+  weight_profit_margin double precision not null,
+  weight_fcf_margin double precision not null,
+  weight_leverage double precision not null,
+  contrib_env_intensity double precision not null,
+  contrib_esg_risk double precision not null,
+  contrib_controversy double precision not null,
+  contrib_asset_turnover double precision not null,
+  contrib_profit_margin double precision not null,
+  contrib_fcf_margin double precision not null,
+  contrib_leverage double precision not null,
+  env_intensity_raw double precision,
+  esg_risk_raw double precision,
+  controversy_raw double precision,
+  asset_turnover_raw double precision,
+  profit_margin_raw double precision,
+  fcf_margin_raw double precision,
+  leverage_raw double precision,
+  rank_min integer not null,
+  rank_max integer not null,
+  rank_delta_vs_equal double precision not null,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.sp500_esg_scores enable row level security;
+
+create policy "public read access" on public.sp500_esg_scores
+  for select to authenticated, anon
+  using (true);
