@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/landing/reveal";
+
 const STATS = [
   { value: "503", label: "S&P 500 companies scored" },
   { value: "12", label: "Sector-relative variables per company" },
@@ -10,24 +12,28 @@ const STATS = [
 export function ScopeSection() {
   return (
     <section id="the-scope" className="relative px-6 py-32">
-      <div className="mx-auto max-w-3xl text-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-300/80">
+      <Reveal className="mx-auto max-w-3xl text-center">
+        <span className="text-base font-semibold uppercase tracking-[0.2em] text-indigo-300/80">
           The Scope
         </span>
-        <h2 className="mt-4 font-serif text-3xl text-white sm:text-4xl">
+        <h2 className="mt-4 font-serif text-4xl text-white sm:text-5xl">
           Every score, backed by the numbers.
         </h2>
-      </div>
+      </Reveal>
       <div className="mx-auto mt-16 grid max-w-5xl grid-cols-2 gap-x-8 gap-y-14 text-center sm:grid-cols-3">
-        {STATS.map((stat) => (
-          <div key={stat.label} className="flex flex-col items-center gap-3">
-            <span className="font-serif text-5xl text-white sm:text-6xl">
+        {STATS.map((stat, i) => (
+          <Reveal
+            key={stat.label}
+            delay={i * 80}
+            className="flex flex-col items-center gap-3"
+          >
+            <span className="font-serif text-6xl text-white sm:text-7xl">
               {stat.value}
             </span>
-            <span className="max-w-[14rem] text-sm text-slate-400">
+            <span className="max-w-[14rem] text-base text-slate-400">
               {stat.label}
             </span>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

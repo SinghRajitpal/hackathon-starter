@@ -1,4 +1,5 @@
 import { PortfolioGlyph } from "@/components/landing/portfolio-glyph";
+import { Reveal } from "@/components/landing/reveal";
 import { SustainabilityFan } from "@/components/landing/sustainability-fan";
 import { TrendChart } from "@/components/landing/trend-chart";
 
@@ -30,15 +31,15 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="relative px-6 py-32">
       <div className="mx-auto max-w-6xl">
-        <span className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-300/80">
+        <span className="text-base font-semibold uppercase tracking-[0.2em] text-indigo-300/80">
           How it works
         </span>
 
-        <div className="mt-6 flex flex-col gap-10 border-b border-white/10 pb-16 sm:flex-row sm:items-start sm:justify-between sm:gap-16">
-          <h2 className="max-w-xl font-serif text-4xl leading-tight text-white sm:text-5xl">
+        <Reveal className="mt-6 flex flex-col gap-10 border-b border-white/10 pb-16 sm:flex-row sm:items-start sm:justify-between sm:gap-16">
+          <h2 className="max-w-xl font-serif text-5xl leading-tight text-white sm:text-6xl">
             Three steps from raw data to a portfolio you can act on.
           </h2>
-          <div className="flex max-w-md flex-col gap-5 pt-2 text-lg leading-relaxed text-slate-400">
+          <div className="flex max-w-md flex-col gap-5 pt-2 text-xl leading-relaxed text-slate-400">
             <p>
               Meridian pulls live quarterly financials, ESG risk ratings, and
               legally-mandated emissions disclosures for every company in the
@@ -49,22 +50,26 @@ export function HowItWorks() {
               score, a net-zero stress test, and a portfolio built from both.
             </p>
           </div>
-        </div>
+        </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3 sm:gap-8">
-          {STEPS.map((step) => (
-            <div key={step.eyebrow} className="flex flex-col gap-5">
-              <span className="text-sm font-semibold uppercase tracking-[0.15em] text-indigo-300/80">
+          {STEPS.map((step, i) => (
+            <Reveal
+              key={step.eyebrow}
+              delay={i * 120}
+              className="flex flex-col gap-5"
+            >
+              <span className="text-base font-semibold uppercase tracking-[0.15em] text-indigo-300/80">
                 {step.eyebrow}
               </span>
               <div className="flex min-h-[220px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-6">
                 <div className="w-full max-w-[220px]">{step.visual}</div>
               </div>
-              <h3 className="font-serif text-2xl text-white">{step.title}</h3>
-              <p className="text-base leading-relaxed text-slate-400">
+              <h3 className="font-serif text-3xl text-white">{step.title}</h3>
+              <p className="text-lg leading-relaxed text-slate-400">
                 {step.description}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
