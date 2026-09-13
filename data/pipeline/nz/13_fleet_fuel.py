@@ -24,7 +24,7 @@ import pandas as pd
 
 from nzlib.edgar import FLEET_FUEL_PATTERNS, filing_url, find_sections, html_to_text, latest_10k
 from nzlib.fleet import fuel_to_tco2e
-from nzlib.gemini import GeminiJson, google_generate
+from nzlib.gemini import DEFAULT_MODEL, GeminiJson, google_generate
 from nzlib.sec import client_from_env, normalise_ticker
 
 UNIVERSE_PATH = Path("../../out/sp500_esg_financials_raw.csv")
@@ -104,7 +104,7 @@ def main():
     if not api_key:
         raise SystemExit("Set GEMINI_API_KEY (free tier, gemini-3.5-flash).")
     sec = client_from_env()
-    gemini = GeminiJson(google_generate(api_key), CACHE_DIR)
+    gemini = GeminiJson(google_generate(api_key), CACHE_DIR, model=os.environ.get("GEMINI_MODEL", DEFAULT_MODEL))
 
     universe = pd.read_csv(UNIVERSE_PATH, usecols=["ticker", "company_name", "sub_industry"])
     candidates = universe[universe["sub_industry"].isin(FLEET_SUB_INDUSTRIES)]
