@@ -67,7 +67,8 @@ export function PortfolioApp({ data, highlight }: { data: ScenarioData; highligh
       )}
       {view.macMissing.length > 0 && (
         <div role="status" className="rounded-md border border-amber-500/50 bg-amber-500/10 p-3 text-sm">
-          Abatement costs missing for {view.macMissing.join(", ")}; the PDF §12 mid-points are used for those categories.
+          Abatement costs missing for {view.macMissing.join(", ")}; the confirmed mid-points (maps/mac_costs.csv) are used
+          for those categories.
         </div>
       )}
 

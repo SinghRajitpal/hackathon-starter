@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MID_MAC, syntheticUniverse } from "./fixtures";
-import { buildPortfolioView, coverageCounts, DEFAULT_CONTROLS, stressKey, TOP_N } from "./portfolio";
+import { buildPortfolioView, coverageCounts, DEFAULT_CONTROLS, parseCapitalInput, stressKey, TOP_N } from "./portfolio";
 import { CATEGORIES, type MacRow, type ScenarioData } from "./types";
 import { defaultConfig } from "./config";
 import { runEngine } from "./engine";
@@ -124,6 +124,41 @@ describe("halving flipped positions (PDF §11)", () => {
     expect(halved.longOnly.weights.get(target)!.active).toBeCloseTo(base.longOnly.weights.get(target)!.active / 2, 12);
     for (const row of halved.sectorTable) expect(row.tilt).toBeCloseTo(row.benchmark, 9);
     expect(halved.halved).toEqual([target]);
+  });
+
+  it("leaves the long/short book untouched when the stress test ran long-only (finding 1)", () => {
+    const base = buildPortfolioView(data, DEFAULT_CONTROLS);
+    const target = base.topOverweights[0].ticker;
+    const halved = buildPortfolioView(data, DEFAULT_CONTROLS, new Set([target]));
+    expect(halved.longShort.positions).toEqual(base.longShort.positions);
+    expect(halved.longShort.gross).toBe(base.longShort.gross);
+    expect(halved.longShort.net).toBe(base.longShort.net);
+  });
+
+  it("leaves the long-only book untouched when the stress test ran long-short (finding 1)", () => {
+    const controls = { ...DEFAULT_CONTROLS, mandate: "long-short" as const };
+    const base = buildPortfolioView(data, controls);
+    const target = base.largestLongs[0].ticker;
+    const halved = buildPortfolioView(data, controls, new Set([target]));
+    expect(halved.longOnly.weights).toEqual(base.longOnly.weights);
+  });
+});
+
+describe("parseCapitalInput (finding 4: clearing the capital field must not zero it)", () => {
+  it("ignores empty or whitespace-only input so the caller keeps the previous value", () => {
+    expect(parseCapitalInput("")).toBeNull();
+    expect(parseCapitalInput("   ")).toBeNull();
+  });
+
+  it("ignores non-finite or negative input", () => {
+    expect(parseCapitalInput("abc")).toBeNull();
+    expect(parseCapitalInput("-5")).toBeNull();
+    expect(parseCapitalInput("NaN")).toBeNull();
+  });
+
+  it("parses a valid non-negative number, including zero", () => {
+    expect(parseCapitalInput("2000000")).toBe(2000000);
+    expect(parseCapitalInput("0")).toBe(0);
   });
 });
 
