@@ -60,6 +60,10 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Emission factors | Constants in `nzlib/fleet.py` citing EPA GHG Emission Factors Hub 2025 Table 2 (kg CO2 per gallon: jet fuel 9.75, aviation gasoline 8.31, diesel 10.21, gasoline 8.78, LPG 5.68, residual fuel oil 11.27; CNG 0.05444 per scf). No `emission_factors.csv`. |
 | Fleet with GHGRP | GHGRP has no mobile sources, so 10-K fleet emissions are added on top of GHGRP categories. |
 
+## P4 model note (13 Sep 2026)
+
+- [decision] Segment notes and classification run on gemini-3.5-flash-lite: free-tier daily quota of 20 requests for gemini-3.5-flash was exhausted; user chose flash-lite; lower accuracy risk mitigated by the ~10% hand-check.
+
 ## Hand checks
 
 Record each check as: date, what was checked, sample, result, action.
