@@ -41,3 +41,26 @@ def test_climate_trace_only_and_fleet_only_and_nothing():
     assert cats["fleet"] == 7.0 and flags == ["scope1-fleet-only"]
     cats, flags, sources = build.merge_emissions(None, None, None, None, None, SHARES)
     assert set(cats.values()) == {None} and flags == [] and sources == []
+
+
+def test_ghgrp_reconciliation_flags_tickers_over_half_percent():
+    rows = [
+        {"ticker": "OK", "total": 998.5, "reported_total": 1000.0},  # 0.15% under threshold
+        {"ticker": "BAD", "total": 990.0, "reported_total": 1000.0},  # 1% over threshold
+    ]
+    assert build.ghgrp_reconciliation_exceptions(rows) == ["BAD"]
+
+
+def test_ghgrp_reconciliation_skips_missing_or_zero_reported_total():
+    rows = [
+        {"ticker": "NOREPORT", "total": 5.0, "reported_total": None},
+        {"ticker": "ZERO", "total": 5.0, "reported_total": 0.0},
+        {"ticker": "NOCOL", "total": 5.0},
+    ]
+    assert build.ghgrp_reconciliation_exceptions(rows) == []
+
+
+def test_ghgrp_reconciliation_custom_threshold():
+    rows = [{"ticker": "A", "total": 99.0, "reported_total": 100.0}]
+    assert build.ghgrp_reconciliation_exceptions(rows, threshold=0.02) == []
+    assert build.ghgrp_reconciliation_exceptions(rows, threshold=0.005) == ["A"]
