@@ -17,6 +17,10 @@ FLEET_FUEL_PATTERNS = [
     r"gallons of (jet|diesel|fuel)",
     r"gallons",
     r"fuel consum",
+    # Marine bunker fuel (cruise lines: CCL, RCL, NCLH) is reported in metric tons, not gallons.
+    r"fuel consumption in metric tons",
+    r"metric tons? of fuel",
+    r"metric tons?",
 ]
 
 SECTION_WINDOW_CHARS = 12_000
