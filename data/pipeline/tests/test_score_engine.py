@@ -17,6 +17,7 @@ from score_engine import (
     entropy_divergence,
     entropy_weights,
     topsis_scores,
+    pillar_scores,
 )
 
 
@@ -288,3 +289,34 @@ def test_topsis_scores_worst_company_scores_0():
     w = pd.Series({"a": 0.5, "b": 0.5})
     result = topsis_scores(X, w)
     assert result["score"].iloc[0] == pytest.approx(0.0)
+
+
+def test_pillar_scores_single_variable_pillar_equals_100x():
+    # with exactly one variable in a pillar, the weight cancels out of
+    # the D+/D- ratio entirely -- pillar score is just 100 * that
+    # variable's normalised value.
+    X = pd.DataFrame({"env_intensity": [0.3, 0.9], "other": [0.5, 0.5]})
+    w = pd.Series({"env_intensity": 0.6, "other": 0.4})
+    result = pillar_scores(X, w, pillars={"environmental": ["env_intensity"]})
+    assert result["environmental"].round(1).tolist() == [30.0, 90.0]
+
+
+def test_pillar_scores_returns_one_column_per_pillar():
+    X = pd.DataFrame({
+        "env_intensity": [0.5], "esg_risk": [0.5], "controversy": [0.5],
+        "asset_turnover": [0.5], "profit_margin": [0.5], "fcf_margin": [0.5], "leverage": [0.5],
+    })
+    w = pd.Series({k: 1 / 7 for k in X.columns})
+    result = pillar_scores(X, w)
+    assert set(result.columns) == {"environmental", "social", "financial"}
+
+
+def test_pillar_scores_uses_pillar_local_renormalised_weights():
+    # global weights a=0.45, b=0.05, c=0.50 (c outside the pillar) --
+    # within the pillar this renormalises to a=0.9, b=0.1. With a=1.0
+    # (best) and b=0.0 (worst), the formula reduces to
+    # 100 * sqrt(w_a) / (sqrt(w_a) + sqrt(w_b)) = 100 * sqrt(0.9) / (sqrt(0.9) + sqrt(0.1)) = 75.0
+    X = pd.DataFrame({"a": [1.0], "b": [0.0], "c": [0.5]})
+    w = pd.Series({"a": 0.45, "b": 0.05, "c": 0.50})
+    result = pillar_scores(X, w, pillars={"p": ["a", "b"]})
+    assert result["p"].iloc[0] == pytest.approx(75.0, abs=0.1)
