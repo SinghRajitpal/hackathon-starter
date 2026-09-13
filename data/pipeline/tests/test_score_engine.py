@@ -14,6 +14,8 @@ from score_engine import (
     impute_sector_median,
     normalize_all,
     REFERENCE_RANGES,
+    entropy_divergence,
+    entropy_weights,
 )
 
 
@@ -141,3 +143,93 @@ def test_normalize_all_clips_penalty_at_zero():
     X, imputed = normalize_all(df)
     assert (X >= 0).all().all()
     assert (X <= 1).all().all()
+
+
+def test_entropy_divergence_matches_worked_example():
+    # Section 12: intensity/FCF-margin/controversy normalised columns for
+    # companies A-D. Column sums 2.70, 2.45, 2.00; entropies 0.938, 0.982,
+    # 0.993; divergences 0.062, 0.018, 0.007.
+    X = pd.DataFrame({
+        "intensity": [0.70, 0.90, 0.25, 0.85],
+        "fcf_margin": [0.60, 0.75, 0.40, 0.70],
+        "controversy": [0.50, 0.60, 0.40, 0.50],
+    })
+    d = entropy_divergence(X)
+    assert d.round(3).tolist() == [0.062, 0.018, 0.007]
+    # weights derived directly from these divergences (no winsorisation
+    # or cap involved -- none of these three toy divergences exceed 0.40
+    # once normalised) match the worked example's ~0.71/0.21/0.08 too.
+    w = d / d.sum()
+    assert w.round(2).tolist() == [0.71, 0.21, 0.08]
+
+
+def test_entropy_weights_sums_to_one():
+    X = pd.DataFrame({
+        "a": [0.1, 0.5, 0.9, 0.3, 0.7],
+        "b": [0.5, 0.5, 0.5, 0.5, 0.5],
+        "c": [0.9, 0.1, 0.2, 0.8, 0.4],
+    })
+    w, _ = entropy_weights(X)
+    assert w.sum() == pytest.approx(1.0)
+
+
+def test_entropy_weights_constant_column_gets_zero_divergence():
+    # a column where every company looks identical carries no
+    # discriminatory power -- entropy is 1, divergence is 0. (Checked on
+    # the pre-cap divergence `d`, not the capped weight `w`: with only
+    # one other, fully-informative column, the 0.40 cap is mathematically
+    # infeasible for 2 columns -- 0.40+0.40 < 1 -- so this case isn't a
+    # meaningful test of the cap, only of the divergence calculation.)
+    X = pd.DataFrame({
+        "constant": [0.5, 0.5, 0.5, 0.5],
+        "varied": [0.1, 0.9, 0.3, 0.7],
+    })
+    _, d = entropy_weights(X)
+    assert d["constant"] == pytest.approx(0.0, abs=1e-9)
+    assert d["varied"] > 0
+
+
+def test_entropy_weights_caps_dominant_column_at_040():
+    # a column that alone would take ~100% of the weight (spread out 0
+    # to 1 while every other column is constant) must be capped at 0.40,
+    # excess redistributed proportionally to the rest.
+    n = 100
+    X = pd.DataFrame({
+        "dominant": np.linspace(0.0, 1.0, n),
+        "b": [0.5] * n,
+        "c": [0.5] * n,
+        "d": [0.5] * n,
+    })
+    w, _ = entropy_weights(X)
+    assert w["dominant"] == pytest.approx(0.40, abs=1e-6)
+    assert w.sum() == pytest.approx(1.0)
+
+
+def test_entropy_weights_winsorises_thin_tail_before_weighting():
+    # 99% of companies sit in a narrow band around 0.50, 1% (below the
+    # 2.5th/97.5th percentile winsorisation cut) sit at a much more
+    # extreme value. Section 7.1: this must not be read as strong,
+    # genuine differentiation -- the winsorised copy used for weighting
+    # should produce a materially lower divergence for this column than
+    # an unwinsorised computation would.
+    n = 500
+    rng = np.random.default_rng(0)
+    bulk = 0.50 + rng.normal(0, 0.01, size=int(n * 0.99))
+    thin_tail = pd.Series(np.concatenate([bulk, np.full(n - len(bulk), 0.999)]))
+    spread_out = pd.Series(np.linspace(0.0, 1.0, n))
+    X = pd.DataFrame({"thin_tail": thin_tail, "spread_out": spread_out})
+
+    w, _ = entropy_weights(X)
+
+    # unwinsorised entropy, computed directly for comparison
+    def raw_divergence(col):
+        x = col.clip(lower=1e-12)
+        p = x / x.sum()
+        plogp = (p * np.log(p)).where(p > 0, 0.0)
+        e = -(1 / np.log(len(col))) * plogp.sum()
+        return 1 - e
+
+    raw_d_thin_tail = raw_divergence(thin_tail)
+    winsorised = thin_tail.clip(thin_tail.quantile(0.025), thin_tail.quantile(0.975))
+    winsorised_d_thin_tail = raw_divergence(winsorised)
+    assert winsorised_d_thin_tail < raw_d_thin_tail

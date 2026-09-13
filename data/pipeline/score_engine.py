@@ -167,3 +167,66 @@ def normalize_all(df: pd.DataFrame, sector_col: str = "sector") -> tuple[pd.Data
         X[name] = (col - DISCLOSURE_PENALTY * missing.astype(float)).clip(lower=0.0, upper=1.0)
 
     return X, imputed
+
+
+def entropy_divergence(X: pd.DataFrame) -> pd.Series:
+    """Section 7's plain entropy-weight formula, with no guardrails --
+    this is exactly what section 12's worked example hand-computes.
+    entropy_weights below is the production entry point: it runs this
+    same formula on a winsorised copy (section 7.1's guardrail), not on
+    the raw matrix. Kept as its own function so the core formula is
+    testable against the blueprint's worked numbers directly, since
+    winsorisation (structurally, via percentile interpolation) always
+    perturbs a small/toy matrix even when there's no real thin tail to
+    guard against -- it only leaves genuinely spread-out real data
+    unchanged, per section 7.1: "the guardrail only activates in the
+    thin-tail case it targets"."""
+    n = len(X)
+    d = {}
+    for col in X.columns:
+        x = X[col].clip(lower=1e-12)
+        p = x / x.sum()
+        plogp = (p * np.log(p)).where(p > 0, 0.0)
+        e = -(1.0 / np.log(n)) * plogp.sum()
+        d[col] = 1.0 - e
+    return pd.Series(d)
+
+
+def entropy_weights(X: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
+    """Section 7 (standard entropy weight method) + section 7.1's
+    guardrails: entropy is computed on a winsorised (2.5th/97.5th
+    percentile clipped) COPY of X, never on X itself -- X is untouched
+    and is what topsis_scores reads from. The resulting weights are
+    capped at WEIGHT_CAP (0.40); any excess above the cap is
+    redistributed proportionally across the uncapped columns. Binary
+    variables are out of scope for this project's confirmed 7-variable
+    set (see section 11), so that guardrail doesn't apply here.
+
+    Returns (w, d): w sums to 1.0, d is the per-column divergence
+    1 - entropy (before the cap is applied, for display/debugging)."""
+    Xw = X.copy()
+    for col in Xw.columns:
+        lo_w, hi_w = Xw[col].quantile(WINSOR_LO), Xw[col].quantile(WINSOR_HI)
+        Xw[col] = Xw[col].clip(lower=lo_w, upper=hi_w)
+
+    d = entropy_divergence(Xw)
+
+    if d.sum() == 0:
+        w = pd.Series(1.0 / len(d), index=d.index)
+    else:
+        w = d / d.sum()
+
+    for _ in range(10):
+        over = w[w > WEIGHT_CAP].index
+        if len(over) == 0:
+            break
+        excess = (w[over] - WEIGHT_CAP).sum()
+        w[over] = WEIGHT_CAP
+        under = w.index.difference(over)
+        under_sum = w[under].sum()
+        if under_sum == 0:
+            w[under] = excess / len(under)
+        else:
+            w[under] = w[under] + excess * (w[under] / under_sum)
+
+    return w, d
