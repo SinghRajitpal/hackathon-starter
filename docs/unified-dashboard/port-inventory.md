@@ -68,6 +68,21 @@ The unified functions do not exist yet in either branch:
   - Tool 2 reads the key from Vault using `SUPABASE_SECRET_KEY`, and its client lives in `features/netzero/`.
   - Main's `lib/gemini/client.ts` and `lib/supabase/admin.ts` stay as they are.
 
+## Status (13 Sep 2026)
+
+- **Done:** Phases 0–3.
+  - `features/sustainability` and `features/netzero` expose the four unified functions.
+  - The new pages are `/dashboard`, `/ticker/[symbol]`, `/tickers` (A–Z index plus the See Rankings modal), `/portfolio` and the `/market` stub.
+  - The landing page's Get started buttons open `/dashboard`.
+  - `supabase/schema.sql` and `.env.example` now document both tools.
+- **Checks:** `npm test` (the live Supabase tests read `.env.local`), `npx tsc --noEmit`, `npm run lint` and `npm run build` all pass. A headless-Chromium walk through every flow also passes.
+- **Open:**
+  - Phase 4 restyle: pick the app theme.
+  - Market Overview has no spec yet.
+  - Tool 1's AI analysis card returns a 502 locally. `GEMINI_MODEL` is unset, so it uses `gemini-2.5-flash`.
+  - Tool 1's anonymous-write policies on the cache table are still in place.
+  - `/app` no longer exists and now redirects to login.
+
 ## Known defects to fix while porting
 
 - Tool 1's `sp500_esg_gemini_analysis` has anon INSERT and UPDATE policies with `using (true)`, so anyone can overwrite cached analyses. Write with the admin client and drop those policies once the user approves a database change.

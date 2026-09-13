@@ -32,7 +32,8 @@ function ActiveNavLinks() {
 
 function NavLinks({ pathname }: { pathname: string | null }) {
   return (
-    <nav aria-label="Main" className="flex flex-1 items-center justify-end gap-1 overflow-x-auto sm:gap-2">
+    // ml-auto instead of justify-end: an overflowing justify-end row clips its first link out of scroll reach on phones.
+    <nav aria-label="Main" className="ml-auto flex min-w-0 items-center gap-1 overflow-x-auto sm:gap-2">
       {LINKS.map(({ href, label }) => {
         const active = pathname !== null && (pathname === href || pathname.startsWith(`${href}/`));
         return (
