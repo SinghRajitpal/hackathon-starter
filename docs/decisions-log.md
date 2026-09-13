@@ -13,7 +13,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | D3 | Python pipeline builds inputs; TypeScript engine runs in the browser | §8 and §10 need live overrides |
 | D4 | Raw emissions data stored in Supabase too (long-format source table) | User requirement; every number traceable |
 | D5 | DE/BEN: SEC bulk segment tags → Gemini classification → segment-note reads → sector median + flag | Cheapest path faithful to §5 |
-| D6 | Gemini 2.5 Flash free tier, temperature 0, JSON schema, cached | $0 |
+| D6 | Gemini 3.5 Flash (2.5 Flash unavailable to new API keys), temperature 0, JSON schema, no thinking tokens, cached responses | $0 / cheapest viable |
 | D7 | Utilities: generation revenue × 10-K fuel mix (fossil → DE, renewable → BEN) | Segment revenue cannot split generation by fuel |
 | D8 | Earnings = sum of last 4 reported quarters | §4 needs annual EBITDA |
 | D9 | MAC values researched from IEA/McKinsey; out-of-range figures need team approval | §4 requires confirmation |
