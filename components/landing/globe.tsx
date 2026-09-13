@@ -33,13 +33,7 @@ export function Globe() {
       baseColor: [0.16, 0.19, 0.36],
       markerColor: [0.55, 0.7, 1],
       glowColor: [0.22, 0.26, 0.48],
-      markers: [
-        { location: [40.7128, -74.006], size: 0.05 },
-        { location: [51.5074, -0.1278], size: 0.05 },
-        { location: [35.6762, 139.6503], size: 0.05 },
-        { location: [1.3521, 103.8198], size: 0.05 },
-        { location: [-33.8688, 151.2093], size: 0.05 },
-      ],
+      markers: [],
     });
 
     let frame = 0;
@@ -64,7 +58,7 @@ export function Globe() {
   }, []);
 
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[500px]">
+    <div className="relative mx-auto aspect-square w-full max-w-[620px]">
       <canvas
         ref={canvasRef}
         onPointerDown={(e) => {

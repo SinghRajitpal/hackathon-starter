@@ -4,22 +4,22 @@ import { TrendChart } from "@/components/landing/trend-chart";
 
 const STEPS = [
   {
-    number: "01",
-    title: "Sustainability Score",
+    eyebrow: "Sustainability Score",
+    title: "Every company, ranked against an ideal",
     description:
       "Rank every company against an objective, mathematically weighted ideal — not by opinion.",
     visual: <SustainabilityFan />,
   },
   {
-    number: "02",
-    title: "Net-Zero Stress Test",
+    eyebrow: "Net-Zero Scenario",
+    title: "Model who survives the transition",
     description:
       "Model exactly where the shock lands when the world commits to net zero, and who survives it.",
     visual: <TrendChart />,
   },
   {
-    number: "03",
-    title: "Portfolio Construction",
+    eyebrow: "Portfolio",
+    title: "A long/short book, ready to trade",
     description:
       "Turn every score into a risk-adjusted, long/short portfolio your portfolio manager can act on.",
     visual: <PortfolioGlyph />,
@@ -29,39 +29,41 @@ const STEPS = [
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="relative px-6 py-32">
-      <div className="mx-auto max-w-3xl text-center">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-300/80">
+      <div className="mx-auto max-w-6xl">
+        <span className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-300/80">
           How it works
         </span>
-        <h2 className="mt-4 font-serif text-3xl text-white sm:text-4xl">
-          Three steps from raw data to a portfolio you can act on.
-        </h2>
-      </div>
 
-      <div className="relative mx-auto mt-24 max-w-5xl">
-        <div className="absolute bottom-6 left-6 top-6 hidden w-px bg-white/10 sm:block" />
-        <div className="flex flex-col gap-24">
+        <div className="mt-6 flex flex-col gap-10 border-b border-white/10 pb-16 sm:flex-row sm:items-start sm:justify-between sm:gap-16">
+          <h2 className="max-w-xl font-serif text-4xl leading-tight text-white sm:text-5xl">
+            Three steps from raw data to a portfolio you can act on.
+          </h2>
+          <div className="flex max-w-md flex-col gap-5 pt-2 text-lg leading-relaxed text-slate-400">
+            <p>
+              Meridian pulls live quarterly financials, ESG risk ratings, and
+              legally-mandated emissions disclosures for every company in the
+              S&amp;P 500.
+            </p>
+            <p>
+              Then it turns those numbers into three things: a sustainability
+              score, a net-zero stress test, and a portfolio built from both.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3 sm:gap-8">
           {STEPS.map((step) => (
-            <div
-              key={step.number}
-              className="relative flex flex-col gap-8 sm:flex-row sm:items-center sm:gap-12"
-            >
-              <div className="flex items-start gap-6 sm:w-1/2">
-                <span className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-[#0b0d22] font-serif text-lg text-white">
-                  {step.number}
-                </span>
-                <div className="flex flex-col gap-3 pt-1">
-                  <h3 className="font-serif text-2xl text-white">
-                    {step.title}
-                  </h3>
-                  <p className="max-w-sm font-serif text-base leading-relaxed text-slate-400">
-                    {step.description}
-                  </p>
-                </div>
+            <div key={step.eyebrow} className="flex flex-col gap-5">
+              <span className="text-sm font-semibold uppercase tracking-[0.15em] text-indigo-300/80">
+                {step.eyebrow}
+              </span>
+              <div className="flex min-h-[220px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <div className="w-full max-w-[220px]">{step.visual}</div>
               </div>
-              <div className="sm:w-1/2">
-                <div className="mx-auto max-w-xs">{step.visual}</div>
-              </div>
+              <h3 className="font-serif text-2xl text-white">{step.title}</h3>
+              <p className="text-base leading-relaxed text-slate-400">
+                {step.description}
+              </p>
             </div>
           ))}
         </div>
