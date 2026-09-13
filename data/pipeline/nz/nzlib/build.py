@@ -6,6 +6,9 @@ from nzlib.impute import split_wikirate_total
 SCOPE1_CATEGORIES = ["combustion", "fleet", "process", "fugitive"]
 GHGRP_CATEGORIES = ["combustion", "process", "fugitive"]
 NO_PEER_SHARES = {"combustion": 1.0, "process": 0.0, "fugitive": 0.0}
+# Ruling (progress.md, P1 pre-flight): the tautological "categories sum to total" check is replaced by
+# a per-ticker reconciliation of GHGRP's own reported_total against the category split, 2023 rows only.
+GHGRP_RECONCILIATION_THRESHOLD = 0.005
 
 
 def present(value) -> float | None:
@@ -47,6 +50,10 @@ def merge_emissions(
 
     def add_ct() -> None:
         for category, value in (ct or {}).items():
+            # 10-K fleet takes precedence over Climate TRACE's own "fleet" key -- both are added
+            # separately right after add_ct() runs, so adding this one too would double count it.
+            if category == "fleet" and fleet is not None:
+                continue
             add(category, present(value), "ClimateTRACE")
         flags.append("ct-equal-split")
 
@@ -69,10 +76,32 @@ def merge_emissions(
     elif ct:
         add_ct()
         add("fleet", fleet, "10-K fleet")
+        # This branch carries only Climate TRACE's non-US assets (no GHGRP), so US Scope 1 is absent.
+        flags.append("scope1-us-missing")
     elif fleet is not None:
         add("fleet", fleet, "10-K fleet")
         flags.append("scope1-fleet-only")
     return categories, flags, sources
+
+
+def ghgrp_reconciliation_exceptions(
+    rows: list[dict], threshold: float = GHGRP_RECONCILIATION_THRESHOLD
+) -> list[str]:
+    """Tickers where |reported_total - total| / reported_total exceeds `threshold` (default 0.5%).
+
+    `rows` are ghgrp_categories.csv records (one year) with `ticker`, `total` (sum of categories) and
+    `reported_total` (EPA's own total, may be absent on older data). Rows with a missing or zero
+    reported_total are skipped — there is nothing meaningful to divide by.
+    """
+    exceptions = []
+    for row in rows:
+        reported = present(row.get("reported_total"))
+        total = present(row.get("total"))
+        if not reported or total is None:
+            continue
+        if abs(reported - total) / abs(reported) > threshold:
+            exceptions.append(row["ticker"])
+    return exceptions
 
 
 # ---- DE / BEN filling (P4, spec D5, D7; PDF §15) ----

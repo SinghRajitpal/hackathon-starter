@@ -53,6 +53,26 @@ SUBSECTOR_CATEGORY = {
 }
 
 US_COUNTRY_CODE = "USA"
+# GHGRP already covers US territories, so Climate TRACE must treat them as US too (else e.g. AES
+# Puerto Rico gets counted twice: once via GHGRP, once via Climate TRACE's "non-US" bucket).
+US_COUNTRY_CODES = frozenset({US_COUNTRY_CODE, "PRI", "GUM", "VIR", "ASM", "MNP"})
+
+# oil-and-gas-production / oil-and-gas-transport are the only subsectors where Climate TRACE
+# publishes country-basin aggregates (e.g. "Qatar_Rub al Khali_LNG") rather than single assets.
+BASIN_AGGREGATE_SUBSECTORS = frozenset({"oil-and-gas-production", "oil-and-gas-transport"})
+
+
+def is_basin_aggregate(name: str | None) -> bool:
+    """True for a Climate TRACE country-basin aggregate name: `Country_Basin_Type`, exactly three
+    non-empty underscore-separated segments (e.g. "Qatar_Rub al Khali_LNG", "Saudi Arabia_Widyan -
+    North Arabian Gulf_Conventional onshore"). These aggregate many wells/fields under one row, so
+    they are not a single verified owned asset -- spec D13's equal split assumes the latter. Real
+    Climate TRACE asset names in this dataset use spaces, commas or hyphens, never underscores.
+    """
+    if not name:
+        return False
+    parts = name.split("_")
+    return len(parts) == 3 and all(p.strip() for p in parts)
 
 
 def attribute(source: dict, owners: list[dict], company_owner_ids: set[str]) -> tuple[str, float] | None:
@@ -62,7 +82,9 @@ def attribute(source: dict, owners: list[dict], company_owner_ids: set[str]) -> 
     `owners` is the owner list from /v7/sources/:id.
     """
     category = SUBSECTOR_CATEGORY.get(source.get("subsector", ""))
-    if category is None or source.get("country") == US_COUNTRY_CODE:
+    if category is None or source.get("country") in US_COUNTRY_CODES:
+        return None
+    if source.get("subsector") in BASIN_AGGREGATE_SUBSECTORS and is_basin_aggregate(source.get("name")):
         return None
     distinct = {o["id"] for o in owners}
     ours = distinct & company_owner_ids
