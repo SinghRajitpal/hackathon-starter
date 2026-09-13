@@ -56,6 +56,9 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Rule | Value |
 |---|---|
 | GHGRP unattributed remainder | 21 of 6,470 facilities in 2023 (22 of 6,580 in 2019) report totals above their subpart columns (0.014% of emissions). Categories define the total; the remainder is dropped and printed by `11_ghgrp_categories.py`. |
+| Fleet fuel not disclosed | Companies whose 10-K states no fuel volumes (e.g. UPS) get no fleet emissions and the flag `fleet-fuel-not-disclosed`. Known limitation: their burden is understated. |
+| Emission factors | Constants in `nzlib/fleet.py` citing EPA GHG Emission Factors Hub 2025 Table 2 (kg CO2 per gallon: jet fuel 9.75, aviation gasoline 8.31, diesel 10.21, gasoline 8.78, LPG 5.68, residual fuel oil 11.27; CNG 0.05444 per scf). No `emission_factors.csv`. |
+| Fleet with GHGRP | GHGRP has no mobile sources, so 10-K fleet emissions are added on top of GHGRP categories. |
 
 ## Hand checks
 
