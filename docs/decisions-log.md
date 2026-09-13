@@ -51,6 +51,12 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Survival | all = same direction in every MAC run; most = at least half; few = fewer |
 | Robust pick | survives all MAC runs and ≥ 90% of weight draws |
 
+## P1 data rules (13 Sep 2026)
+
+| Rule | Value |
+|---|---|
+| GHGRP unattributed remainder | 21 of 6,470 facilities in 2023 (22 of 6,580 in 2019) report totals above their subpart columns (0.014% of emissions). Categories define the total; the remainder is dropped and printed by `11_ghgrp_categories.py`. |
+
 ## Hand checks
 
 Record each check as: date, what was checked, sample, result, action.
