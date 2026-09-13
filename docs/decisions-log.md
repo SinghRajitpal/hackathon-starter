@@ -67,3 +67,5 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 ## Hand checks
 
 Record each check as: date, what was checked, sample, result, action.
+
+- 13 Sep 2026 — DE/BEN segment labels, random 10% sample (seed 7, n = 78): 2 wrong (2.6%), corrected by hand and flagged `hand-corrected`. Both were RCL (Royal Caribbean) cruise segments labelled `exposed` with no PDF §5 basis (cruise/maritime is not on the exposed list); checking the rest of RCL and the other cruise line found the same error on all 5 RCL segments and 1 of 2 NCLH segments (CCL was already correctly `neutral`), so all 6 were corrected, not only the 2 sampled rows.
