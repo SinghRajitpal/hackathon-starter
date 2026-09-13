@@ -55,6 +55,19 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Survival | all = same direction in every MAC run; most = at least half; few = fewer |
 | Robust pick | survives all MAC runs and ≥ 90% of weight draws |
 
+## P9 portfolio page (13 Sep 2026)
+
+| Rule | Value |
+|---|---|
+| Active share (long-only) | Σ \|portfolio − benchmark\| ÷ 2 |
+| Stress results and the book | When a stress result exists for the current costs, mandate and thresholds, positions that flip under ±50% costs are halved in both books and the CSV (PDF §11); capital changes do not invalidate the result |
+| Stress run | 1,000 Dirichlet draws, seed 42, run on button press in the browser (~0.5 s for 503 companies) |
+| Cost scenario control | low / mid / high columns of `nz_mac_costs`; missing categories fall back to PDF §12 mid-points with a warning |
+| DE/BEN banner | Shown only when every company is unclassified (P4 not loaded) |
+| Book-limit basis | Long/short name/sector limits are measured against the 200% target gross; fewer tradeable sectors means more cash and lower actual gross, stated on the method tab |
+| Validation card | Shows "not available" when the 2019 validation check has n = 0 or spearman = null (P4/validation data not loaded), instead of implying a check was run |
+| CSV | `toCsv` columns; file `nz-portfolio-<mandate>.csv`; long/short weights and dollars negative for shorts |
+
 ## Hand checks
 
 Record each check as: date, what was checked, sample, result, action.
