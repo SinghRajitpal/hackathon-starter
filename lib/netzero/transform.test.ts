@@ -51,4 +51,20 @@ describe("normaliseSector", () => {
     expect(out2[0].flags).not.toContain("leverage-imputed");
     expect(out2[2].flags).not.toContain("leverage-imputed");
   });
+
+  it("scores a negative-EBITDA-with-debt company as the sector's worst leverage distance", () => {
+    // target = median(1, 10, 3) = 3; distances 2, 0, 7; the flagged row is forced to the max (7),
+    // which ties it with the genuinely worst company (C) rather than collapsing the whole column.
+    const negativeEbitdaRows: RawRow[] = [
+      { ticker: "A", tbr: 0, de: 0.5, ben: 0.1, ndEbitda: 1, fcfMargin: 0.1 },
+      { ticker: "B", tbr: 1, de: 0.3, ben: 0.1, ndEbitda: null, fcfMargin: 0.1, negativeEbitdaWithDebt: true },
+      { ticker: "C", tbr: 2, de: 0.2, ben: 0.1, ndEbitda: 10, fcfMargin: 0.1 },
+      { ticker: "D", tbr: 3, de: 0.1, ben: 0.1, ndEbitda: 3, fcfMargin: 0.1 },
+    ];
+    const out3 = normaliseSector(negativeEbitdaRows, { ...DEFAULT_OPTIONS, winsorise: false });
+    expect(out3.map((r) => r.x.leverage)).toEqual([expect.closeTo(5 / 7, 9), 0, 0, 1]);
+    expect(out3[1].flags).toContain("leverage-negative-ebitda");
+    expect(out3[1].flags).not.toContain("leverage-imputed");
+    expect(out3[0].flags).not.toContain("leverage-negative-ebitda");
+  });
 });

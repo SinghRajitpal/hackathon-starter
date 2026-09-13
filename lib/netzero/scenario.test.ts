@@ -2,8 +2,30 @@ import { describe, expect, it } from "vitest";
 import { defaultConfig, macVector } from "./config";
 import { runEngine } from "./engine";
 import { MID_MAC, PDF_EXAMPLE_CONFIG, PDF_UTILITIES, syntheticUniverse } from "./fixtures";
-import { runScenario } from "./scenario";
-import type { MacRow } from "./types";
+import { ratios, runScenario } from "./scenario";
+import type { CompanyInput, MacRow } from "./types";
+
+function baseCompany(overrides: Partial<CompanyInput>): CompanyInput {
+  return {
+    ticker: "X",
+    companyName: "X",
+    sector: "Sector",
+    subIndustry: "Sub",
+    emissions: { scope2: null, combustion: null, fleet: null, process: null, fugitive: null },
+    revenueTtm: 100,
+    ebitdaTtm: 10,
+    fcfTtm: 5,
+    netDebt: 20,
+    de: 0.1,
+    ben: 0.1,
+    deBenStatus: "tagged",
+    price: null,
+    sharesOutstanding: null,
+    floatCap: null,
+    flags: [],
+    ...overrides,
+  };
+}
 
 describe("PDF §12 worked example", () => {
   it("derives entropy weights 0.29 / 0.42 / 0.29", () => {
@@ -52,8 +74,39 @@ describe("runScenario on the synthetic universe", () => {
     expect(scores.get("ENE0")!.flags).toContain("ebitda-near-zero");
   });
 
+  it("flags ENE0's leverage per its net debt sign under negative EBITDA, and keeps ndEbitda null", () => {
+    const universe = syntheticUniverse();
+    const ene0 = universe.find((c) => c.ticker === "ENE0")!;
+    expect(ene0.ebitdaTtm).not.toBeNull();
+    expect(ene0.ebitdaTtm!).toBeLessThanOrEqual(0);
+    const expectedFlag = ene0.netDebt !== null && ene0.netDebt > 0 ? "leverage-negative-ebitda" : "leverage-imputed";
+    expect(scores.get("ENE0")!.flags).toContain(expectedFlag);
+    expect(scores.get("ENE0")!.ndEbitda).toBeNull();
+  });
+
   it("runEngine v1 returns the same scores", () => {
     expect(runEngine(syntheticUniverse(), config).scores.get("UTI3")!.score).toBeCloseTo(scores.get("UTI3")!.score, 12);
+  });
+});
+
+describe("ratios (negative EBITDA leverage ruling)", () => {
+  it("flags negativeEbitdaWithDebt when EBITDA <= 0 and net debt > 0", () => {
+    const c = baseCompany({ ebitdaTtm: -5, netDebt: 20 });
+    const r = ratios(c);
+    expect(r.ndEbitda).toBeNull();
+    expect(r.negativeEbitdaWithDebt).toBe(true);
+  });
+
+  it("does not flag negativeEbitdaWithDebt when EBITDA <= 0 and net debt <= 0 (net cash)", () => {
+    const c = baseCompany({ ebitdaTtm: -5, netDebt: -20 });
+    const r = ratios(c);
+    expect(r.ndEbitda).toBeNull();
+    expect(r.negativeEbitdaWithDebt).toBeFalsy();
+  });
+
+  it("does not flag negativeEbitdaWithDebt when EBITDA or net debt is null", () => {
+    expect(ratios(baseCompany({ ebitdaTtm: null, netDebt: 20 })).negativeEbitdaWithDebt).toBeFalsy();
+    expect(ratios(baseCompany({ ebitdaTtm: -5, netDebt: null })).negativeEbitdaWithDebt).toBeFalsy();
   });
 });
 
