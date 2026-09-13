@@ -27,8 +27,11 @@ AMD,Wikirate/GRI,scope2,145832.0,,Wikirate GRI 305-1 / 305-2
 AES,GHGRP,combustion,15451298.878,2023.0,EPA GHGRP 2023 data summary spreadsheets
 AES,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 AES,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
-AES,ClimateTRACE,combustion,6422400.0,,"Climate TRACE v7 sources 2024, verified owner, equal split"
+AES,ClimateTRACE,combustion,2748100.0,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 AES,Wikirate/GRI,scope2,515000.0,,Wikirate GRI 305-1 / 305-2
+APD,GHGRP,combustion,770208.1460000001,2023.0,EPA GHGRP 2023 data summary spreadsheets
+APD,GHGRP,process,13302697.176,2023.0,EPA GHGRP 2023 data summary spreadsheets
+APD,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 ALB,GHGRP,combustion,229671.722,2023.0,EPA GHGRP 2023 data summary spreadsheets
 ALB,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 ALB,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -152,7 +155,6 @@ CVX,GHGRP,process,5041147.96,2023.0,EPA GHGRP 2023 data summary spreadsheets
 CVX,GHGRP,fugitive,4824208.328,2023.0,EPA GHGRP 2023 data summary spreadsheets
 CVX,ClimateTRACE,combustion,296413.3333333333,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 CVX,ClimateTRACE,process,6467227.251978723,,"Climate TRACE v7 sources 2024, verified owner, equal split"
-CVX,ClimateTRACE,fugitive,50917929.31971887,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 CVX,Wikirate/GRI,scope2,4000000.0,,Wikirate GRI 305-1 / 305-2
 CI,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
 CI,Wikirate/GRI,combustion,12814.0,,Wikirate GRI 305-1 / 305-2
@@ -180,7 +182,6 @@ COP,GHGRP,combustion,1200814.306,2023.0,EPA GHGRP 2023 data summary spreadsheets
 COP,GHGRP,process,160.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 COP,GHGRP,fugitive,7901609.948,2023.0,EPA GHGRP 2023 data summary spreadsheets
 COP,ClimateTRACE,process,493141.9142268339,,"Climate TRACE v7 sources 2024, verified owner, equal split"
-COP,ClimateTRACE,fugitive,205345.18991065543,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 COP,Wikirate/GRI,scope2,1060000.0,,Wikirate GRI 305-1 / 305-2
 ED,GHGRP,combustion,2463230.61,2023.0,EPA GHGRP 2023 data summary spreadsheets
 ED,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -244,14 +245,17 @@ DUK,GHGRP,combustion,73268493.18,2023.0,EPA GHGRP 2023 data summary spreadsheets
 DUK,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 DUK,GHGRP,fugitive,473091.0412,2023.0,EPA GHGRP 2023 data summary spreadsheets
 DUK,Wikirate/GRI,scope2,4400.0,,Wikirate GRI 305-1 / 305-2
+DD,GHGRP,combustion,180836.708,2023.0,EPA GHGRP 2023 data summary spreadsheets
+DD,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
+DD,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 EBAY,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
 EBAY,Wikirate/GRI,combustion,5133.0,,Wikirate GRI 305-1 / 305-2
 EBAY,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 EBAY,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 EBAY,Wikirate/GRI,scope2,38478.0,,Wikirate GRI 305-1 / 305-2
 ECL,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-ECL,Wikirate/GRI,combustion,247084.04141808648,,Wikirate GRI 305-1 / 305-2
-ECL,Wikirate/GRI,process,52434.95858191351,,Wikirate GRI 305-1 / 305-2
+ECL,Wikirate/GRI,combustion,244121.74068570757,,Wikirate GRI 305-1 / 305-2
+ECL,Wikirate/GRI,process,55397.25931429244,,Wikirate GRI 305-1 / 305-2
 ECL,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 ECL,Wikirate/GRI,scope2,257103.0,,Wikirate GRI 305-1 / 305-2
 EIX,GHGRP,combustion,1056295.2359999998,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -278,13 +282,15 @@ EXC,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 EXC,GHGRP,fugitive,301249.6376,2023.0,EPA GHGRP 2023 data summary spreadsheets
 EXC,Wikirate/GRI,scope2,4868000.0,,Wikirate GRI 305-1 / 305-2
 EXE,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-EXE,Wikirate/GRI,combustion,916689.4652572447,,Wikirate GRI 305-1 / 305-2
-EXE,Wikirate/GRI,process,30.09292750803508,,Wikirate GRI 305-1 / 305-2
-EXE,Wikirate/GRI,fugitive,763280.4418152472,,Wikirate GRI 305-1 / 305-2
+EXE,Wikirate/GRI,combustion,983587.9963871639,,Wikirate GRI 305-1 / 305-2
+EXE,Wikirate/GRI,process,288.70003490669745,,Wikirate GRI 305-1 / 305-2
+EXE,Wikirate/GRI,fugitive,696123.3035779295,,Wikirate GRI 305-1 / 305-2
 EXE,Wikirate/GRI,scope2,53000.0,,Wikirate GRI 305-1 / 305-2
+XOM,GHGRP,combustion,23647628.922,2023.0,EPA GHGRP 2023 data summary spreadsheets
+XOM,GHGRP,process,5768007.958000001,2023.0,EPA GHGRP 2023 data summary spreadsheets
+XOM,GHGRP,fugitive,7382071.507999999,2023.0,EPA GHGRP 2023 data summary spreadsheets
 XOM,ClimateTRACE,combustion,1447743.3333333333,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 XOM,ClimateTRACE,process,27082895.41916076,,"Climate TRACE v7 sources 2024, verified owner, equal split"
-XOM,ClimateTRACE,fugitive,66303900.23083925,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 FDX,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
 FDX,Wikirate/GRI,combustion,15406173.0,,Wikirate GRI 305-1 / 305-2
 FDX,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
@@ -504,13 +510,13 @@ MS,Wikirate/GRI,process,0.0,,Wikirate GRI 305-1 / 305-2
 MS,Wikirate/GRI,fugitive,260.6734733319685,,Wikirate GRI 305-1 / 305-2
 MS,Wikirate/GRI,scope2,295792.0,,Wikirate GRI 305-1 / 305-2
 MOS,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-MOS,Wikirate/GRI,combustion,2664543.664276454,,Wikirate GRI 305-1 / 305-2
-MOS,Wikirate/GRI,process,565456.3357235455,,Wikirate GRI 305-1 / 305-2
+MOS,Wikirate/GRI,combustion,2632598.34072241,,Wikirate GRI 305-1 / 305-2
+MOS,Wikirate/GRI,process,597401.6592775903,,Wikirate GRI 305-1 / 305-2
 MOS,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 MOS,Wikirate/GRI,scope2,1300000.0,,Wikirate GRI 305-1 / 305-2
 NEM,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-NEM,Wikirate/GRI,combustion,2.5655513299999297,,Wikirate GRI 305-1 / 305-2
-NEM,Wikirate/GRI,process,0.5444486700000701,,Wikirate GRI 305-1 / 305-2
+NEM,Wikirate/GRI,combustion,2.5347928296119795,,Wikirate GRI 305-1 / 305-2
+NEM,Wikirate/GRI,process,0.5752071703880204,,Wikirate GRI 305-1 / 305-2
 NEM,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 NEM,Wikirate/GRI,scope2,1580000.0,,Wikirate GRI 305-1 / 305-2
 NEE,GHGRP,combustion,40497897.718,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -557,7 +563,6 @@ NXPI,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 OXY,GHGRP,combustion,7246175.43,2023.0,EPA GHGRP 2023 data summary spreadsheets
 OXY,GHGRP,process,437025.062,2023.0,EPA GHGRP 2023 data summary spreadsheets
 OXY,GHGRP,fugitive,3685293.974,2023.0,EPA GHGRP 2023 data summary spreadsheets
-OXY,ClimateTRACE,fugitive,61391859.24363656,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 OXY,Wikirate/GRI,scope2,4900000.0,,Wikirate GRI 305-1 / 305-2
 OKE,GHGRP,combustion,2021410.988,2023.0,EPA GHGRP 2023 data summary spreadsheets
 OKE,GHGRP,process,5964.794,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -662,7 +667,6 @@ CRM,Wikirate/GRI,combustion,868.7683457611404,,Wikirate GRI 305-1 / 305-2
 CRM,Wikirate/GRI,process,3131.23165423886,,Wikirate GRI 305-1 / 305-2
 CRM,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 CRM,Wikirate/GRI,scope2,280000.0,,Wikirate GRI 305-1 / 305-2
-SLB,ClimateTRACE,fugitive,803921.7860454123,,"Climate TRACE v7 sources 2024, verified owner, equal split"
 SRE,GHGRP,combustion,3823267.528,2023.0,EPA GHGRP 2023 data summary spreadsheets
 SRE,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 SRE,GHGRP,fugitive,1541303.693,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -670,8 +674,8 @@ SWKS,GHGRP,combustion,4053.384,2023.0,EPA GHGRP 2023 data summary spreadsheets
 SWKS,GHGRP,process,20063.33597,2023.0,EPA GHGRP 2023 data summary spreadsheets
 SWKS,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 SW,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
-SW,Wikirate/GRI,combustion,2213.303607199296,,Wikirate GRI 305-1 / 305-2
-SW,Wikirate/GRI,process,469.6963928007036,,Wikirate GRI 305-1 / 305-2
+SW,Wikirate/GRI,combustion,2186.7682192440325,,Wikirate GRI 305-1 / 305-2
+SW,Wikirate/GRI,process,496.2317807559674,,Wikirate GRI 305-1 / 305-2
 SW,Wikirate/GRI,fugitive,0.0,,Wikirate GRI 305-1 / 305-2
 SW,Wikirate/GRI,scope2,691.0,,Wikirate GRI 305-1 / 305-2
 SNA,Wikirate/GRI,fleet,0.0,,Wikirate GRI 305-1 / 305-2
@@ -766,6 +770,9 @@ VST,GHGRP,combustion,86320993.138,2023.0,EPA GHGRP 2023 data summary spreadsheet
 VST,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 VST,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 VST,ClimateTRACE,combustion,77650.0,,"Climate TRACE v7 sources 2024, verified owner, equal split"
+WAB,GHGRP,combustion,35202.768,2023.0,EPA GHGRP 2023 data summary spreadsheets
+WAB,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
+WAB,GHGRP,fugitive,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 WM,GHGRP,combustion,176183.606,2023.0,EPA GHGRP 2023 data summary spreadsheets
 WM,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 WM,GHGRP,fugitive,11474276.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
@@ -785,6 +792,7 @@ XEL,GHGRP,process,0.0,2023.0,EPA GHGRP 2023 data summary spreadsheets
 XEL,GHGRP,fugitive,379186.0908,2023.0,EPA GHGRP 2023 data summary spreadsheets
 ABT,imputed,scope2,376296.70520253235,,Sector-median Scope 2 intensity x TTM revenue
 ABBV,imputed,scope2,536806.8343415218,,Sector-median Scope 2 intensity x TTM revenue
+APD,imputed,scope2,1269648.285783222,,Sector-median Scope 2 intensity x TTM revenue
 ALB,imputed,scope2,595210.3748688197,,Sector-median Scope 2 intensity x TTM revenue
 MO,imputed,scope2,441384.51445554686,,Sector-median Scope 2 intensity x TTM revenue
 AEE,imputed,scope2,237214.02482616322,,Sector-median Scope 2 intensity x TTM revenue
@@ -808,6 +816,7 @@ CTVA,imputed,scope2,1802283.5841659438,,Sector-median Scope 2 intensity x TTM re
 DE,imputed,scope2,484344.8676340631,,Sector-median Scope 2 intensity x TTM revenue
 FANG,imputed,scope2,408710.54832750605,,Sector-median Scope 2 intensity x TTM revenue
 DTE,imputed,scope2,441269.38724984066,,Sector-median Scope 2 intensity x TTM revenue
+DD,imputed,scope2,48566.72545428375,,Sector-median Scope 2 intensity x TTM revenue
 EIX,imputed,scope2,518969.13766597974,,Sector-median Scope 2 intensity x TTM revenue
 ETR,imputed,scope2,355031.16102817125,,Sector-median Scope 2 intensity x TTM revenue
 EQT,imputed,scope2,228133.69863239507,,Sector-median Scope 2 intensity x TTM revenue
@@ -836,7 +845,6 @@ PPL,imputed,scope2,251108.0654782926,,Sector-median Scope 2 intensity x TTM reve
 PEG,imputed,scope2,335140.2921147291,,Sector-median Scope 2 intensity x TTM revenue
 RSG,imputed,scope2,174493.0850718682,,Sector-median Scope 2 intensity x TTM revenue
 RMD,imputed,scope2,47134.57646010369,,Sector-median Scope 2 intensity x TTM revenue
-SLB,imputed,scope2,875230.7031255497,,Sector-median Scope 2 intensity x TTM revenue
 SRE,imputed,scope2,362100.07484164945,,Sector-median Scope 2 intensity x TTM revenue
 SWKS,imputed,scope2,16333.559370053883,,Sector-median Scope 2 intensity x TTM revenue
 LUV,imputed,scope2,310678.2743801789,,Sector-median Scope 2 intensity x TTM revenue
@@ -848,6 +856,7 @@ TSN,imputed,scope2,1202429.5220156147,,Sector-median Scope 2 intensity x TTM rev
 UAL,imputed,scope2,649839.5230376307,,Sector-median Scope 2 intensity x TTM revenue
 VTRS,imputed,scope2,122869.62009973146,,Sector-median Scope 2 intensity x TTM revenue
 VST,imputed,scope2,513331.36347828875,,Sector-median Scope 2 intensity x TTM revenue
+WAB,imputed,scope2,123767.14974310131,,Sector-median Scope 2 intensity x TTM revenue
 WM,imputed,scope2,265169.56865243585,,Sector-median Scope 2 intensity x TTM revenue
 WEC,imputed,scope2,270864.3225132628,,Sector-median Scope 2 intensity x TTM revenue
 WY,imputed,scope2,4805.349679193401,,Sector-median Scope 2 intensity x TTM revenue
