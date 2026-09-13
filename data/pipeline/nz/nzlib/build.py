@@ -102,3 +102,43 @@ def ghgrp_reconciliation_exceptions(
         if abs(reported - total) / abs(reported) > threshold:
             exceptions.append(row["ticker"])
     return exceptions
+
+
+# ---- DE / BEN filling (P4, spec D5, D7; PDF §15) ----
+import statistics  # noqa: E402
+
+MEASURED_DE_BEN_STATUSES = ("tagged", "note")
+
+
+def median_generation_mix(mixes: list[dict | None]) -> dict | None:
+    """Median fossil and renewable shares across utilities that disclosed a generation mix."""
+    usable = [m for m in mixes if m is not None]
+    if not usable:
+        return None
+    return {
+        "fossil_share": statistics.median(m["fossil_share"] for m in usable),
+        "renewable_share": statistics.median(m["renewable_share"] for m in usable),
+    }
+
+
+def fill_de_ben(records: list[dict], in_scope_sectors: set[str]) -> None:
+    """Mutates records (keys: sector, de, ben, de_ben_status, flags list).
+
+    Out-of-scope sectors → DE = BEN = 0, unclassified (PDF §15 default).
+    In-scope without a measured value → sector median of measured values, imputed (PDF §5).
+    """
+    medians: dict[str, tuple[float, float]] = {}
+    for sector in {r["sector"] for r in records}:
+        measured = [r for r in records if r["sector"] == sector and r["de_ben_status"] in MEASURED_DE_BEN_STATUSES]
+        if measured:
+            de = statistics.median(r["de"] for r in measured)
+            ben = statistics.median(r["ben"] for r in measured)
+            medians[sector] = (de, min(ben, 1.0 - de))
+    for r in records:
+        if r["sector"] not in in_scope_sectors:
+            r.update(de=0.0, ben=0.0, de_ben_status="unclassified")
+            r["flags"].append("de-ben-out-of-scope-zero")
+        elif r["de_ben_status"] not in MEASURED_DE_BEN_STATUSES:
+            de, ben = medians.get(r["sector"], (0.0, 0.0))
+            r.update(de=de, ben=ben, de_ben_status="imputed")
+            r["flags"].append("de-ben-imputed")

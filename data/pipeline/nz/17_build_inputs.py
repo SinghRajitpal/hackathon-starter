@@ -3,18 +3,20 @@ Merge every source into one engine input row per ticker (spec §5, D10, D11, D13
 
 Emissions: GHGRP category split (2023) + Climate TRACE non-US + 10-K fleet; otherwise the reported
 Scope 1 total split by sector-median GHGRP shares with fleet first; Scope 2 from Wikirate, imputed
-from sector-median intensity only for companies that have some Scope 1 data. DE/BEN stay empty
-(status 'unclassified') until P4.
+from sector-median intensity only for companies that have some Scope 1 data. DE/BEN come from
+classified segments (P4, see apply_de_ben).
 
 Run from data/pipeline/nz:  uv run python 17_build_inputs.py
 Outputs: ../../out/nz/company_inputs.csv (one row per ticker, flags pipe-joined)
          ../../out/nz/emissions_sources.csv (ticker, source, category, tco2e, year, reference)
+         ../../out/nz/segments.csv (ticker, segment, revenue, share, class, fiscal_year, filing_url, method)
 """
 from pathlib import Path
 
 import pandas as pd
 
-from nzlib.build import SCOPE1_CATEGORIES, merge_emissions, present
+from nzlib.build import SCOPE1_CATEGORIES, fill_de_ben, median_generation_mix, merge_emissions, present
+from nzlib.deben import de_ben
 from nzlib.impute import impute_scope2, sector_category_shares
 
 OUT_DIR = Path("../../out/nz")
@@ -26,6 +28,12 @@ FLEET_PATH = OUT_DIR / "fleet.csv"
 INPUTS_PATH = OUT_DIR / "company_inputs.csv"
 SOURCES_PATH = OUT_DIR / "emissions_sources.csv"
 LATEST_GHGRP_YEAR = 2023
+
+# ---- DE / BEN (P4, spec D5, D7; PDF §5, §15) ----
+CANDIDATE_SECTORS = {"Energy", "Utilities", "Materials", "Industrials", "Consumer Discretionary", "Consumer Staples"}
+CLASSIFIED_PATH = OUT_DIR / "segments_classified.csv"
+MIX_PATH = OUT_DIR / "generation_mix.csv"
+SEGMENTS_OUT_PATH = OUT_DIR / "segments.csv"
 
 REFERENCES = {
     "GHGRP": "EPA GHGRP 2023 data summary spreadsheets",
@@ -157,8 +165,56 @@ def build_frames() -> tuple[pd.DataFrame, pd.DataFrame]:
     return inputs, pd.DataFrame(sources)
 
 
+def apply_de_ben(inputs: pd.DataFrame) -> pd.DataFrame:
+    """Fills de, ben, de_ben_status, generation shares and flags; writes segments.csv for nz_segments."""
+    classified = pd.read_csv(CLASSIFIED_PATH)
+    mix_df = pd.read_csv(MIX_PATH)
+    mixes = {
+        r["ticker"]: {"fossil_share": r["fossil_share"], "renewable_share": r["renewable_share"]}
+        for r in mix_df[mix_df["status"] == "extracted"].to_dict("records")
+    }
+    sector_of = inputs.set_index("ticker")["sector"].to_dict()
+    utility_median = median_generation_mix([m for t, m in mixes.items() if sector_of.get(t) == "Utilities"])
+
+    records = []
+    for row in inputs.to_dict("records"):
+        record = {**row, "flags": list(row["flags"])}
+        segs = classified[classified["ticker"] == row["ticker"]]
+        if row["sector"] in CANDIDATE_SECTORS and len(segs):
+            mix = mixes.get(row["ticker"])
+            result = de_ben(segs[["revenue", "label"]].to_dict("records"), mix)
+            if result["needs_generation_mix"] and utility_median is not None:
+                mix = utility_median
+                record["flags"].append("generation-mix-imputed")
+                result = de_ben(segs[["revenue", "label"]].to_dict("records"), mix)
+            if result["de"] is not None:
+                record.update(
+                    de=result["de"],
+                    ben=result["ben"],
+                    de_ben_status="note" if (segs["method"] == "note").all() else "tagged",
+                    fossil_generation_share=None if mix is None else mix["fossil_share"],
+                    renewable_generation_share=None if mix is None else mix["renewable_share"],
+                )
+            if segs["flag"].notna().any():
+                record["flags"].append("segment-classification-fallback")
+        records.append(record)
+
+    fill_de_ben(records, CANDIDATE_SECTORS)
+
+    segments = classified.copy()
+    segments["share"] = segments["revenue"] / segments.groupby("ticker")["revenue"].transform(lambda s: s.clip(lower=0).sum())
+    segments = segments.rename(columns={"member": "segment", "label": "class"})
+    segments = segments.drop_duplicates(["ticker", "segment"])
+    segments["fiscal_year"] = pd.to_numeric(segments["fiscal_year"], errors="coerce")
+    segments[["ticker", "segment", "revenue", "share", "class", "fiscal_year", "filing_url", "method"]].to_csv(
+        SEGMENTS_OUT_PATH, index=False
+    )
+    return pd.DataFrame(records)
+
+
 def main():
     inputs, sources = build_frames()
+    inputs = apply_de_ben(inputs)
     assert inputs["ticker"].is_unique
     inputs["flags"] = inputs["flags"].map(lambda f: "|".join(dict.fromkeys(f)))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
