@@ -17,6 +17,18 @@ describe("explanations (spec D17)", () => {
       "Short: burden 1.06 years of earnings (sector median 0.62 years), fossil revenue 60%, beneficiary revenue 0%, net debt/EBITDA 6.0x; largest gaps to the sector ideal: fossil revenue share and transition burden.",
     );
   });
+
+  it("prints 'negative EBITDA' instead of 'n/a' when flagged leverage-negative-ebitda (finding 7)", () => {
+    const s = {
+      tbr: 1.06,
+      de: 0.6,
+      ben: 0,
+      ndEbitda: null,
+      shares: {},
+      flags: ["leverage-negative-ebitda"],
+    } as unknown as CompanyScore;
+    expect(reasonSentence(s, "short", 0.62)).toContain("net debt/EBITDA negative EBITDA");
+  });
 });
 
 describe("allocation (PDF §10)", () => {
