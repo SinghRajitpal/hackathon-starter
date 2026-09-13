@@ -122,7 +122,6 @@ create table public.sp500_esg_scores (
   profit_margin_raw double precision,
   fcf_margin_raw double precision,
   leverage_raw double precision,
-  rank_delta_vs_equal double precision not null,
   updated_at timestamptz not null default now()
 );
 

@@ -18,7 +18,8 @@
   1. **No company is ever excluded from the ranking.** Blueprint section 6 rule: "Companies missing more than a third of the variables are excluded from the ranking and listed separately." On the real dataset this would exclude 97 companies (93 missing exactly 3 of 7 variables — always Scope 1+2 intensity + ESG risk score + controversy level together — plus 4 missing 4 of 7). Overridden: every company is scored and ranked, no separate excluded list.
   2. **No user-facing indication that a value was imputed, anywhere.** Blueprint section 6 rule: "the imputation is flagged in its detail view." Overridden: nothing in the UI, API response consumed by the client, or generated explanation text says a value was imputed. `score_engine.py` still computes an internal imputed-mask (needed to apply the penalty below and useful for future debugging), but it is never written to the Supabase table or read by any Next.js code.
   3. **The 0.05 disclosure penalty is kept, applied silently.** Blueprint section 6: "a configurable disclosure penalty (default 0.05 on the normalised scale) is subtracted so that opacity is not rewarded." Kept exactly as specified — an imputed company's score is quietly ~0.05/axis lower on the normalised scale than a company that actually reported the value — just never surfaced as a message.
-- **Amendment, 2026-09-13 (during execution, Task 7):** a fourth locked-section change, agreed with the user in chat: **rank stability (blueprint section 10's 1,000-draw Dirichlet re-weighting/re-ranking robustness check) is dropped entirely** — not computed, not stored, not displayed. `rank_stability()` was implemented and unit-tested in Task 3/5 execution, then removed (function + tests) once this decision was made, since it became dead code. Task 5's steps below are kept as written for the historical record of what was built and then removed; Tasks 6, 7, 10 below are edited to match the final state (no `rank_min`/`rank_max` anywhere). `weight_vs_equal_delta` (section 10's other robustness output — 2 scoring passes, not 1,000) is kept.
+- **Amendment, 2026-09-13 (during execution, Task 7):** a fourth locked-section change, agreed with the user in chat: **rank stability (blueprint section 10's 1,000-draw Dirichlet re-weighting/re-ranking robustness check) is dropped entirely** — not computed, not stored, not displayed. `rank_stability()` was implemented and unit-tested in Task 3/5 execution, then removed (function + tests) once this decision was made, since it became dead code. Task 5's steps below are kept as written for the historical record of what was built and then removed; Tasks 6, 7, 10 below are edited to match the final state (no `rank_min`/`rank_max` anywhere).
+- **Amendment, 2026-09-13 (later same session):** a fifth locked-section change — **`weight_vs_equal_delta` (section 10's other robustness output, the "does the weighting even matter" equal-weight comparison) is also dropped entirely**, not just rank stability. Same reasoning: user wants entropy-derived weights only, with equal weighting never computed anywhere, not even as a diagnostic comparison. `weight_vs_equal_delta()` was implemented, unit-tested, and used in `09_score.py`/the schema, then removed (function + tests + `rank_delta_vs_equal` column) once this decision was made. Section 10 therefore ships with **no robustness outputs at all** in this build — score, rank, sector_rank, weights, and per-axis decomposition only. Task 5's and Task 6's steps below are kept as originally written for the historical record; their "Produces"/interface lines and Task 7's schema are corrected to the final state.
 - Reference ranges (lo/hi per variable) are frozen constants, checked against the real 503-company dataset on 2026-09-13 (see `score_engine.py`'s module docstring for the per-variable justification) — never recomputed at request time.
 - Universal view and sector view must share one computation (blueprint section 9): the sector view is a filter + renumber of the same score table, never a second entropy/TOPSIS pass.
 - `controversy_level` in the blueprint's variable table (section 11) refers to the numeric 0-5 ordinal already computed in this repo as `controversy_score_ordinal` (derived from the text categories in the raw `controversy_level` column via `CONTROVERSY_ORDER` in `06_zscores.py`) — not that raw text column directly.
@@ -446,7 +447,7 @@ git commit -m "feat: add normalize_all with silent disclosure penalty"
 
 **Interfaces:**
 - Consumes: `X: pd.DataFrame` from Task 2's `normalize_all`.
-- Produces: `entropy_weights(X: pd.DataFrame) -> tuple[pd.Series, pd.Series]` — `(w, d)`, both indexed by `X`'s columns, `w` sums to 1.0. Consumed by Task 4 (`topsis_scores`), Task 5 (`rank_stability`, `weight_vs_equal_delta`), and Task 6 (pipeline runner, to persist the weight vector for the UI).
+- Produces: `entropy_weights(X: pd.DataFrame) -> tuple[pd.Series, pd.Series]` — `(w, d)`, both indexed by `X`'s columns, `w` sums to 1.0. Consumed by Task 4 (`topsis_scores`) and Task 6 (pipeline runner, to persist the weight vector for the UI). Task 5 originally also consumed it for `rank_stability`/`weight_vs_equal_delta`; both were later removed (Global Constraints amendments).
 
 - [ ] **Step 1: Write the failing test using the section 12 worked example**
 
@@ -850,8 +851,8 @@ git commit -m "feat: add rank_stability and weight_vs_equal_delta robustness out
 - Create: `data/pipeline/09_score.py`
 
 **Interfaces:**
-- Consumes: `data/out/sp500_esg_financials_raw.csv` (existing, from `05_merge.py`/`08_fetch_epa_scope1.py`); `score_engine.normalize_all`, `entropy_weights`, `topsis_scores`, `weight_vs_equal_delta`, `REFERENCE_RANGES` (Tasks 1-5).
-- Produces: `data/out/sp500_esg_scores.csv` with columns: `ticker`, `company_name`, `sector`, `sub_industry`, `score`, `rank`, `sector_rank`, `d_plus`, `d_minus`, one `weight_<var>` and `contrib_<var>` per the 7 `REFERENCE_RANGES` keys, one `<var>_raw` per variable (the post-imputation display value — silently includes sector-median fills, per Global Constraints), `rank_delta_vs_equal`. No `imputed` column and no `rank_min`/`rank_max` columns are written (Global Constraints — rank stability dropped). Consumed by Task 7's loader.
+- Consumes: `data/out/sp500_esg_financials_raw.csv` (existing, from `05_merge.py`/`08_fetch_epa_scope1.py`); `score_engine.normalize_all`, `entropy_weights`, `topsis_scores`, `REFERENCE_RANGES` (Tasks 1-4).
+- Produces: `data/out/sp500_esg_scores.csv` with columns: `ticker`, `company_name`, `sector`, `sub_industry`, `score`, `rank`, `sector_rank`, `d_plus`, `d_minus`, one `weight_<var>` and `contrib_<var>` per the 7 `REFERENCE_RANGES` keys, one `<var>_raw` per variable (the post-imputation display value — silently includes sector-median fills, per Global Constraints). No `imputed` column and no robustness-output columns (`rank_min`/`rank_max`, `rank_delta_vs_equal`) are written — both of section 10's robustness outputs were dropped (Global Constraints amendments). Consumed by Task 7's loader.
 
 - [ ] **Step 1: Write `09_score.py`**
 
@@ -1018,7 +1019,6 @@ create table public.sp500_esg_scores (
   profit_margin_raw double precision,
   fcf_margin_raw double precision,
   leverage_raw double precision,
-  rank_delta_vs_equal double precision not null,
   updated_at timestamptz not null default now()
 );
 

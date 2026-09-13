@@ -6,15 +6,18 @@ database or the real dataset.
 
 Blueprint: sustainability-evaluator-blueprint-v1.4.pdf, sections 3, 5-10.
 Sections 3, 5, 6, 7, 8 of that document are marked "Locked" -- any change
-to the math here needs a decisions-log entry. Four such changes are
+to the math here needs a decisions-log entry. Five such changes are
 already made and recorded in this plan's Global Constraints
 (docs/superpowers/plans/2026-09-13-sustainability-evaluator.md): no
 company is ever excluded from the ranking, no imputation is surfaced to
 the user, the 0.05 disclosure penalty is kept but applied silently, and
-(2026-09-13, user decision) rank stability -- section 10's 1,000-draw
-Dirichlet re-weighting/re-ranking robustness check -- is dropped
-entirely, not computed. weight_vs_equal_delta (section 10's other
-robustness output, 2 scoring passes not 1,000) is kept.
+(2026-09-13, user decision) both of section 10's robustness outputs are
+dropped entirely: rank stability (the 1,000-draw Dirichlet
+re-weighting/re-ranking check) and weight-vs-equal-weights delta (the
+"does the weighting even matter" comparison). Neither is computed,
+stored, or displayed. The actual score always uses the real entropy
+weights only -- equal weighting is never applied anywhere, including as
+a comparison.
 
 Reference ranges below are frozen constants, checked against the real
 503-company dataset (data/out/sp500_esg_financials_raw.csv) on
@@ -262,14 +265,3 @@ def topsis_scores(X: pd.DataFrame, w: pd.Series) -> pd.DataFrame:
         out[f"contrib_{col}"] = (gaps_to_ideal[col] / total_gap).fillna(0.0)
 
     return out
-
-
-def weight_vs_equal_delta(X: pd.DataFrame, w: pd.Series) -> pd.Series:
-    """Section 10: |rank under entropy weights - rank under equal
-    weights| per company -- the direct answer to "does the weighting
-    even matter?". Blueprint reports how many companies move by more
-    than 25 places; callers filter/count that threshold themselves."""
-    w_equal = pd.Series(1.0 / len(w), index=w.index)
-    rank_entropy = topsis_scores(X, w)["score"].rank(ascending=False, method="min")
-    rank_equal = topsis_scores(X, w_equal)["score"].rank(ascending=False, method="min")
-    return (rank_entropy - rank_equal).abs()

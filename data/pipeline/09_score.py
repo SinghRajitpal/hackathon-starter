@@ -8,9 +8,11 @@ ranking (blueprint section 9) -- not a second weighting pass. No
 `imputed` column is written here: per this plan's Global Constraints
 (docs/superpowers/plans/2026-09-13-sustainability-evaluator.md), no
 company is excluded and no imputation is ever surfaced downstream.
-Rank stability (section 10's 1,000-draw robustness check) is dropped
-per a 2026-09-13 user decision -- see score_engine.py's module
-docstring; weight_vs_equal_delta (2 scoring passes) is kept.
+Both of section 10's robustness outputs (rank stability and
+weight-vs-equal-weights delta) are dropped per a 2026-09-13 user
+decision -- see score_engine.py's module docstring. The score always
+uses the real entropy weights only; equal weighting is never applied,
+including as a comparison.
 
 Input: data/out/sp500_esg_financials_raw.csv (output of 05_merge.py,
 08_fetch_epa_scope1.py)
@@ -23,7 +25,6 @@ from score_engine import (
     entropy_weights,
     normalize_all,
     topsis_scores,
-    weight_vs_equal_delta,
 )
 
 IN_PATH = "../out/sp500_esg_financials_raw.csv"
@@ -53,7 +54,6 @@ def main():
     X, imputed = normalize_all(df)
     w, _d = entropy_weights(X)
     scored = topsis_scores(X, w)
-    rank_delta = weight_vs_equal_delta(X, w)
 
     out = df[ID_COLUMNS].copy()
     out["score"] = scored["score"]
@@ -72,15 +72,11 @@ def main():
         filled = df[raw_col].where(~imputed[var], df.groupby("sector")[raw_col].transform("median"))
         out[f"{var}_raw"] = filled
 
-    out["rank_delta_vs_equal"] = rank_delta
-
     out = out.sort_values("rank")
     out.to_csv(OUT_PATH, index=False)
 
     print(f"Wrote {len(out)} rows to {OUT_PATH}")
     print(f"Weights: {dict(w.round(4))}")
-    moved_more_than_25 = (rank_delta > 25).sum()
-    print(f"Companies moving >25 ranks vs equal weighting: {moved_more_than_25}/{len(out)}")
     print(f"Companies with >=1 imputed variable: {imputed.any(axis=1).sum()}/{len(out)} (not surfaced downstream)")
 
 
