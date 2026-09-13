@@ -47,6 +47,8 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Long/short cap excess | name cap → within leg; sector cap → other sectors ∝ score IQR; remainder cash |
 | Long/short zero-dispersion sector | skips tradeable sectors whose score IQR is 0 (no dispersion to trade); their allotment stays in cash and is logged |
 | Long-only quintile / decile | ceil(N ÷ 5) / ceil(N ÷ 10) |
+| Small sectors | quintile q = ceil(N/5) reduced to floor(N/2) when 2q > N; decile d = min(ceil(N/10), q) |
+| Long-only tilt excess | excess that cannot be placed in the top quintile within limits goes to middle names by benchmark weight, then back to the bottom quintile (spec D15 says pro-rata within sector) |
 | Benchmark name above 5% | kept at benchmark (sector weight must hold), logged |
 | Dirichlet concentration | α = 100 × entropy weight, seed 42, 1,000 draws |
 | Survival | all = same direction in every MAC run; most = at least half; few = fewer |
