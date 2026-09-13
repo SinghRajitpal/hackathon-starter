@@ -125,6 +125,23 @@ describe("halving flipped positions (PDF §11)", () => {
     for (const row of halved.sectorTable) expect(row.tilt).toBeCloseTo(row.benchmark, 9);
     expect(halved.halved).toEqual([target]);
   });
+
+  it("leaves the long/short book untouched when the stress test ran long-only (finding 1)", () => {
+    const base = buildPortfolioView(data, DEFAULT_CONTROLS);
+    const target = base.topOverweights[0].ticker;
+    const halved = buildPortfolioView(data, DEFAULT_CONTROLS, new Set([target]));
+    expect(halved.longShort.positions).toEqual(base.longShort.positions);
+    expect(halved.longShort.gross).toBe(base.longShort.gross);
+    expect(halved.longShort.net).toBe(base.longShort.net);
+  });
+
+  it("leaves the long-only book untouched when the stress test ran long-short (finding 1)", () => {
+    const controls = { ...DEFAULT_CONTROLS, mandate: "long-short" as const };
+    const base = buildPortfolioView(data, controls);
+    const target = base.largestLongs[0].ticker;
+    const halved = buildPortfolioView(data, controls, new Set([target]));
+    expect(halved.longOnly.weights).toEqual(base.longOnly.weights);
+  });
 });
 
 describe("coverageCounts", () => {
