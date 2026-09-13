@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MID_MAC, syntheticUniverse } from "./fixtures";
-import { buildPortfolioView, coverageCounts, DEFAULT_CONTROLS, stressKey, TOP_N } from "./portfolio";
+import { buildPortfolioView, coverageCounts, DEFAULT_CONTROLS, parseCapitalInput, stressKey, TOP_N } from "./portfolio";
 import { CATEGORIES, type MacRow, type ScenarioData } from "./types";
 import { defaultConfig } from "./config";
 import { runEngine } from "./engine";
@@ -141,6 +141,24 @@ describe("halving flipped positions (PDF §11)", () => {
     const target = base.largestLongs[0].ticker;
     const halved = buildPortfolioView(data, controls, new Set([target]));
     expect(halved.longOnly.weights).toEqual(base.longOnly.weights);
+  });
+});
+
+describe("parseCapitalInput (finding 4: clearing the capital field must not zero it)", () => {
+  it("ignores empty or whitespace-only input so the caller keeps the previous value", () => {
+    expect(parseCapitalInput("")).toBeNull();
+    expect(parseCapitalInput("   ")).toBeNull();
+  });
+
+  it("ignores non-finite or negative input", () => {
+    expect(parseCapitalInput("abc")).toBeNull();
+    expect(parseCapitalInput("-5")).toBeNull();
+    expect(parseCapitalInput("NaN")).toBeNull();
+  });
+
+  it("parses a valid non-negative number, including zero", () => {
+    expect(parseCapitalInput("2000000")).toBe(2000000);
+    expect(parseCapitalInput("0")).toBe(0);
   });
 });
 
