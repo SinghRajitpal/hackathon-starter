@@ -54,7 +54,8 @@ export interface ComparisonRow {
 
 export interface SectorBet {
   sector: string;
-  activePp: number;
+  /** Weight moved from laggards to leaders inside the sector (Σ|active| ÷ 2), in percentage points. */
+  movedPp: number;
 }
 
 export interface OverUnderRow {
@@ -101,9 +102,12 @@ export function buildPortfolioDashboard(data: ScenarioData, model: DashboardMode
     { metric: "Active share", format: "percent", portfolio: portfolioActiveShare, benchmark: 0, exclusion: exclusionActiveShare },
   ];
 
-  const sectorBets: SectorBet[] = [...longOnly.sectorWeights.entries()]
-    .map(([sector, w]) => ({ sector, activePp: (w.portfolio - w.benchmark) * 100 }))
-    .sort((a, b) => Math.abs(b.activePp) - Math.abs(a.activePp));
+  const moved = new Map<string, number>();
+  for (const w of longOnly.weights.values()) moved.set(w.sector, (moved.get(w.sector) ?? 0) + Math.abs(w.active) / 2);
+  const sectorBets: SectorBet[] = [...moved.entries()]
+    .map(([sector, m]) => ({ sector, movedPp: m * 100 }))
+    .filter((b) => b.movedPp > 0.005)
+    .sort((a, b) => b.movedPp - a.movedPp);
 
   const companies = new Map(data.companies.map((c) => [c.ticker, c]));
   const medianTbr = new Map(dispersion.map((d) => [d.sector, d.medianTbr]));
@@ -163,10 +167,9 @@ export function buildPortfolioDashboard(data: ScenarioData, model: DashboardMode
     const dir = portfolioM.cleanupYears < benchmarkM.cleanupYears ? "lower" : "higher";
     takeaways.push(`The book carries a ${dir} cleanup burden than the S&P 500: ${formatYears(portfolioM.cleanupYears)} vs ${formatYears(benchmarkM.cleanupYears)}.`);
   }
-  if (sectorBets.length > 0 && Math.abs(sectorBets[0].activePp) > 0.01) {
+  if (sectorBets.length > 0) {
     const biggest = sectorBets[0];
-    const verb = biggest.activePp > 0 ? "overweight" : "underweight";
-    takeaways.push(`Biggest sector bet: ${verb} ${biggest.sector} by ${Math.abs(biggest.activePp).toFixed(1)}pp.`);
+    takeaways.push(`Largest tilt: ${biggest.movedPp.toFixed(1)}pp of weight moved from laggards to leaders inside ${biggest.sector}; sector weights stay at benchmark.`);
   }
   takeaways.push(robustnessText);
 

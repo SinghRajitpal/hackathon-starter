@@ -67,20 +67,21 @@ export function PortfolioScreen({ data, model, nav, onAnswers, onAdjust }: Portf
           </tbody>
         </table>
       </Panel>
-      <Panel title="Sector active weight">
-        <ul className="flex flex-col gap-1 text-sm">
-          {view.sectorBets.map((b) => (
-            <li key={b.sector} className="flex items-center justify-between gap-2">
-              <button type="button" className="text-left hover:underline" onClick={() => nav.openSector(b.sector)}>
-                {b.sector}
-              </button>
-              <span className={`font-mono tabular-nums ${b.activePp >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"}`}>
-                {b.activePp >= 0 ? "+" : ""}
-                {b.activePp.toFixed(2)}pp
-              </span>
-            </li>
-          ))}
-        </ul>
+      <Panel title="Where the bets are (weight moved inside each sector)">
+        {view.sectorBets.length === 0 ? (
+          <p className="text-xs text-muted-foreground">No sector passes the preset threshold: the book holds the S&amp;P 500.</p>
+        ) : (
+          <ul className="flex flex-col gap-1 text-sm">
+            {view.sectorBets.map((b) => (
+              <li key={b.sector} className="flex items-center justify-between gap-2">
+                <button type="button" className="text-left hover:underline" onClick={() => nav.openSector(b.sector)}>
+                  {b.sector}
+                </button>
+                <span className="font-mono tabular-nums">{b.movedPp.toFixed(2)}pp</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </Panel>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <Panel title="Top overweights">
