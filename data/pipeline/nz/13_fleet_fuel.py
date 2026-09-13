@@ -11,7 +11,12 @@ Requires SEC_USER_AGENT and GEMINI_API_KEY in the environment
 Run from data/pipeline/nz:  uv run python 13_fleet_fuel.py
 Output: ../../out/nz/fleet.csv -- one row per candidate ticker, status in
         extracted | not-disclosed | no-10k | no-cik | error.
+
+--tickers A,B,C scopes the run to just those candidate tickers (comma-separated, case-
+insensitive) -- e.g. re-checking a handful after a fix, without refetching/recalling Gemini for
+the whole fleet universe. Rows for other tickers already in the CSV are left untouched.
 """
+import argparse
 import os
 from pathlib import Path
 
@@ -55,7 +60,10 @@ FLEET_SCHEMA = {
                         "enum": ["jet_fuel", "aviation_gasoline", "diesel", "gasoline", "lpg", "residual_fuel_oil", "cng"],
                     },
                     "quantity": {"type": "number"},
-                    "unit": {"type": "string", "enum": ["gallons", "million_gallons", "barrels", "scf"]},
+                    "unit": {
+                        "type": "string",
+                        "enum": ["gallons", "million_gallons", "barrels", "scf", "metric_tons", "million_metric_tons"],
+                    },
                     "quote": {"type": "string"},
                 },
                 "required": ["fuel", "quantity", "unit", "quote"],
@@ -71,15 +79,27 @@ def prompt_for(company: str, excerpts: list[str]) -> str:
     return (
         f"These are excerpts from the latest 10-K of {company}.\n"
         "Extract the fuel the company itself consumed in its most recent fiscal year for its own vehicles, "
-        "aircraft, ships or locomotives. Only use quantities explicitly stated as volumes (gallons, barrels, "
-        "standard cubic feet). Never convert dollar amounts into volumes. If a table says '(in millions)', "
-        "use unit million_gallons. If no volume is stated, return an empty fuels list. Quote the sentence or "
-        "table row for each fuel. Use fiscal_year 0 if the year is not stated.\n\n"
+        "aircraft, ships or locomotives. Only use quantities explicitly stated as amounts (gallons, barrels, "
+        "standard cubic feet, or metric tons/tonnes). Never convert dollar amounts, percentages or hedged/"
+        "projected purchase volumes into consumption -- only actual consumption in the period counts. "
+        "If a table says '(in millions)', use unit million_gallons or million_metric_tons as appropriate. "
+        "Marine bunker fuel (ships) is usually reported in metric tons, not gallons -- use unit metric_tons "
+        "or million_metric_tons for it. If the metric-ton figure is not broken out by fuel type (e.g. a "
+        "single 'fuel consumption in metric tons' line), classify it as residual_fuel_oil. If no actual "
+        "consumption amount is stated, return an empty fuels list. Quote the sentence or table row for each "
+        "fuel. Use fiscal_year 0 if the year is not stated.\n\n"
         f"Excerpts:\n{joined}"
     )
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--tickers",
+        help="Comma-separated tickers to (re)run, scoped to just those rows (default: all fleet candidates).",
+    )
+    args = parser.parse_args()
+
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise SystemExit("Set GEMINI_API_KEY (free tier, gemini-3.5-flash).")
@@ -88,6 +108,9 @@ def main():
 
     universe = pd.read_csv(UNIVERSE_PATH, usecols=["ticker", "company_name", "sub_industry"])
     candidates = universe[universe["sub_industry"].isin(FLEET_SUB_INDUSTRIES)]
+    if args.tickers:
+        wanted = {t.strip().upper() for t in args.tickers.split(",") if t.strip()}
+        candidates = candidates[candidates["ticker"].str.upper().isin(wanted)]
     print(f"{len(candidates)} fleet candidates")
     ciks = sec.cik_map()
 
@@ -120,7 +143,14 @@ def main():
         rows.append(row)
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    df = pd.DataFrame(rows)
+    new_df = pd.DataFrame(rows)
+    if args.tickers and OUT_PATH.exists():
+        # Scoped rerun: keep every existing row untouched except the ones just (re)fetched.
+        existing = pd.read_csv(OUT_PATH)
+        df = pd.concat([existing[~existing["ticker"].isin(new_df["ticker"])], new_df], ignore_index=True)
+        df = df.sort_values("ticker").reset_index(drop=True)
+    else:
+        df = new_df
     df.to_csv(OUT_PATH, index=False)
     print(f"Wrote {len(df)} rows to {OUT_PATH}; statuses {df['status'].value_counts().to_dict()}; Gemini calls {gemini.calls}")
 

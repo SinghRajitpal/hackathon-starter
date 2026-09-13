@@ -25,8 +25,37 @@ def ttm_sum(df: pd.DataFrame | None, row: str, columns: list) -> float | None:
     return float(sum(values))
 
 
-def float_cap(market_cap, float_shares, shares_outstanding) -> tuple[float | None, str | None]:
-    """Return (float-adjusted cap, flag). Falls back to market cap when the float ratio is unusable."""
+def cap_at_listed_line(cap, flag, price, shares_outstanding) -> tuple[float | None, str | None]:
+    """Cap `cap` at price x shares_outstanding for this listed line.
+
+    D16 fix: yfinance `marketCap` is company-wide, but the pipeline pairs it with a per-class
+    share count. For multi-class tickers (GOOGL/GOOG, FOX/FOXA, NWS/NWSA, BRK-B) and several
+    others (IBKR, TKO, DELL, BX, ...) this can overstate the cap by 1.2x-4x. The listed line's
+    own price x shares_outstanding is always a valid upper bound and needs no refetch, so this
+    also drives the CSV `--recap-only` path. Idempotent by construction: a flag that already
+    records the cap short-circuits before recomputing, so repeated `--recap-only` runs cannot
+    drift or double-append -- price/shares_outstanding read back from a CSV round-trip are not
+    guaranteed bit-identical to the values used the first time (pandas' float serialisation),
+    which could otherwise flip the `<` comparison by a part in 1e15 and re-append the flag.
+    """
+    if cap is None or pd.isna(cap):
+        return cap, flag
+    if flag and "capped-listed-line" in flag:
+        return cap, flag
+    if price is None or pd.isna(price) or price <= 0:
+        return cap, flag
+    if shares_outstanding is None or pd.isna(shares_outstanding) or shares_outstanding <= 0:
+        return cap, flag
+    listed_line = float(price) * float(shares_outstanding)
+    if listed_line < cap:
+        new_flag = "float-cap-capped-listed-line" if not flag else f"{flag}+capped-listed-line"
+        return listed_line, new_flag
+    return cap, flag
+
+
+def float_cap(market_cap, float_shares, shares_outstanding, price=None) -> tuple[float | None, str | None]:
+    """Return (float-adjusted cap, flag). Falls back to market cap when the float ratio is
+    unusable, then capped at the listed line when `price` is given (see `cap_at_listed_line`)."""
     if market_cap is None or pd.isna(market_cap) or market_cap <= 0:
         return None, "no-market-cap"
     if (
@@ -35,8 +64,11 @@ def float_cap(market_cap, float_shares, shares_outstanding) -> tuple[float | Non
         or float_shares <= 0
         or shares_outstanding <= 0
     ):
-        return float(market_cap), "float-cap-fallback-market-cap"
-    ratio = float_shares / shares_outstanding
-    if not math.isfinite(ratio) or ratio < MIN_FLOAT_RATIO or ratio > 1.0:
-        return float(market_cap), "float-cap-fallback-market-cap"
-    return float(market_cap) * ratio, None
+        cap, flag = float(market_cap), "float-cap-fallback-market-cap"
+    else:
+        ratio = float_shares / shares_outstanding
+        if not math.isfinite(ratio) or ratio < MIN_FLOAT_RATIO or ratio > 1.0:
+            cap, flag = float(market_cap), "float-cap-fallback-market-cap"
+        else:
+            cap, flag = float(market_cap) * ratio, None
+    return cap_at_listed_line(cap, flag, price, shares_outstanding)
