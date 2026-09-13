@@ -95,3 +95,21 @@ describe("buildPortfolioDashboard", () => {
     expect(withStress.robustnessText).toContain("75%");
   });
 });
+
+describe("sector bets", () => {
+  it("reports the weight moved inside each sector, since sector totals stay at benchmark", () => {
+    const data = makeData();
+    const model = buildDashboardModel(data, DEFAULT_ANSWERS);
+    const view = buildPortfolioDashboard(data, model);
+    const moved = new Map<string, number>();
+    for (const w of model.result.longOnly.weights.values()) {
+      moved.set(w.sector, (moved.get(w.sector) ?? 0) + Math.abs(w.active) / 2);
+    }
+    const expected = [...moved.entries()].filter(([, v]) => v * 100 > 0.005);
+    expect(view.sectorBets.length).toBe(expected.length);
+    for (const bet of view.sectorBets) {
+      expect(bet.movedPp).toBeCloseTo((moved.get(bet.sector) ?? 0) * 100, 6);
+      expect(bet.movedPp).toBeGreaterThan(0);
+    }
+  });
+});
