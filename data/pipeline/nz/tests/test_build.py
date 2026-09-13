@@ -1,0 +1,43 @@
+import pytest
+
+from nzlib import build
+
+SHARES = {"combustion": 0.5, "process": 0.25, "fugitive": 0.25}
+
+
+def test_ghgrp_split_plus_climate_trace_and_fleet():
+    cats, flags, sources = build.merge_emissions(
+        ghgrp={"combustion": 70.0, "process": 20.0, "fugitive": 10.0},
+        ct={"fugitive": 5.0, "process": 1.0},
+        fleet_tco2e=3.0,
+        scope1_total=999.0,
+        scope1_source="EPA GHGRP",
+        sector_shares=SHARES,
+    )
+    assert cats == {"combustion": 70.0, "fleet": 3.0, "process": 21.0, "fugitive": 15.0}
+    assert flags == ["ct-equal-split"]
+    assert ("ClimateTRACE", "fugitive", 5.0) in sources and ("10-K fleet", "fleet", 3.0) in sources
+
+
+def test_reported_total_is_split_by_sector_shares_after_fleet_without_climate_trace():
+    cats, flags, sources = build.merge_emissions(None, {"fugitive": 50.0}, 20.0, 100.0, "Wikirate/GRI", SHARES)
+    assert cats == {"combustion": 40.0, "fleet": 20.0, "process": 20.0, "fugitive": 20.0}
+    assert flags == ["category-split-imputed"]
+    assert all(source != "ClimateTRACE" for source, _, _ in sources)
+    assert ("10-K fleet", "fleet", 20.0) in sources
+
+
+def test_total_without_sector_peers_goes_to_combustion_and_is_flagged():
+    cats, flags, _ = build.merge_emissions(None, None, None, 10.0, "Wikirate/GRI", None)
+    assert cats["combustion"] == pytest.approx(10.0)
+    assert flags == ["category-split-no-peers", "category-split-imputed"]
+
+
+def test_climate_trace_only_and_fleet_only_and_nothing():
+    cats, flags, _ = build.merge_emissions(None, {"process": 4.0}, None, None, None, SHARES)
+    assert cats == {"combustion": None, "fleet": None, "process": 4.0, "fugitive": None}
+    assert flags == ["ct-equal-split"]
+    cats, flags, _ = build.merge_emissions(None, None, 7.0, float("nan"), None, SHARES)
+    assert cats["fleet"] == 7.0 and flags == ["scope1-fleet-only"]
+    cats, flags, sources = build.merge_emissions(None, None, None, None, None, SHARES)
+    assert set(cats.values()) == {None} and flags == [] and sources == []
