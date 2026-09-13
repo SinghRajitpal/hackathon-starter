@@ -157,3 +157,37 @@ alter table public.sp500_esg_correlation enable row level security;
 create policy "public read access" on public.sp500_esg_correlation
   for select to authenticated, anon
   using (true);
+
+-- sp500_esg_gemini_analysis: cached Gemini AI-narration layer on top of
+-- the quantitative model (app/api/sustainability-analysis/route.ts).
+-- Gemini is an explanation layer, never a second scoring model -- this
+-- table only stores generated prose, keyed by ticker, plus the score
+-- and rank that were in effect when it was generated so the API route
+-- can detect staleness (the underlying model data changed) and
+-- regenerate. Unlike every other table in this schema, anon can INSERT/
+-- UPDATE here too -- the app's Supabase client (lib/supabase/server.ts,
+-- anon-key-based, no service role) is what writes the cache after each
+-- Gemini call. Narrower privilege escalation is acceptable here since
+-- the only content ever written is Gemini's own generated JSON for a
+-- ticker that already exists in sp500_esg_scores.
+create table public.sp500_esg_gemini_analysis (
+  ticker text primary key,
+  score double precision not null,
+  rank integer not null,
+  analysis jsonb not null,
+  generated_at timestamptz not null default now()
+);
+
+alter table public.sp500_esg_gemini_analysis enable row level security;
+
+create policy "public read access" on public.sp500_esg_gemini_analysis
+  for select to authenticated, anon
+  using (true);
+
+create policy "public write access for caching" on public.sp500_esg_gemini_analysis
+  for insert to authenticated, anon
+  with check (true);
+
+create policy "public update access for caching" on public.sp500_esg_gemini_analysis
+  for update to authenticated, anon
+  using (true) with check (true);

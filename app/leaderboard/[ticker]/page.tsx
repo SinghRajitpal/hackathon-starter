@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { CompanyDetail, type CompanyDetailRow } from "@/components/company-detail";
+import { GeminiAnalysisCard } from "@/components/gemini-analysis";
 
 export default async function CompanyDetailPage({
   params,
@@ -29,6 +30,7 @@ export default async function CompanyDetailPage({
         {data.company_name} <span className="text-muted-foreground font-mono text-xl">{data.ticker}</span>
       </h1>
       <CompanyDetail row={data as CompanyDetailRow} />
+      <GeminiAnalysisCard ticker={data.ticker} />
     </main>
   );
 }
