@@ -50,6 +50,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Small sectors | quintile q = ceil(N/5) reduced to floor(N/2) when 2q > N; decile d = min(ceil(N/10), q) |
 | Long-only tilt excess | excess that cannot be placed in the top quintile within limits goes to middle names by benchmark weight, then back to the bottom quintile (spec D15 says pro-rata within sector) |
 | Benchmark name above 5% | kept at benchmark (sector weight must hold), logged |
+| Exclusion comparison missing emissions | never removes companies without emissions data (they cannot be ranked by emissions) |
 | Dirichlet concentration | α = 100 × entropy weight, seed 42, 1,000 draws |
 | Survival | all = same direction in every MAC run; most = at least half; few = fewer |
 | Robust pick | survives all MAC runs and ≥ 90% of weight draws |
