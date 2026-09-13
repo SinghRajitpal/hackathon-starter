@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { createClient } from "@/lib/supabase/server";
 import { LeaderboardTable, type ScoreRow } from "@/components/leaderboard-table";
 
@@ -13,6 +15,7 @@ export default async function LeaderboardPage() {
 
   if (error) console.error(error);
   const rows = (data ?? []) as ScoreRow[];
+  const sectors = [...new Set(rows.map((r) => r.sector))].sort();
 
   return (
     <main className="min-h-screen flex flex-col gap-6 px-5 py-16 max-w-4xl mx-auto">
@@ -21,6 +24,17 @@ export default async function LeaderboardPage() {
         {rows.length} S&P 500 companies, ranked by sustainability score (0-100).
       </p>
       <LeaderboardTable rows={rows} />
+      <div className="flex flex-wrap gap-2">
+        {sectors.map((sector) => (
+          <Link
+            key={sector}
+            href={`/leaderboard/sector/${encodeURIComponent(sector)}`}
+            className="text-sm underline text-muted-foreground hover:text-foreground"
+          >
+            {sector}
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }
