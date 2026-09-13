@@ -34,3 +34,32 @@ describe("topsis", () => {
     expect(rows[2].shares).toEqual([0.5, 0.5]);
   });
 });
+
+describe("entropy floating-point residue (WEIGHT_EPSILON)", () => {
+  it.each([6, 7, 10, 14, 21])("gives an exactly-constant column zero weight for n=%i", (n) => {
+    const constant = Array(n).fill(1);
+    const varying = Array.from({ length: n }, (_, i) => i + 1);
+    const w = entropyWeights([constant, varying]);
+    expect(w[0]).toBe(0);
+  });
+
+  it("does not let dead near-zero columns absorb the capped excess", () => {
+    const { cap, weights } = capWeights([0.5, 0.5, 1e-16, 1e-16], 0.4, ["a", "b", "c", "d"]);
+    expect(cap).toBeCloseTo(0.5);
+    expect(weights[0]).toBeCloseTo(0.5);
+    expect(weights[1]).toBeCloseTo(0.5);
+    expect(weights[2]).toBeLessThan(1e-12);
+    expect(weights[3]).toBeLessThan(1e-12);
+  });
+
+  it("relaxes the cap to 1 and gives the sole varying column full weight when 4 of 5 columns are constant", () => {
+    const n = 10;
+    const constant = Array(n).fill(1);
+    const varying = Array.from({ length: n }, (_, i) => i + 1);
+    const entropy = entropyWeights([constant, constant, constant, constant, varying]);
+    const { weights, cap, events } = capWeights(entropy, 0.4, ["a", "b", "c", "d", "e"]);
+    expect(weights[4]).toBe(1);
+    expect(cap).toBe(1);
+    expect(events.some((e) => e.includes("cap relaxed"))).toBe(true);
+  });
+});
