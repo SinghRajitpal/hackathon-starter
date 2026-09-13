@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
-  { id: "sustainability-score", label: "Sustainability Score" },
-  { id: "net-zero-scenario", label: "Net-Zero Scenario / Portfolio" },
+  { id: "how-it-works", label: "How it works" },
+  { id: "the-scope", label: "The Scope" },
 ];
 
 export function LandingNav() {

@@ -1,7 +1,8 @@
 import { LandingNav } from "@/components/landing/nav";
 import { Hero } from "@/components/landing/hero";
-import { SustainabilityScoreSection } from "@/components/landing/sustainability-score-section";
-import { NetZeroSection } from "@/components/landing/net-zero-section";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { ScopeSection } from "@/components/landing/scope-section";
+import { ClosingCta } from "@/components/landing/closing-cta";
 
 export default function LandingPage() {
   return (
@@ -14,8 +15,9 @@ export default function LandingPage() {
     >
       <LandingNav />
       <Hero />
-      <SustainabilityScoreSection />
-      <NetZeroSection />
+      <HowItWorks />
+      <ScopeSection />
+      <ClosingCta />
     </div>
   );
 }
