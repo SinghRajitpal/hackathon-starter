@@ -2,18 +2,26 @@
 
 import { useEffect, useState } from "react";
 
+import { NetZeroRiskPanel } from "@/components/netzero/ticker-risk-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import type { ScenarioData } from "@/lib/netzero/types";
 import { createClient } from "@/lib/supabase/client";
 
 type Company = { ticker: string; company_name: string };
 
 const MAX_RESULTS = 10;
 
-export function TickerSearch() {
+export function TickerSearch({
+  initialTicker,
+  scenario,
+}: {
+  initialTicker: string | null;
+  scenario: ScenarioData;
+}) {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(initialTicker);
 
   useEffect(() => {
     createClient()
@@ -77,7 +85,9 @@ export function TickerSearch() {
           <CardHeader>
             <CardTitle className="text-2xl">{selected}</CardTitle>
           </CardHeader>
-          <CardContent />
+          <CardContent>
+            <NetZeroRiskPanel ticker={selected} data={scenario} />
+          </CardContent>
         </Card>
       )}
     </div>
