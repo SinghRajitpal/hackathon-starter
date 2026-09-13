@@ -5,9 +5,9 @@ import { useMemo } from "react";
 import { BurdenSection } from "@/components/netzero/sections/burden-section";
 import { InputsSection } from "@/components/netzero/sections/inputs-section";
 import { ScoreSection } from "@/components/netzero/sections/score-section";
+import { SectorContextSection } from "@/components/netzero/sections/sector-context-section";
 import { defaultConfig, macVector } from "@/lib/netzero/config";
 import { runEngine } from "@/lib/netzero/engine";
-import { median } from "@/lib/netzero/stats";
 import type { ScenarioData } from "@/lib/netzero/types";
 
 export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: ScenarioData }) {
@@ -33,14 +33,17 @@ export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: Scena
 
   const score = run.result.scores.get(ticker)!;
   const model = run.result.sectors.find((s) => s.sector === company.sector)!;
-  const sectorMedianTbr = median(
-    [...run.result.scores.values()].filter((s) => s.sector === company.sector).map((s) => s.tbr),
-  );
+  const dispersion = run.result.dispersion.find((d) => d.sector === company.sector)!;
 
   return (
     <div className="flex flex-col gap-6">
       <ScoreSection score={score} model={model} />
-      <BurdenSection company={company} score={score} sectorMedianTbr={sectorMedianTbr} mac={run.config.mac} />
+      <BurdenSection company={company} score={score} sectorMedianTbr={dispersion.medianTbr} mac={run.config.mac} />
+      <SectorContextSection
+        dispersion={dispersion}
+        tbrIqrThreshold={run.config.tbrIqrThreshold}
+        scoreIqrThreshold={run.config.scoreIqrThreshold}
+      />
       <InputsSection company={company} flags={score.flags} />
     </div>
   );
