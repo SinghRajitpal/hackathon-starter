@@ -62,28 +62,54 @@ class GeminiJson:
 
 
 def google_generate(api_key: str) -> Generate:
-    """Real network boundary: google-genai client, temperature 0, JSON schema, no thinking tokens."""
+    """Real network boundary: google-genai client, temperature 0, JSON schema, minimal thinking.
+
+    Some models (e.g. gemini-3.5-flash) accept an explicit zero token budget; others (e.g. the
+    -lite variants) reject thinking_budget with 400 INVALID_ARGUMENT and require thinking_level
+    instead. Try the budget form first and fall back to the level form on that specific error,
+    remembering the working form per model so later calls skip straight to it.
+    """
     from google import genai
     from google.genai import errors, types
 
     client = genai.Client(api_key=api_key)
+    thinking_kwargs = {
+        "budget": {"thinking_config": types.ThinkingConfig(thinking_budget=0)},
+        "level": {"thinking_config": types.ThinkingConfig(thinking_level="low")},
+    }
+    working_form: dict[str, str] = {}
+
+    def call(model: str, prompt: str, schema: dict, form: str):
+        return client.models.generate_content(
+            model=model,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                temperature=0,
+                response_mime_type="application/json",
+                response_json_schema=schema,
+                **thinking_kwargs[form],
+            ),
+        )
 
     def generate(model: str, prompt: str, schema: dict) -> str:
+        form = working_form.get(model, "budget")
         try:
-            response = client.models.generate_content(
-                model=model,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    temperature=0,
-                    response_mime_type="application/json",
-                    response_json_schema=schema,
-                    thinking_config=types.ThinkingConfig(thinking_budget=0),
-                ),
-            )
+            response = call(model, prompt, schema, form)
         except errors.ClientError as exc:
-            if exc.code == 429:
+            if exc.code == 400 and form == "budget":
+                try:
+                    response = call(model, prompt, schema, "level")
+                except errors.ClientError as exc2:
+                    if exc2.code == 429:
+                        raise RateLimited() from exc2
+                    raise
+                working_form[model] = "level"
+            elif exc.code == 429:
                 raise RateLimited() from exc
-            raise
+            else:
+                raise
+        else:
+            working_form[model] = form
         return response.text
 
     return generate
