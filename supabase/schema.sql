@@ -82,3 +82,99 @@ begin
     execute format('update public.sp500_esg_zscores set %I = NULL where %I = ''NaN''', col, col);
   end loop;
 end $$;
+
+begin;
+
+-- nz_*: Part 2 net-zero scenario inputs (docs/superpowers/specs/2026-09-13-net-zero-scenario-design.md §5).
+-- Public reference data, loaded via the session pooler by data/pipeline/nz/19_load_supabase.py,
+-- read-only for regular clients.
+create table public.nz_company_inputs (
+  ticker text primary key,
+  company_name text not null,
+  sector text not null,
+  sub_industry text not null,
+  e_scope2 double precision,
+  e_combustion double precision,
+  e_fleet double precision,
+  e_process double precision,
+  e_fugitive double precision,
+  emissions_year integer,
+  revenue_ttm double precision,
+  ebitda_ttm double precision,
+  fcf_ttm double precision,
+  net_debt double precision,
+  de double precision,
+  ben double precision,
+  de_ben_status text not null default 'unclassified'
+    check (de_ben_status in ('tagged', 'note', 'imputed', 'unclassified')),
+  fossil_generation_share double precision,
+  renewable_generation_share double precision,
+  price double precision,
+  shares_outstanding double precision,
+  float_cap double precision,
+  flags text[] not null default '{}',
+  updated_at timestamptz not null default now()
+);
+
+create table public.nz_emissions_sources (
+  ticker text not null references public.nz_company_inputs (ticker) on delete cascade,
+  source text not null,
+  category text not null check (category in ('scope2', 'combustion', 'fleet', 'process', 'fugitive')),
+  tco2e double precision not null,
+  year integer,
+  reference text,
+  primary key (ticker, source, category)
+);
+
+create table public.nz_segments (
+  ticker text not null references public.nz_company_inputs (ticker) on delete cascade,
+  segment text not null,
+  revenue double precision,
+  share double precision,
+  class text not null check (class in ('exposed', 'beneficiary', 'neutral', 'electricity_generation')),
+  fiscal_year integer,
+  filing_url text,
+  method text not null check (method in ('xbrl', 'note')),
+  primary key (ticker, segment)
+);
+
+create table public.nz_mac_costs (
+  category text primary key check (category in ('scope2', 'combustion', 'fleet', 'process', 'fugitive')),
+  low double precision not null,
+  mid double precision not null,
+  high double precision not null,
+  source text not null,
+  source_date date not null
+);
+
+create table public.nz_product_map (
+  list text not null check (list in ('exposed', 'beneficiary')),
+  product_line text not null,
+  source text not null,
+  primary key (list, product_line)
+);
+
+create table public.nz_validation_2019 (
+  ticker text primary key,
+  sector text not null,
+  tbr_2019 double precision,
+  intensity_2019 double precision,
+  intensity_latest double precision,
+  intensity_change double precision
+);
+
+alter table public.nz_company_inputs enable row level security;
+alter table public.nz_emissions_sources enable row level security;
+alter table public.nz_segments enable row level security;
+alter table public.nz_mac_costs enable row level security;
+alter table public.nz_product_map enable row level security;
+alter table public.nz_validation_2019 enable row level security;
+
+create policy "public read access" on public.nz_company_inputs for select to authenticated, anon using (true);
+create policy "public read access" on public.nz_emissions_sources for select to authenticated, anon using (true);
+create policy "public read access" on public.nz_segments for select to authenticated, anon using (true);
+create policy "public read access" on public.nz_mac_costs for select to authenticated, anon using (true);
+create policy "public read access" on public.nz_product_map for select to authenticated, anon using (true);
+create policy "public read access" on public.nz_validation_2019 for select to authenticated, anon using (true);
+
+commit;
