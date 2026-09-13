@@ -75,8 +75,7 @@ describe("buildCompanyView", () => {
   });
 
   it("reports 'no-position' robustness when the model has not run a stress test", () => {
-    expect(model.stress).toBeNull();
-    const view = buildCompanyView(data, model, "UTI3")!;
+    const view = buildCompanyView(data, { ...model, stress: null }, "UTI3")!;
     expect(view.badges.robust).toBe("no-position");
   });
 
