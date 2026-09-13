@@ -1,0 +1,504 @@
+ticker,company_name,sector,sub_industry,e_scope2,e_combustion,e_fleet,e_process,e_fugitive,emissions_year,revenue_ttm,ebitda_ttm,fcf_ttm,net_debt,de,ben,de_ben_status,fossil_generation_share,renewable_generation_share,price,shares_outstanding,float_cap,flags
+MMM,3M,Industrials,Industrial Conglomerates,1460000.0,400170.606,,606973.082924,0.0,2023.0,25180000000.0,6162000000.0,3985000000.0,9596000000.0,,,unclassified,,,164.97,515722417.0,84935796383.77986,
+AOS,A. O. Smith,Industrials,Building Products,,,,,,,3804900000.0,758700000.0,639400000.0,456200000.0,,,unclassified,,,57.39,110047214.0,6315609611.46,float-cap-capped-listed-line
+ABT,Abbott Laboratories,Health Care,Health Care Equipment,376296.70520253235,134386.892,,0.0,0.0,2023.0,45134000000.0,11836000000.0,7378000000.0,27244000000.0,,,unclassified,,,101.95,1730383296.0,175347041761.87045,scope2-imputed
+ABBV,AbbVie,Health Care,Biotechnology,536806.8343415218,99777.824,,0.0,0.0,2023.0,64386000000.0,19484000000.0,18210000000.0,64253000000.0,,,unclassified,,,257.12,1767117285.0,453556966899.9669,scope2-imputed
+ACN,Accenture,Information Technology,IT Consulting & Other Services,70659.0,2009.0267995726372,0.0,7240.973200427364,0.0,,73100595000.0,12330716000.0,12581688000.0,-1776475000.0,,,unclassified,,,183.9,611942109.0,112357209349.91354,category-split-imputed
+ADBE,Adobe Inc.,Information Technology,Application Software,80104.0,1426.5176237397925,0.0,5141.482376260208,0.0,,25198000000.0,10131000000.0,10280000000.0,1726000000.0,,,unclassified,,,252.23,397500000.0,99941587122.83136,category-split-imputed
+AMD,Advanced Micro Devices,Information Technology,Semiconductors,145832.0,11971.844996674954,0.0,43149.15500332505,0.0,,41305000000.0,10718000000.0,8403000000.0,-810000000.0,,,unclassified,,,516.13,1632475042.0,837909942646.8849,category-split-imputed
+AES,AES Corporation,Utilities,Independent Power Producers & Energy Traders,515000.0,18199398.878,,0.0,0.0,2023.0,13054000000.0,3816000000.0,-1720000000.0,30317000000.0,,,unclassified,,,14.79,713438630.0,10483276911.413914,ct-equal-split
+AFL,Aflac,Financials,Life & Health Insurance,,,,,,,18286000000.0,,2647000000.0,2523000000.0,,,unclassified,,,115.28,501343298.0,57294351463.92928,
+A,Agilent Technologies,Health Care,Life Sciences Tools & Services,,,,,,,7372000000.0,2035000000.0,1267000000.0,2191000000.0,,,unclassified,,,146.93,281965813.0,41282137905.88098,
+APD,Air Products,Materials,Industrial Gases,1269648.285783222,770208.1460000001,,13302697.176,0.0,2023.0,12602200000.0,1683000000.0,-301400000.0,16687000000.0,,,unclassified,,,291.43,222685530.0,64804442213.11818,scope2-imputed
+ABNB,Airbnb,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",,,,,,,13159000000.0,2914000000.0,4860000000.0,-4325000000.0,,,unclassified,,,170.19,419529556.0,71399735135.64,fleet-fuel-not-disclosed|float-cap-capped-listed-line
+AKAM,Akamai Technologies,Information Technology,Internet Services & Infrastructure,,,,,,,4322834000.0,1261233000.0,629879000.0,6082571000.0,,,unclassified,,,106.79,143716609.0,14997420538.461658,
+ALB,Albemarle Corporation,Materials,Specialty Chemicals,595210.3748688197,229671.722,,0.0,0.0,2023.0,5907904000.0,986287000.0,1342372000.0,245096000.0,,,unclassified,,,117.52,118005057.0,13821219175.373297,scope2-imputed
+ARE,Alexandria Real Estate Equities,Real Estate,Office REITs,,,,,,,2760944000.0,687779000.0,1279448000.0,12342425000.0,,,unclassified,,,51.14,172095277.0,7909332776.12889,
+ALGN,Align Technology,Health Care,Health Care Supplies,,,,,,,4139532000.0,906705000.0,633569000.0,-981749000.0,,,unclassified,,,150.82,71039852.0,10088199175.945488,
+ALLE,Allegion,Industrials,Building Products,,,,,,,4288500000.0,1035500000.0,671100000.0,1710500000.0,,,unclassified,,,153.35,85036786.0,12968538565.2577,
+LNT,Alliant Energy,Utilities,Electric Utilities,13200000.0,13637785.468,,0.0,44862.600000000006,2023.0,4419000000.0,2025000000.0,1288000000.0,11725000000.0,,,unclassified,,,67.26,259284699.0,17382637318.429974,
+ALL,Allstate,Financials,Property & Casualty Insurance,104350.0,56049.79859964832,0.0,0.0,471.20140035167555,,69347000000.0,,12249000000.0,6652000000.0,,,unclassified,,,253.71,252857950.0,63763186086.45074,category-split-imputed
+GOOGL,Alphabet Inc. (Class A),Communication Services,Interactive Media & Services,,,,,,,445867000000.0,326758000000.0,53273000000.0,42254000000.0,,,unclassified,,,338.5,5867155790.0,1986032234915.0,float-cap-fallback-market-cap+capped-listed-line
+GOOG,Alphabet Inc. (Class C),Communication Services,Interactive Media & Services,,,,,,,445867000000.0,326758000000.0,53273000000.0,42254000000.0,,,unclassified,,,335.45,5527000000.0,1854032150000.0,float-cap-fallback-market-cap+capped-listed-line
+MO,Altria,Consumer Staples,Tobacco,441384.51445554686,66467.196,,0.0,0.0,2023.0,20444000000.0,11805000000.0,9112000000.0,22210000000.0,,,unclassified,,,68.98,1669743926.0,114952035827.28552,scope2-imputed
+AMZN,Amazon,Consumer Discretionary,Broadline Retail,2890000.0,13400000.0,0.0,0.0,0.0,,742776000000.0,188438000000.0,-2472000000.0,17258000000.0,,,unclassified,,,256.78,10786313572.0,2519161517466.92,category-split-imputed
+AMCR,Amcor,Materials,Paper & Plastic Packaging Products & Materials,,,,,,,23506000000.0,3437000000.0,1229000000.0,12897000000.0,,,unclassified,,,42.32,462345690.0,19457267271.80338,
+AEE,Ameren,Utilities,Multi-Utilities,237214.02482616322,19669522.87,,0.0,120821.7816,2023.0,8878000000.0,4171000000.0,-1345000000.0,21291000000.0,,,unclassified,,,104.9,276843251.0,28858482500.373688,scope2-imputed
+AEP,American Electric Power,Utilities,Electric Utilities,318776.0,50834862.764,,0.0,191571.2316,2023.0,22790700000.0,9307800000.0,-2437000000.0,52461000000.0,,,unclassified,,,123.33,544397352.0,67031091072.81123,
+AXP,American Express,Financials,Consumer Finance,97479.0,25225.92977438216,0.0,0.0,212.0702256178398,,75952000000.0,,15052000000.0,13883000000.0,,,unclassified,,,324.69,675309833.0,169560861986.12125,category-split-imputed
+AIG,American International Group,Financials,Multi-line Insurance,,,,,,,26661000000.0,,3850000000.0,7637000000.0,,,unclassified,,,75.33,522893169.0,39274920882.83076,
+AMT,American Tower,Real Estate,Telecom Tower REITs,,,,,,,10941500000.0,7407000000.0,3959800000.0,35427100000.0,,,unclassified,,,177.85,465960048.0,82603327746.48962,
+AWK,American Water Works,Utilities,Water Utilities,,,,,,,5284000000.0,3024000000.0,-1223000000.0,15797000000.0,,,unclassified,,,137.69,198728989.0,27307175730.643677,
+AMP,Ameriprise Financial,Financials,Asset Management & Custody Banks,33012.0,1626.3277313462827,0.0,0.0,13.672268653717166,,19503000000.0,,8064000000.0,-3716000000.0,,,unclassified,,,557.61,88333219.0,49045160352.30407,category-split-imputed
+AME,Ametek,Industrials,Electrical Components & Equipment,,,,,,,7863923000.0,2423871000.0,1824950000.0,1540728000.0,,,unclassified,,,241.87,229261244.0,55105956177.16,
+AMGN,Amgen,Health Care,Biotechnology,317610.2934526182,61780.352,,0.0,0.0,2023.0,38095000000.0,17622000000.0,10175000000.0,43315000000.0,,,unclassified,,,377.35,540632005.0,203452589184.688,scope2-imputed
+APH,Amphenol,Information Technology,Electronic Components,,,,,,,25903800000.0,7954600000.0,4631700000.0,14620900000.0,,,unclassified,,,83.92,2465966914.0,205596723313.91977,
+ADI,Analog Devices,Information Technology,Semiconductors,56485.46119525903,12832.104,,104939.524108,0.0,2023.0,13881744000.0,7025615000.0,4937495000.0,6955713000.0,,,unclassified,,,378.78,484565465.0,182859091728.6999,scope2-imputed
+AON,Aon plc,Financials,Insurance Brokers,,,,,,,17577000000.0,6732000000.0,3248000000.0,13905000000.0,,,unclassified,,,302.69,212125434.0,63356205221.43305,
+APA,APA Corporation,Energy,Oil & Gas Exploration & Production,211936.46735202085,610906.0,,0.0,1037441.444,2023.0,8806000000.0,5525000000.0,2102000000.0,3299000000.0,,,unclassified,,,44.73,350351510.0,15571554298.106468,ct-equal-split|scope2-imputed
+APO,Apollo Global Management,Financials,Asset Management & Custody Banks,,,,,,,35897000000.0,9520000000.0,9473000000.0,-13088000000.0,,,unclassified,,,128.98,590543159.0,59976409315.49069,
+AAPL,Apple Inc.,Information Technology,"Technology Hardware, Storage & Peripherals",1065405.0,11989.003171503737,0.0,43210.99682849627,0.0,,466823000000.0,167959000000.0,136683000000.0,44800000000.0,,,unclassified,,,332.27,14594180000.0,4840867231771.655,category-split-imputed
+AMAT,Applied Materials,Information Technology,Semiconductor Materials & Equipment,,,,,,,30837000000.0,11631000000.0,5623000000.0,154000000.0,,,unclassified,,,456.49,793597443.0,360889032375.7244,
+APP,AppLovin,Communication Services,Advertising,,,,,,,6829124000.0,5550334000.0,4499271000.0,461766000.0,,,unclassified,,,323.96,305732000.0,90213528408.46768,
+APTV,Aptiv,Consumer Discretionary,Automotive Parts & Equipment,,,,,,,18725000000.0,2086000000.0,684000000.0,4593000000.0,,,unclassified,,,45.54,207633331.0,9337710519.359257,
+ACGL,Arch Capital Group,Financials,Property & Casualty Insurance,,,,,,,18595000000.0,,6055000000.0,3177000000.0,,,unclassified,,,96.09,341229126.0,31445657618.944424,
+ADM,Archer Daniels Midland,Consumer Staples,Agricultural Products & Services,1772511.60498366,10573786.856,,0.0,11580.75,2023.0,82099000000.0,3876000000.0,1677000000.0,6951000000.0,,,unclassified,,,86.72,481959583.0,41438183062.74245,scope2-imputed
+ARES,Ares Management,Financials,Asset Management & Custody Banks,9009.8423616018,1817717.564,,0.0,0.0,2023.0,5987595000.0,2292811000.0,836147000.0,12207654000.0,,,unclassified,,,131.64,223957742.0,29481797156.879997,float-cap-capped-listed-line|scope2-imputed
+ANET,Arista Networks,Information Technology,Communications Equipment,,,,,,,10540800000.0,4639600000.0,5155300000.0,,,,unclassified,,,199.59,1261224648.0,209462735104.62354,
+AJG,Arthur J. Gallagher & Co.,Financials,Insurance Brokers,,,,,,,15754800000.0,3966700000.0,2285000000.0,12223000000.0,,,unclassified,,,240.32,256341000.0,60931263944.73137,
+AIZ,Assurant,Financials,Multi-line Insurance,,,,,,,13456200000.0,,1655600000.0,509400000.0,,,unclassified,,,282.46,49323767.0,13827361925.743015,
+T,AT&T,Communication Services,Integrated Telecommunication Services,4.74,1044751.0,0.0,0.0,0.0,,127239000000.0,53702000000.0,17654000000.0,126384000000.0,,,unclassified,,,26.06,6852385650.0,178192803714.84433,category-split-no-peers|category-split-imputed
+ATO,Atmos Energy,Utilities,Gas Utilities,131499.77368175352,121148.192,,0.0,615972.8575584,2023.0,4921526000.0,2673591000.0,-2020303000.0,9802914000.0,,,unclassified,,,163.19,168988553.0,27448457845.50604,scope2-imputed
+ADSK,Autodesk,Information Technology,Application Software,,,,,,,7790000000.0,2376000000.0,2804000000.0,234000000.0,,,unclassified,,,212.4,209000000.0,44271298891.65312,
+ADP,Automatic Data Processing,Industrials,Human Resource & Employment Services,,,,,,,21947500000.0,6775400000.0,4776100000.0,734000000.0,,,unclassified,,,268.26,397262737.0,106315009989.52576,
+AZO,AutoZone,Consumer Discretionary,Automotive Retail,,,,,,,19986404000.0,4274993000.0,1633222000.0,8762748000.0,,,unclassified,,,2876.75,,,fleet-fuel-not-disclosed|no-market-cap
+AVY,Avery Dennison,Materials,Paper & Plastic Packaging Products & Materials,,,,,,,9248100000.0,1450400000.0,1033000000.0,3450900000.0,,,unclassified,,,169.38,75788142.0,12740718636.2897,
+AXON,Axon Enterprise,Industrials,Aerospace & Defense,,,,,,,3219099000.0,406221000.0,133192000.0,1134113000.0,,,unclassified,,,479.34,81237415.0,37056410527.80352,
+BKR,Baker Hughes,Energy,Oil & Gas Equipment & Services,,,,,,,27725000000.0,5080000000.0,3128000000.0,526000000.0,,,unclassified,,,59.06,992674071.0,58507144012.27978,
+BALL,Ball Corporation,Materials,"Metal, Glass & Plastic Containers",,,,,,,14326000000.0,2128000000.0,827000000.0,6729000000.0,,,unclassified,,,59.9,264703357.0,15793260142.626862,
+BAC,Bank of America,Financials,Diversified Banks,,,,,,,116983000000.0,,56567000000.0,133729000000.0,,,unclassified,,,62.69,6992748365.0,436652567789.32007,
+BAX,Baxter International,Health Care,Health Care Equipment,480000.0,43203.836,,0.0,0.0,2023.0,11470000000.0,762000000.0,812000000.0,7309000000.0,,,unclassified,,,23.8,516995999.0,12243843629.724909,
+BDX,Becton Dickinson,Health Care,Health Care Equipment,,,,,,,20840000000.0,4411000000.0,2534000000.0,16100000000.0,,,unclassified,,,177.85,272386800.0,48315621616.3058,
+BRK-B,Berkshire Hathaway,Financials,Multi-Sector Holdings,2654796.0,58989180.572,,45424.5,495912.2991621,2023.0,420276000000.0,,21239000000.0,87990000000.0,,,unclassified,,,510.37,1408035161.0,718618905119.57,float-cap-fallback-market-cap+capped-listed-line
+BBY,Best Buy,Consumer Discretionary,Computer & Electronics Retail,145367.0,283348.0,0.0,0.0,0.0,,42201000000.0,2580000000.0,1768000000.0,242000000.0,,,unclassified,,,90.8,209727698.0,17858402230.486607,category-split-imputed
+TECH,Bio-Techne,Health Care,Life Sciences Tools & Services,,,,,,,1215039000.0,347669000.0,263223000.0,87121000.0,,,unclassified,,,72.12,156818238.0,11262909514.506077,
+BIIB,Biogen,Health Care,Biotechnology,83605.83440644467,28268.192,,0.0,0.0,2023.0,10027900000.0,2139100000.0,2490000000.0,6805300000.0,,,unclassified,,,217.15,147753998.0,31968634251.23711,scope2-imputed
+BLK,BlackRock,Financials,Asset Management & Custody Banks,,,,,,,27299000000.0,11188000000.0,3515000000.0,2252000000.0,,,unclassified,,,1079.65,154869259.0,162894376336.65482,
+BX,Blackstone Inc.,Financials,Asset Management & Custody Banks,,,,,,,13613047000.0,,5486239000.0,10687657000.0,,,unclassified,,,128.51,750625114.0,96462833400.14,float-cap-capped-listed-line
+XYZ,"Block, Inc.",Financials,Transaction & Payment Processing Services,,,,,,,25041964000.0,2840428000.0,3881840000.0,-4786297000.0,,,unclassified,,,79.21,540816000.0,42838035360.0,float-cap-capped-listed-line
+BNY,BNY Mellon,Financials,Asset Management & Custody Banks,,,,,,,20408000000.0,,1455000000.0,-153281000000.0,,,unclassified,,,162.66,678504142.0,110087362062.0389,
+BA,Boeing,Industrials,Aerospace & Defense,756000.0,151144.822,,0.0,0.0,2023.0,92184000000.0,7324000000.0,-1050000000.0,37768000000.0,,,unclassified,,,210.45,790370020.0,159618488214.0217,
+BKNG,Booking Holdings,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",,,,,,,28241000000.0,11109000000.0,9539000000.0,2966000000.0,,,unclassified,,,173.92,751380500.0,130257998016.6632,fleet-fuel-not-disclosed
+BSX,Boston Scientific,Health Care,Health Care Equipment,,,,,,,20996000000.0,5637000000.0,1806000000.0,11961000000.0,,,unclassified,,,42.98,1449229526.0,62105380766.02667,
+BMY,Bristol Myers Squibb,Health Care,Pharmaceuticals,410087.872530619,95102.74,,0.0,0.0,2023.0,49187000000.0,16816000000.0,11440000000.0,34398000000.0,,,unclassified,,,63.64,2042714656.0,129796859009.43317,scope2-imputed
+AVGO,Broadcom,Information Technology,Semiconductors,362568.31521618325,13161.4,,21295.651985,0.0,2023.0,89104000000.0,52349000000.0,39403000000.0,35444000000.0,,,unclassified,,,361.99,4773629865.0,1706700006331.5486,scope2-imputed
+BR,Broadridge Financial Solutions,Industrials,Data Processing & Outsourced Services,,,,,,,7476800000.0,1898900000.0,1233000000.0,2851700000.0,,,unclassified,,,167.74,114021798.0,19036125838.75805,
+BRO,Brown & Brown,Financials,Insurance Brokers,,,,,,,6664000000.0,2468000000.0,1446000000.0,6841000000.0,,,unclassified,,,66.19,334610357.0,19033428365.867096,
+BF-B,Brown–Forman,Consumer Staples,Distillers & Vintners,,,,,,,3915000000.0,1090000000.0,925000000.0,2141000000.0,,,unclassified,,,26.22,290383416.0,7613853167.52,float-cap-fallback-market-cap+capped-listed-line
+BLDR,Builders FirstSource,Industrials,Building Products,,,,,,,14448703000.0,1032812000.0,639317000.0,4525663000.0,,,unclassified,,,60.37,107596457.0,6305991546.679137,
+BG,Bunge Global,Consumer Staples,Agricultural Products & Services,1549444.0,1722634.0,0.0,0.0,0.0,,91819000000.0,3117000000.0,-711000000.0,14666000000.0,,,unclassified,,,122.41,192119123.0,19308881458.25185,category-split-imputed
+BXP,"BXP, Inc.",Real Estate,Office REITs,,,,,,,3516454000.0,1979044000.0,1284500000.0,15124614000.0,,,unclassified,,,64.7,159661556.0,10330102673.2,float-cap-capped-listed-line
+CHRW,C.H. Robinson,Industrials,Air Freight & Logistics,,,,,,,16198957000.0,895822000.0,807110000.0,1183062000.0,,,unclassified,,,152.78,116851258.0,17784695118.270313,fleet-fuel-not-disclosed
+CDNS,Cadence Design Systems,Information Technology,Application Software,,,,,,,5837623000.0,2276611000.0,1671720000.0,1041757000.0,,,unclassified,,,289.37,275393000.0,79332654966.46371,
+CPT,Camden Property Trust,Real Estate,Multi-Family Residential REITs,,,,,,,1571752000.0,1156484000.0,370482000.0,4209824000.0,,,unclassified,,,103.01,115732578.0,10363319864.92394,
+COF,Capital One,Financials,Consumer Finance,,,,,,,61938000000.0,,29701000000.0,1730000000.0,,,unclassified,,,208.3,613484836.0,126001133606.00533,
+CAH,Cardinal Health,Health Care,Health Care Distributors,,,,,,,254248000000.0,3478000000.0,4525000000.0,4030000000.0,,,unclassified,,,234.57,232575728.0,54429268908.267296,
+CCL,Carnival Corporation,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",66246.0,10319475.0,0.0,0.0,0.0,,27311000000.0,7167000000.0,3200000000.0,22646000000.0,,,unclassified,,,22.75,1369649119.0,28906372491.75871,category-split-imputed
+CARR,Carrier Global,Industrials,Building Products,,,,,,,22108000000.0,3080000000.0,1928000000.0,10608000000.0,,,unclassified,,,57.46,824325057.0,45054270964.269936,
+CVNA,Carvana,Consumer Discretionary,Automotive Retail,,,,,,,25058000000.0,142000000.0,929000000.0,2606000000.0,,,unclassified,,,69.16,719916415.0,49789419261.399994,fleet-fuel-not-disclosed|float-cap-capped-listed-line
+CASY,Casey's,Consumer Staples,Food Retail,,,,,,,18672331000.0,1554428000.0,648926000.0,1906464000.0,,,unclassified,,,615.47,36960167.0,22586818326.32071,
+CAT,Caterpillar Inc.,Industrials,Construction Machinery & Heavy Transportation Equipment,800000.0,300110.238,,0.0,156791.5,2023.0,74729000000.0,16830000000.0,8994000000.0,38433000000.0,,,unclassified,,,818.57,459674889.0,375087025481.2445,
+CBOE,Cboe Global Markets,Financials,Financial Exchanges & Data,,,,,,,5061300000.0,2064900000.0,1874500000.0,185700000.0,,,unclassified,,,281.04,104431019.0,29238353819.149097,
+CBRE,CBRE Group,Real Estate,Real Estate Services,30605.0,34654.0,0.0,0.0,0.0,,43640000000.0,2197000000.0,938000000.0,6604000000.0,,,unclassified,,,140.51,289575298.0,40405032191.8413,category-split-imputed
+CDW,CDW Corporation,Information Technology,Technology Distributors,,,,,,,23500400000.0,1977000000.0,860200000.0,5455200000.0,,,unclassified,,,153.79,125017426.0,19151446359.247707,
+COR,Cencora,Health Care,Health Care Distributors,,,,,,,332771323000.0,5186821000.0,4060102000.0,8907950000.0,,,unclassified,,,321.57,190827165.0,57962257201.91725,
+CNC,Centene Corporation,Health Care,Managed Health Care,,,,,,,202938000000.0,-2731000000.0,8951000000.0,525000000.0,,,unclassified,,,66.42,493995000.0,30798511510.75224,
+CNP,CenterPoint Energy,Utilities,Multi-Utilities,257039.752064394,3741577.852,,0.0,491947.5352,2023.0,9620000000.0,3997000000.0,-2695000000.0,24593000000.0,,,unclassified,,,39.11,658720288.0,25666455436.654728,scope2-imputed
+CF,CF Industries,Materials,Fertilizers & Agricultural Chemicals,779689.9020549074,5789971.109999999,,16874370.515361153,0.0,2023.0,7739000000.0,4153000000.0,1904000000.0,736000000.0,,,unclassified,,,133.07,151338130.0,19997998463.50316,ct-equal-split|scope2-imputed
+CRL,Charles River Laboratories,Health Care,Life Sciences Tools & Services,,,,,,,3998987000.0,220471000.0,370605000.0,2427960000.0,,,unclassified,,,278.26,48167730.0,13140618807.6676,
+SCHW,Charles Schwab Corporation,Financials,Investment Banking & Brokerage,,,,,,,26025000000.0,,10789000000.0,5439000000.0,,,unclassified,,,107.25,1729335714.0,174367090540.5562,
+CHTR,Charter Communications,Communication Services,Cable & Satellite,,,,,,,54396000000.0,21354000000.0,4358000000.0,96201000000.0,,,unclassified,,,145.77,119277492.0,17387080008.84,float-cap-capped-listed-line
+CVX,Chevron Corporation,Energy,Integrated Oil & Gas,4000000.0,11667098.849333335,,11508375.211978722,4824208.328,2023.0,208711000000.0,55951000000.0,27012000000.0,28548000000.0,,,unclassified,,,214.06,1961603274.0,399963926693.6925,ct-equal-split|ct-basin-aggregate-excluded
+CMG,Chipotle Mexican Grill,Consumer Discretionary,Restaurants,,,,,,,12423759000.0,2296607000.0,1568985000.0,5190997000.0,,,unclassified,,,36.2,1265418000.0,45442583188.84192,
+CB,Chubb Limited,Financials,Property & Casualty Insurance,,,,,,,62277000000.0,,15376000000.0,15605000000.0,,,unclassified,,,338.25,385799859.0,118346249176.95515,
+CHD,Church & Dwight,Consumer Staples,Household Products,,,,,,,6205400000.0,1292700000.0,1066700000.0,1702300000.0,,,unclassified,,,94.15,237203907.0,22263516268.410954,
+CIEN,Ciena,Information Technology,Communications Equipment,,,,,,,6020894000.0,971833000.0,814362000.0,784135000.0,,,unclassified,,,349.54,141808525.0,49331313896.686104,
+CI,Cigna,Health Care,Health Care Services,116420.0,12814.0,0.0,0.0,0.0,,281336000000.0,12785000000.0,9113000000.0,25580000000.0,,,unclassified,,,280.76,264240486.0,73825380910.00601,category-split-imputed
+CINF,Cincinnati Financial,Financials,Property & Casualty Insurance,,,,,,,12928000000.0,,3439000000.0,-326000000.0,,,unclassified,,,169.8,153478045.0,25567506571.06148,
+CTAS,Cintas,Industrials,Diversified Support Services,,,,,,,11264761000.0,3124465000.0,1881175000.0,2139055000.0,,,unclassified,,,201.5,400169561.0,68938181294.05978,
+CSCO,Cisco,Information Technology,Communications Equipment,257672.3666846023,4995417.988126557,0.0,18004582.011873446,0.0,,63325000000.0,20019000000.0,12767000000.0,22315000000.0,,,unclassified,,,112.13,3942586873.0,441370510581.4275,category-split-imputed|scope2-imputed
+C,Citigroup,Financials,Diversified Banks,,,,,,,91193000000.0,,-24511000000.0,36314000000.0,,,unclassified,,,138.82,1677436783.0,232188823760.50583,
+CFG,Citizens Financial Group,Financials,Regional Banks,,,,,,,8726000000.0,,2353000000.0,2482000000.0,,,unclassified,,,70.48,421176788.0,29392742385.384094,
+CLX,Clorox,Consumer Staples,Household Products,,,,,,,6720000000.0,1168000000.0,405000000.0,4925000000.0,,,unclassified,,,87.76,120931005.0,10577352737.25958,
+CME,CME Group,Financials,Financial Exchanges & Data,,,,,,,6772600000.0,6101400000.0,4212700000.0,1280000000.0,,,unclassified,,,275.54,359576125.0,97726903374.60004,
+CMS,CMS Energy,Utilities,Multi-Utilities,235477.26974464703,17169054.104000002,,0.0,227400.014,2023.0,8813000000.0,3314000000.0,-2103000000.0,18801000000.0,,,unclassified,,,67.15,313577136.0,20915416030.9513,scope2-imputed
+KO,Coca-Cola Company (The),Consumer Staples,Soft Drinks & Non-alcoholic Beverages,3880000.0,4400000.0,0.0,0.0,0.0,,50129000000.0,19831000000.0,14297000000.0,30636000000.0,,,unclassified,,,88.29,4302549243.0,342036794865.4112,category-split-imputed
+CTSH,Cognizant,Information Technology,IT Consulting & Other Services,,,,,,,21642000000.0,4102000000.0,2598000000.0,522000000.0,,,unclassified,,,60.0,450444209.0,26948546142.13884,
+COHR,Coherent Corp.,Information Technology,Electronic Components,,,,,,,7118181000.0,1559895000.0,-1030569000.0,2060206000.0,,,unclassified,,,305.37,195832246.0,59569259738.78723,
+COIN,Coinbase,Financials,Financial Exchanges & Data,,,,,,,6282872000.0,-901225000.0,1713665000.0,-1945775000.0,,,unclassified,,,175.26,222803032.0,39048459388.32,float-cap-capped-listed-line
+CL,Colgate-Palmolive,Consumer Staples,Household Products,316000.0,195000.0,0.0,0.0,0.0,,21046000000.0,3839000000.0,3858000000.0,6487000000.0,,,unclassified,,,86.8,797172829.0,64957126965.88837,category-split-imputed
+CMCSA,Comcast,Communication Services,Cable & Satellite,,,,,,,124905000000.0,34134000000.0,17817000000.0,82720000000.0,,,unclassified,,,25.2,3539192198.0,88718324846.52742,
+FIX,Comfort Systems USA,Industrials,Construction & Engineering,,,,,,,11228024000.0,2000175000.0,2159806000.0,-1526761000.0,,,unclassified,,,1690.82,35194329.0,59507273728.0,float-cap-fallback-market-cap
+COP,ConocoPhillips,Energy,Oil & Gas Exploration & Production,1060000.0,1200814.306,,493301.9142268339,7901609.948,2023.0,63345000000.0,27787000000.0,10064000000.0,16716000000.0,,,unclassified,,,137.35,1201337479.0,164648948341.6012,ct-equal-split|ct-basin-aggregate-excluded
+ED,Consolidated Edison,Utilities,Multi-Utilities,472611.136643971,2463230.61,,0.0,234296.768,2023.0,17688000000.0,6476000000.0,-862000000.0,26344000000.0,,,unclassified,,,106.46,369828633.0,39316048009.844154,scope2-imputed
+STZ,Constellation Brands,Consumer Staples,Distillers & Vintners,,,,,,,9056700000.0,3286200000.0,1834200000.0,10437200000.0,,,unclassified,,,122.45,170752511.0,19329845797.576897,
+CEG,Constellation Energy,Utilities,Electric Utilities,835512.7907540125,8941169.546,,0.0,151.0,2023.0,31270000000.0,8229000000.0,309000000.0,24003000000.0,,,unclassified,,,284.75,354307379.0,100559119479.97552,scope2-imputed
+COO,Cooper Companies (The),Health Care,Health Care Supplies,,,,,,,4236900000.0,935600000.0,678000000.0,2387300000.0,,,unclassified,,,53.91,190155294.0,10180025866.077404,
+CPRT,Copart,Industrials,Diversified Support Services,,,,,,,4638867000.0,1919218000.0,1339233000.0,-3261026000.0,,,unclassified,,,29.95,925811482.0,25353654418.537605,
+GLW,Corning Inc.,Information Technology,Electronic Components,69027.30404165169,177405.932,,354.4,0.0,2023.0,16964000000.0,4199000000.0,2395000000.0,5920000000.0,,,unclassified,,,166.4,861388331.0,131551442814.84326,scope2-imputed
+CPAY,Corpay,Financials,Transaction & Payment Processing Services,,,,,,,5020502000.0,2551576000.0,1638406000.0,7459992000.0,,,unclassified,,,408.22,65659599.0,25755543333.404205,
+CTVA,Corteva,Materials,Fertilizers & Agricultural Chemicals,1802283.5841659438,82753.73999999999,,0.0,0.0,2023.0,17889000000.0,3146000000.0,2046000000.0,1392000000.0,,,unclassified,,,83.9,667196000.0,55831644476.89648,scope2-imputed
+CSGP,CoStar Group,Real Estate,Real Estate Services,,,,,,,3555500000.0,394000000.0,227000000.0,-64000000.0,,,unclassified,,,30.46,405197588.0,12237408391.48908,
+COST,Costco,Consumer Staples,Consumer Staples Merchandise Retail,,,,,,,293587000000.0,14463000000.0,8806000000.0,-10810000000.0,,,unclassified,,,904.77,443478804.0,398939819640.2493,
+CRH,CRH plc,Materials,Construction Materials,,,,,,,38632000000.0,8261000000.0,2766000000.0,14901000000.0,,,unclassified,,,88.55,665284511.0,58747168762.24683,
+CRWD,CrowdStrike,Information Technology,Systems Software,,,,,,,5396145000.0,436857000.0,1522603000.0,-4193668000.0,,,unclassified,,,206.74,1023934842.0,208047253781.929,
+CCI,Crown Castle,Real Estate,Telecom Tower REITs,,,,,,,4161000000.0,2684000000.0,2406000000.0,17197000000.0,,,unclassified,,,75.62,437000000.0,32097012363.24775,
+CSX,CSX Corporation,Industrials,Rail Transportation,327528.0,5212604.0,0.0,0.0,0.0,,14512000000.0,6702000000.0,2796000000.0,17857000000.0,,,unclassified,,,48.95,1852474917.0,90489283844.51505,category-split-imputed|fleet-fuel-not-disclosed
+CMI,Cummins,Industrials,Construction Machinery & Heavy Transportation Equipment,465000.0,269000.0,0.0,0.0,0.0,,34708000000.0,5289000000.0,3367000000.0,4516000000.0,,,unclassified,,,556.75,137664487.0,76320488877.16986,category-split-imputed
+CVS,CVS Health,Health Care,Health Care Services,,,,,,,415086000000.0,13411000000.0,11758000000.0,50081000000.0,,,unclassified,,,94.66,1278970369.0,120830047782.77292,
+DHR,Danaher Corporation,Health Care,Life Sciences Tools & Services,,,,,,,25107000000.0,7585000000.0,5466000000.0,22210000000.0,,,unclassified,,,200.14,702986054.0,125261322903.75333,
+DRI,Darden Restaurants,Consumer Discretionary,Restaurants,,,,,,,13210900000.0,2146000000.0,1087900000.0,2147800000.0,,,unclassified,,,209.89,113541756.0,23831279166.84,float-cap-fallback-market-cap+capped-listed-line
+DDOG,Datadog,Information Technology,Application Software,,,,,,,3966725000.0,281700000.0,1072769000.0,550588000.0,,,unclassified,,,221.21,334904614.0,74084249662.94,float-cap-capped-listed-line
+DVA,DaVita,Health Care,Health Care Services,,,,,,,14009646000.0,2771832000.0,1609804000.0,10112050000.0,,,unclassified,,,181.55,63800000.0,6162097471.488,
+DECK,Deckers Brands,Consumer Discretionary,Footwear,285.6,460.54,0.0,0.0,0.0,,5527289000.0,1390224000.0,1117808000.0,-1130255000.0,,,unclassified,,,81.27,136181857.0,10961993954.286266,category-split-imputed
+DE,Deere & Company,Industrials,Agricultural & Farm Machinery,484344.8676340631,45075.88,,0.0,0.0,2023.0,46882000000.0,11687000000.0,3229000000.0,54865000000.0,,,unclassified,,,675.74,269625412.0,181828629326.4445,scope2-imputed
+DELL,Dell Technologies,Information Technology,"Technology Hardware, Storage & Peripherals",751500.0,12814.33309997682,0.0,46185.666900023185,0.0,,151197000000.0,18411000000.0,8560000000.0,22897000000.0,,,unclassified,,,567.29,315433188.0,178942093220.52,category-split-imputed|float-cap-capped-listed-line
+DAL,Delta Air Lines,Industrials,Passenger Airlines,266545.0,842329.4519999999,41622750.0,413767.41,0.0,2023.0,68287000000.0,5709000000.0,3410000000.0,9287000000.0,,,unclassified,,,79.91,657623030.0,51920713139.273,
+DVN,Devon Energy,Energy,Oil & Gas Exploration & Production,570000.0,0.0,,0.0,4366295.996,2023.0,19676000000.0,8804000000.0,1477000000.0,10379000000.0,,,unclassified,,,50.23,1100000000.0,54794400290.4064,
+DXCM,Dexcom,Health Care,Health Care Equipment,,,,,,,4969200000.0,1559100000.0,1405000000.0,137800000.0,,,unclassified,,,83.03,377360765.0,31217901155.384117,
+FANG,Diamondback Energy,Energy,Oil & Gas Exploration & Production,408710.54832750605,0.0,,0.0,1757044.196,2023.0,16982000000.0,7378000000.0,3682000000.0,12152000000.0,,,unclassified,,,204.97,280019792.0,41850149337.604546,scope2-imputed
+DLR,Digital Realty,Real Estate,Data Center REITs,,,,,,,6340228000.0,3819492000.0,2545472000.0,15570002000.0,,,unclassified,,,188.58,370998727.0,67263793206.87388,
+DG,Dollar General,Consumer Staples,Consumer Staples Merchandise Retail,,,,,,,43637998000.0,3516317000.0,2010656000.0,2981225000.0,,,unclassified,,,124.58,220616790.0,27238452836.87329,
+DLTR,Dollar Tree,Consumer Staples,Consumer Staples Merchandise Retail,,,,,,,20068700000.0,2912500000.0,1977100000.0,1875400000.0,,,unclassified,,,118.17,187630299.0,20970757174.153458,
+D,Dominion Energy,Utilities,Multi-Utilities,10898034.0,28387484.264,,0.0,1167450.7372,2023.0,18119000000.0,8710000000.0,-6342000000.0,53128000000.0,,,unclassified,,,64.36,879525949.0,56493077333.59528,
+DPZ,Domino's,Consumer Discretionary,Restaurants,,,,,,,5027815000.0,1052394000.0,653470000.0,4718808000.0,,,unclassified,,,311.6,33081735.0,9418665352.490995,
+DASH,DoorDash,Consumer Discretionary,Specialized Consumer Services,,,,,,,15891000000.0,1763000000.0,2139000000.0,-1119000000.0,,,unclassified,,,201.95,409082893.0,81753536655.2103,
+DOV,Dover Corporation,Industrials,Industrial Machinery & Supplies & Components,,,,,,,8420564000.0,1919336000.0,1171676000.0,1504017000.0,,,unclassified,,,189.05,134680225.0,25277466629.004288,
+DOW,Dow Inc.,Materials,Commodity Chemicals,3940000.0,13490574.914,,2639039.196,218836.0524,2023.0,41319000000.0,2651000000.0,1599000000.0,13189000000.0,,,unclassified,,,29.03,722340711.0,20918805542.55336,
+DHI,D. R. Horton,Consumer Discretionary,Homebuilding,,,,,,,33349900000.0,3922600000.0,3202200000.0,5033600000.0,,,unclassified,,,137.89,279701267.0,34553851257.49581,
+DTE,DTE Energy,Utilities,Multi-Utilities,441269.38724984066,22637116.812,,208651.44,343319.898,2023.0,16515000000.0,4316000000.0,-1490000000.0,26462000000.0,,,unclassified,,,132.58,208088069.0,27437131118.42507,scope2-imputed
+DUK,Duke Energy,Utilities,Electric Utilities,4400.0,73268493.18,,0.0,473091.0412,2023.0,33250000000.0,17710000000.0,-4274000000.0,90565000000.0,,,unclassified,,,119.42,779702193.0,92846664015.01295,
+DD,DuPont,Industrials,Industrial Conglomerates,48566.72545428375,180836.708,,0.0,0.0,2023.0,4701000000.0,934000000.0,647000000.0,1385000000.0,,,unclassified,,,126.99,135042975.0,17077766885.602242,scope2-imputed
+ETN,Eaton Corporation,Industrials,Electrical Components & Equipment,,,,,,,30025000000.0,6449000000.0,3934000000.0,20128000000.0,,,unclassified,,,425.37,388400000.0,164922923983.83105,
+EBAY,eBay Inc.,Consumer Discretionary,Broadline Retail,38478.0,5133.0,0.0,0.0,0.0,,12008000000.0,3198000000.0,2428000000.0,4425000000.0,,,unclassified,,,107.75,445000000.0,43079555199.3856,category-split-imputed
+ECHO,EchoStar,Communication Services,Wireless Telecommunication Services,,,,,,,14653925000.0,-5612481000.0,-827707000.0,16991715000.0,,,unclassified,,,93.14,159142240.0,14822508233.6,float-cap-capped-listed-line
+ECL,Ecolab,Materials,Specialty Chemicals,257103.0,244121.74068570757,0.0,55397.25931429244,0.0,,16842500000.0,3983500000.0,1874500000.0,8040900000.0,,,unclassified,,,276.18,280328603.0,77266307964.47708,category-split-imputed
+EIX,Edison International,Utilities,Electric Utilities,518969.13766597974,1056295.2359999998,,0.0,45490.8108,2023.0,19423000000.0,10123000000.0,-389000000.0,42161000000.0,,,unclassified,,,56.0,384813979.0,21486442057.42984,scope2-imputed
+EW,Edwards Lifesciences,Health Care,Health Care Equipment,,,,,,,6512300000.0,1652200000.0,1433600000.0,-2202100000.0,,,unclassified,,,84.37,576400000.0,48470388144.947205,
+ELV,Elevance Health,Health Care,Managed Health Care,,,,,,,201113000000.0,,6289000000.0,20812000000.0,,,unclassified,,,418.72,216869290.0,90597743671.3098,
+EME,Emcor,Industrials,Construction & Engineering,,,,,,,18597775000.0,2155526000.0,1171382000.0,-382483000.0,,,unclassified,,,780.66,44109901.0,34170719205.590004,
+EMR,Emerson Electric,Industrials,Electrical Components & Equipment,,,,,,,18636000000.0,5342000000.0,3460000000.0,10933000000.0,,,unclassified,,,152.19,557800000.0,84557109629.09184,
+ETR,Entergy,Utilities,Electric Utilities,355031.16102817125,35764226.074,,0.0,112080.6468,2023.0,13287438000.0,6243253000.0,-3150947000.0,30487390000.0,,,unclassified,,,105.33,477777482.0,48925189003.45293,scope2-imputed
+EOG,EOG Resources,Energy,Oil & Gas Exploration & Production,400000.0,265985.996,,0.0,5275357.594,2023.0,26637000000.0,13905000000.0,6614000000.0,3019000000.0,,,unclassified,,,147.36,524529176.0,77030277119.15717,
+EQT,EQT Corporation,Energy,Oil & Gas Exploration & Production,228133.69863239507,0.0,,0.0,420523.02,2023.0,9478998000.0,6933063000.0,3758333000.0,5542851000.0,,,unclassified,,,54.07,625516000.0,33475317229.68224,scope2-imputed
+EFX,Equifax,Industrials,Research & Consulting Services,,,,,,,6444500000.0,1910100000.0,1105000000.0,5297000000.0,,,unclassified,,,169.0,117484896.0,19769969233.02816,
+EQIX,Equinix,Real Estate,Data Center REITs,,,,,,,9805000000.0,4459000000.0,-1464000000.0,18730000000.0,,,unclassified,,,1037.72,98671686.0,101999362189.4971,
+ERIE,Erie Indemnity,Financials,Insurance Brokers,,,,,,,4185570000.0,,553083000.0,,,,unclassified,,,245.03,46189068.0,6973092012.56801,
+ESS,Essex Property Trust,Real Estate,Multi-Family Residential REITs,,,,,,,1926734000.0,1314137000.0,990799000.0,6640173000.0,,,unclassified,,,272.91,64268439.0,17539499687.49,float-cap-capped-listed-line
+EL,Estée Lauder Companies (The),Consumer Staples,Personal Care Products,,,,,,,15049000000.0,1647000000.0,1316000000.0,3808000000.0,,,unclassified,,,97.12,247291223.0,24016923577.76,float-cap-capped-listed-line
+EG,Everest Group,Financials,Reinsurance,,,,,,,16435000000.0,,2000000000.0,2472000000.0,,,unclassified,,,371.71,38342734.0,9660974413.30255,
+EVRG,Evergy,Utilities,Electric Utilities,162824.79678848345,23649072.274,,0.0,65439.3972,2023.0,6093900000.0,2863800000.0,-1405800000.0,16476200000.0,,,unclassified,,,81.62,230567172.0,18709367857.132004,scope2-imputed
+ES,Eversource Energy,Utilities,Electric Utilities,372289.32299250644,0.0,,0.0,206262.3,2023.0,13933344000.0,5634717000.0,236707000.0,30069511000.0,,,unclassified,,,68.52,376674754.0,25769230778.18572,scope2-imputed
+EXC,Exelon,Utilities,Electric Utilities,4868000.0,0.0,,0.0,301249.6376,2023.0,25326000000.0,9336000000.0,-1916000000.0,50860000000.0,,,unclassified,,,43.16,1030253967.0,44465761215.71999,float-cap-fallback-market-cap+capped-listed-line
+EXE,Expand Energy,Energy,Oil & Gas Exploration & Production,53000.0,983587.9963871639,0.0,288.70003490669745,696123.3035779295,,13665000000.0,6685000000.0,2477000000.0,3022000000.0,,,unclassified,,,94.83,231503789.0,21842201028.16651,category-split-imputed
+EXPE,Expedia Group,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",,,,,,,15700000000.0,3693000000.0,4459000000.0,748000000.0,,,unclassified,,,280.83,114498625.0,32154648858.75,fleet-fuel-not-disclosed|float-cap-capped-listed-line
+EXPD,Expeditors International,Industrials,Air Freight & Logistics,,,,,,,12036002000.0,1238286000.0,923864000.0,-464163000.0,,,unclassified,,,192.6,129990622.0,24851679054.344563,fleet-fuel-not-disclosed
+EXR,Extra Space Storage,Real Estate,Self-Storage REITs,,,,,,,3413572000.0,2395280000.0,1838919000.0,13031539000.0,,,unclassified,,,137.64,211269558.0,29079141963.12,float-cap-capped-listed-line
+XOM,ExxonMobil,Energy,Integrated Oil & Gas,8689732.103352334,25095372.25533333,,32850903.37716076,7382071.507999999,2023.0,361060000000.0,75779000000.0,30553000000.0,31780000000.0,,,unclassified,,,165.99,4111911960.0,681218976881.031,ct-equal-split|ct-basin-aggregate-excluded|scope2-imputed
+FFIV,"F5, Inc.",Information Technology,Communications Equipment,,,,,,,3309332000.0,923304000.0,969595000.0,-1353402000.0,,,unclassified,,,411.71,56627182.0,23092028186.07873,
+FDS,FactSet,Financials,Financial Exchanges & Data,,,,,,,2438459000.0,955994000.0,708307000.0,1101587000.0,,,unclassified,,,259.71,35565543.0,9204767651.874315,
+FICO,Fair Isaac,Information Technology,Application Software,,,,,,,2393575000.0,1267566000.0,960878000.0,5333945000.0,,,unclassified,,,985.39,21597635.0,20590852837.12217,
+FAST,Fastenal,Industrials,Trading Companies & Distributors,,,,,,,8749300000.0,1959700000.0,1155800000.0,236800000.0,,,unclassified,,,49.32,1147497573.0,56463280049.87892,fleet-fuel-not-disclosed
+FRT,Federal Realty Investment Trust,Real Estate,Retail REITs,,,,,,,1335088000.0,1033897000.0,329221000.0,4660666000.0,,,unclassified,,,114.36,86889133.0,9219881233.60938,
+FDX,FedEx,Industrials,Air Freight & Logistics,995988.0,15406173.0,0.0,0.0,0.0,,94720000000.0,11132000000.0,5116000000.0,12403000000.0,,,unclassified,,,311.99,236670435.0,68194684686.66138,category-split-imputed|fleet-fuel-not-disclosed
+FDXF,FedEx Freight,Industrials,Cargo Ground Transportation,,,,,,,,,,1490000000.0,,,unclassified,,,128.31,149518133.0,15322604702.80805,fleet-fuel-not-disclosed
+FERG,Ferguson Enterprises,Industrials,Trading Companies & Distributors,,,,,,,32889000000.0,3570000000.0,1265000000.0,4467000000.0,,,unclassified,,,222.54,193452717.0,42952380263.5967,fleet-fuel-not-disclosed
+FIS,Fidelity National Information Services,Financials,Transaction & Payment Processing Services,,,,,,,12201000000.0,4200000000.0,1921000000.0,20430000000.0,,,unclassified,,,38.14,515705917.0,19623980640.80553,
+FITB,Fifth Third Bancorp,Financials,Regional Banks,,,,,,,10492000000.0,,2896000000.0,17327000000.0,,,unclassified,,,54.72,906892564.0,49407803543.17847,
+FSLR,First Solar,Information Technology,Semiconductors,,,,,,,5378071000.0,2440196000.0,1500119000.0,-1494269000.0,,,unclassified,,,209.03,107469788.0,21249084942.56313,
+FE,FirstEnergy,Utilities,Electric Utilities,3600000.0,15258135.972,,0.0,80315.166,2023.0,15825000000.0,,-1964000000.0,28920000000.0,,,unclassified,,,46.13,578639932.0,25291563460.507748,
+FISV,Fiserv,Financials,Transaction & Payment Processing Services,121968.0,19127.2007818336,0.0,0.0,160.79921816640044,,20866000000.0,8114000000.0,3926000000.0,25317000000.0,,,unclassified,,,51.58,531766721.0,27428527469.18,category-split-imputed|float-cap-fallback-market-cap+capped-listed-line
+FLEX,Flex Ltd.,Information Technology,Electronic Manufacturing Services,,,,,,,27914000000.0,1921000000.0,1052000000.0,1362000000.0,,,unclassified,,,115.78,369402978.0,42446568131.90434,
+F,Ford Motor Company,Consumer Discretionary,Automobile Manufacturers,1360000.0,497625.124,,0.0,0.0,2023.0,187973000000.0,3512000000.0,7280000000.0,142364000000.0,,,unclassified,,,13.97,3916743591.0,54716907966.27,float-cap-capped-listed-line
+FTNT,Fortinet,Information Technology,Systems Software,,,,,,,7527400000.0,2799500000.0,3117000000.0,-2438000000.0,,,unclassified,,,156.07,733713653.0,96593211274.34624,
+FTV,Fortive,Industrials,Industrial Machinery & Supplies & Components,,,,,,,4315800000.0,1240200000.0,1051300000.0,3135100000.0,,,unclassified,,,54.69,302017052.0,15365395148.705511,
+FOXA,Fox Corporation (Class A),Communication Services,Broadcasting,,,,,,,17126000000.0,3089000000.0,1468000000.0,2401000000.0,,,unclassified,,,65.94,200188712.0,13200443669.28,float-cap-fallback-market-cap+capped-listed-line
+FOX,Fox Corporation (Class B),Communication Services,Broadcasting,,,,,,,17126000000.0,3089000000.0,1468000000.0,2401000000.0,,,unclassified,,,58.45,220248764.0,12873540255.8,float-cap-fallback-market-cap+capped-listed-line
+BEN,Franklin Resources,Financials,Asset Management & Custody Banks,,,,,,,9324100000.0,1958700000.0,231600000.0,11974500000.0,,,unclassified,,,33.65,508076910.0,9755769137.37183,
+FCX,Freeport-McMoRan,Materials,Copper,2606153.041265841,260273.666,,0.0,3627419.019858512,2023.0,25868000000.0,9227000000.0,1762000000.0,5306000000.0,,,unclassified,,,71.07,1436017523.0,101370914067.2585,ct-equal-split|scope2-imputed
+GRMN,Garmin,Consumer Discretionary,Consumer Electronics,,,,,,,7671437000.0,2311467000.0,1599841000.0,-2156278000.0,,,unclassified,,,282.67,192852536.0,46499037123.81302,
+IT,Gartner,Information Technology,IT Consulting & Other Services,,,,,,,6463626000.0,1363153000.0,1288944000.0,1490575000.0,,,unclassified,,,179.59,63148976.0,10276351444.858496,
+GE,GE Aerospace,Industrials,Aerospace & Defense,1510000.0,740000.0,0.0,0.0,0.0,,50638000000.0,12685000000.0,8396000000.0,9812000000.0,,,unclassified,,,323.66,1037562513.0,334541367500.7764,category-split-imputed
+GEHC,GE HealthCare,Health Care,Health Care Equipment,,,,,,,21267000000.0,3696000000.0,1579000000.0,8014000000.0,,,unclassified,,,63.93,451686252.0,28781010514.739388,
+GEV,GE Vernova,Industrials,Heavy Electrical Equipment,,,,,,,41367000000.0,3005000000.0,12438000000.0,-10326000000.0,,,unclassified,,,957.27,266333581.0,254420308774.54395,
+GEN,Gen Digital,Information Technology,Systems Software,,,,,,,5079000000.0,2564000000.0,1548000000.0,7623000000.0,,,unclassified,,,30.26,598587032.0,13721868471.26046,
+GNRC,Generac,Industrials,Heavy Electrical Equipment,,,,,,,4438732000.0,619424000.0,379249000.0,974042000.0,,,unclassified,,,186.99,59006361.0,10834995293.121023,
+GD,General Dynamics,Industrials,Aerospace & Defense,,,,,,,54861000000.0,6731000000.0,6447000000.0,3183000000.0,,,unclassified,,,355.9,270557195.0,90557456734.06224,
+GIS,General Mills,Consumer Staples,Packaged Foods & Meats,74100.0,70688.598,,0.0,0.0,2023.0,18424600000.0,477100000.0,1626300000.0,13084200000.0,,,unclassified,,,35.85,534629472.0,19166466048.0,float-cap-fallback-market-cap
+GM,General Motors,Consumer Discretionary,Automobile Manufacturers,2996074.0,558676.202,,0.0,13494.75,2023.0,185527000000.0,17516000000.0,605000000.0,107563000000.0,,,unclassified,,,85.62,904451541.0,74902017640.95284,
+GPC,Genuine Parts Company,Consumer Discretionary,Distributors,,,,,,,25071538000.0,742343000.0,759354000.0,4420004000.0,,,unclassified,,,133.68,137859758.0,18376384625.023,fleet-fuel-not-disclosed
+GILD,Gilead Sciences,Health Care,Biotechnology,,,,,,,30456000000.0,1803000000.0,12943000000.0,23067000000.0,,,unclassified,,,143.72,1239955155.0,177823215819.06787,
+GPN,Global Payments,Financials,Transaction & Payment Processing Services,,,,,,,10230917000.0,3816606000.0,822719000.0,18146128000.0,,,unclassified,,,88.29,264618390.0,19390486630.10248,
+GL,Globe Life,Financials,Life & Health Insurance,,,,,,,6191958000.0,,1232375000.0,2686195000.0,,,unclassified,,,171.17,76849447.0,13031985179.968603,
+GDDY,GoDaddy,Information Technology,Internet Services & Infrastructure,,,,,,,5104100000.0,1403200000.0,1702900000.0,2618900000.0,,,unclassified,,,98.07,126647704.0,12323834655.145325,
+GS,Goldman Sachs,Financials,Investment Banking & Brokerage,,,,,,,66203000000.0,,-41515000000.0,285689000000.0,,,unclassified,,,1029.18,291171408.0,299667783680.0,float-cap-fallback-market-cap
+HAL,Halliburton,Energy,Oil & Gas Equipment & Services,538457.2546067184,53414.518,,0.0,0.0,2023.0,22373000000.0,3592000000.0,1725000000.0,5113000000.0,,,unclassified,,,35.84,833130367.0,29697555608.309654,scope2-imputed
+HIG,Hartford (The),Financials,Property & Casualty Insurance,,,,,,,28626000000.0,,5789000000.0,4249000000.0,,,unclassified,,,136.36,270872002.0,36760290082.63351,
+HAS,Hasbro,Consumer Discretionary,Leisure Products,,,,,,,4973200000.0,1354800000.0,1086400000.0,2657700000.0,,,unclassified,,,91.54,141044467.0,12852077120.700363,fleet-fuel-not-disclosed
+HCA,HCA Healthcare,Health Care,Health Care Facilities,,,,,,,78013000000.0,15861000000.0,5997000000.0,48705000000.0,,,unclassified,,,426.94,216501500.0,61615940531.090805,
+DOC,Healthpeak Properties,Real Estate,Health Care REITs,,,,,,,2949806000.0,1886442000.0,1231026000.0,8405359000.0,,,unclassified,,,20.3,689527260.0,13997403378.0,float-cap-capped-listed-line
+HSIC,Henry Schein,Health Care,Health Care Distributors,,,,,,,13602000000.0,1027000000.0,513000000.0,3305000000.0,,,unclassified,,,88.36,111446542.0,8103537796.069961,
+HSY,Hershey Company (The),Consumer Staples,Packaged Foods & Meats,262618.0,146653.0,0.0,0.0,0.0,,12163912000.0,2679242000.0,2228157000.0,4743926000.0,,,unclassified,,,173.32,146312143.0,25358820624.76,category-split-imputed|float-cap-capped-listed-line
+HPE,Hewlett Packard Enterprise,Information Technology,"Technology Hardware, Storage & Peripherals",170375.04406555046,996401.9269340333,0.0,3591251.0730659673,0.0,,41871000000.0,6774000000.0,4156000000.0,14028000000.0,,,unclassified,,,62.09,1327464779.0,82025017044.8239,category-split-imputed|scope2-imputed
+HLT,Hilton Worldwide,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",2102953.0,554015.0,0.0,0.0,0.0,,12485000000.0,3092000000.0,1939000000.0,12334000000.0,,,unclassified,,,306.19,225064910.0,67592261665.71004,category-split-imputed|fleet-fuel-not-disclosed
+HD,Home Depot (The),Consumer Discretionary,Home Improvement Retail,,,,,,,169176000000.0,25474000000.0,15099000000.0,50811000000.0,,,unclassified,,,308.74,997689626.0,307499945576.8266,
+HONA,Honeywell Aerospace,Industrials,Aerospace & Defense,,,,,,,17237000000.0,3805000000.0,877000000.0,14792000000.0,,,unclassified,,,158.26,316952725.0,50098739503.61062,
+HON,Honeywell Technologies,Industrials,Industrial Conglomerates,,,,,,,36130000000.0,12967000000.0,4010000000.0,25237000000.0,,,unclassified,,,202.36,316940010.0,60235870126.16264,
+HRL,Hormel Foods,Consumer Staples,Packaged Foods & Meats,517537.0,58585.68,,0.0,0.0,2023.0,12146911000.0,872412000.0,780869000.0,2015484000.0,,,unclassified,,,20.57,550350800.0,5982205561.9364395,
+HST,Host Hotels & Resorts,Real Estate,Hotel & Resort REITs,,,,,,,6219000000.0,2117000000.0,1017000000.0,3129000000.0,,,unclassified,,,22.24,685124399.0,15205049771.79536,
+HWM,Howmet Aerospace,Industrials,Aerospace & Defense,94189.07380699956,123294.594,,0.0,843.0,2023.0,9117000000.0,2753000000.0,1791000000.0,3938000000.0,,,unclassified,,,229.61,398801399.0,90745588018.82478,scope2-imputed
+HPQ,HP Inc.,Information Technology,"Technology Hardware, Storage & Peripherals",198200.0,10577.254609641885,0.0,38122.74539035812,0.0,,59162000000.0,4205000000.0,3881000000.0,4991000000.0,,,unclassified,,,35.48,901790969.0,31876840102.984325,category-split-imputed
+HUBB,Hubbell Incorporated,Industrials,Industrial Machinery & Supplies & Components,,,,,,,6223600000.0,1468300000.0,901400000.0,4994000000.0,,,unclassified,,,460.4,52832571.0,24205414766.936993,
+HUM,Humana,Health Care,Managed Health Care,,,,,,,145679000000.0,,1949000000.0,7354000000.0,,,unclassified,,,409.8,120080308.0,49098185564.30341,
+HBAN,Huntington Bancshares,Financials,Regional Banks,,,,,,,9683000000.0,,2683000000.0,5805000000.0,,,unclassified,,,16.86,2020414826.0,33841756383.69681,
+HII,Huntington Ingalls Industries,Industrials,Aerospace & Defense,136216.18275148506,49672.026,,34.7,0.0,2023.0,13185000000.0,1264000000.0,-85000000.0,2690000000.0,,,unclassified,,,279.69,39404598.0,10940287840.452442,scope2-imputed
+IBM,IBM,Information Technology,IT Consulting & Other Services,,,,,,,69097000000.0,17570000000.0,13144000000.0,54815000000.0,,,unclassified,,,243.29,942134390.0,228739688607.81952,
+IEX,IDEX Corporation,Industrials,Industrial Machinery & Supplies & Components,,,,,,,3585300000.0,957800000.0,641500000.0,1237600000.0,,,unclassified,,,224.21,73719896.0,16480970362.280886,
+IDXX,Idexx Laboratories,Health Care,Health Care Equipment,,,,,,,4553223000.0,1616289000.0,1237090000.0,771931000.0,,,unclassified,,,504.7,78781116.0,39618884089.34888,
+ITW,Illinois Tool Works,Industrials,Industrial Machinery & Supplies & Components,1418758.0,9.4,0.0,0.0,0.0,,16469000000.0,4822000000.0,2921000000.0,8855000000.0,,,unclassified,,,268.16,284800000.0,69113576161.28,category-split-imputed
+INCY,Incyte,Health Care,Biotechnology,,,,,,,5819530000.0,2067971000.0,1890466000.0,-3944108000.0,,,unclassified,,,121.47,202697746.0,20739346062.294163,
+IR,Ingersoll Rand,Industrials,Industrial Machinery & Supplies & Components,58812.0,35999.0,0.0,0.0,0.0,,7942200000.0,2003200000.0,1219300000.0,3582900000.0,,,unclassified,,,72.93,387999429.0,28206248466.336704,category-split-imputed
+PODD,Insulet Corporation,Health Care,Health Care Equipment,,,,,,,3053500000.0,652700000.0,265600000.0,413500000.0,,,unclassified,,,131.96,69354199.0,9113633757.899809,
+INTC,Intel,Information Technology,Semiconductors,1299000.0,210589.756,,580177.7884783,0.0,2023.0,57032000000.0,3676000000.0,2831000000.0,37663000000.0,,,unclassified,,,102.94,5286105262.0,475531009212.8372,
+IBKR,Interactive Brokers,Financials,Investment Banking & Brokerage,,,,,,,11085000000.0,9921000000.0,15834000000.0,-7698000000.0,,,unclassified,,,91.37,453077771.0,41397715936.27,float-cap-capped-listed-line
+ICE,Intercontinental Exchange,Financials,Financial Exchanges & Data,,,,,,,13426000000.0,7684000000.0,4641000000.0,18779000000.0,,,unclassified,,,157.4,561394487.0,87755550518.7695,
+IFF,International Flavors & Fragrances,Materials,Specialty Chemicals,1985131.0,307088.216,,0.0,0.0,2023.0,9978000000.0,1486000000.0,536000000.0,5130000000.0,,,unclassified,,,83.61,255149963.0,21274422296.59368,
+IP,International Paper,Materials,Paper & Plastic Packaging Products & Materials,3310000.0,3150134.066,,1916705.900255,890433.25,2023.0,24203000000.0,168000000.0,492000000.0,8491000000.0,,,unclassified,,,34.36,529569895.0,18113411322.64267,ct-equal-split
+INTU,Intuit,Information Technology,Application Software,,,,,,,21448000000.0,7119000000.0,8617000000.0,2964000000.0,,,unclassified,,,321.57,267236000.0,83888965234.36575,
+ISRG,Intuitive Surgical,Health Care,Health Care Equipment,,,,,,,11034400000.0,4245400000.0,3222600000.0,,,,unclassified,,,369.15,358278038.0,129650981194.57054,
+IVZ,Invesco,Financials,Asset Management & Custody Banks,,,,,,,6902500000.0,1760800000.0,1920700000.0,7655200000.0,,,unclassified,,,32.28,441499780.0,11508746872.672464,
+INVH,Invitation Homes,Real Estate,Single-Family Residential REITs,,,,,,,2855078000.0,1799708000.0,956722000.0,8450905000.0,,,unclassified,,,27.54,590623226.0,14783952751.108044,
+IQV,IQVIA,Health Care,Life Sciences Tools & Services,,,,,,,16983000000.0,3528000000.0,2184000000.0,14090000000.0,,,unclassified,,,261.77,164600000.0,40901518786.1504,
+IRM,Iron Mountain,Real Estate,Other Specialized REITs,288801.0,120870.0,0.0,0.0,0.0,,7562471000.0,2515305000.0,-596682000.0,17144856000.0,,,unclassified,,,115.18,297702812.0,33967432534.260323,category-split-imputed
+JBHT,J.B. Hunt,Industrials,Cargo Ground Transportation,,,,,,,12701310000.0,1678212000.0,1099722000.0,1141175000.0,,,unclassified,,,270.45,93914939.0,19805355093.681618,fleet-fuel-not-disclosed
+JBL,Jabil,Information Technology,Electronic Manufacturing Services,,,,,,,33590000000.0,2025000000.0,1306000000.0,2018000000.0,,,unclassified,,,318.08,104787089.0,32693726585.27656,
+JKHY,Jack Henry & Associates,Financials,Transaction & Payment Processing Services,,,,,,,2544340000.0,871419000.0,506506000.0,27944000.0,,,unclassified,,,161.12,70112608.0,11218596574.458624,
+J,Jacobs Solutions,Industrials,Construction & Engineering,,,,,,,14219216000.0,904246000.0,644544000.0,2406462000.0,,,unclassified,,,141.85,117038611.0,16494347216.901468,
+JNJ,Johnson & Johnson,Health Care,Pharmaceuticals,1167140.0,415094.0,0.0,0.0,0.0,,97929000000.0,33959000000.0,22228000000.0,28614000000.0,,,unclassified,,,265.58,2409898597.0,638984006614.008,category-split-imputed
+JCI,Johnson Controls,Industrials,Building Products,229809.0,549358.0,0.0,0.0,0.0,,24995000000.0,3702000000.0,1659000000.0,8834000000.0,,,unclassified,,,146.01,605741470.0,88158630293.95424,category-split-imputed
+JPM,JPMorgan Chase,Financials,Diversified Banks,,,,,,,194911000000.0,,-162534000000.0,223142000000.0,,,unclassified,,,356.23,2658186195.0,941869148532.182,
+KVUE,Kenvue,Consumer Staples,Personal Care Products,,,,,,,15408000000.0,3215000000.0,1914000000.0,7370000000.0,,,unclassified,,,17.78,1920773467.0,34104567006.289104,
+KDP,Keurig Dr Pepper,Consumer Staples,Soft Drinks & Non-alcoholic Beverages,,,,,,,20090000000.0,4283000000.0,1965000000.0,28463000000.0,,,unclassified,,,31.39,1360826038.0,42514706864.98299,
+KEY,KeyCorp,Financials,Regional Banks,,,,,,,7597000000.0,,1199000000.0,12936000000.0,,,unclassified,,,21.84,1067128554.0,23207270634.48657,
+KEYS,Keysight Technologies,Information Technology,Electronic Equipment & Instruments,,,,,,,6582000000.0,1916000000.0,1469000000.0,119000000.0,,,unclassified,,,338.64,170244745.0,57266570048.353584,
+KMB,Kimberly-Clark,Consumer Staples,Household Products,2712684.0,1030421.266,,0.0,0.0,2023.0,16582000000.0,3200000000.0,1820000000.0,5561000000.0,,,unclassified,,,98.15,332579038.0,32517938859.81349,
+KIM,Kimco Realty,Real Estate,Retail REITs,62800.0,2712.0,0.0,0.0,0.0,,,,1179106000.0,8040407000.0,,,unclassified,,,23.19,670789373.0,15168893146.82893,category-split-imputed
+KMI,Kinder Morgan,Energy,Oil & Gas Storage & Transportation,79924.0,7636793.772,,3305.648,3314371.6988003,2023.0,17959000000.0,7697000000.0,3158000000.0,32050000000.0,,,unclassified,,,30.86,2226802089.0,59735466218.60054,
+KKR,KKR & Co.,Financials,Asset Management & Custody Banks,,,,,,,21060036000.0,9735275000.0,2339924000.0,32898850000.0,,,unclassified,,,101.08,897635601.0,71773435103.40138,
+KLAC,KLA Corporation,Information Technology,Semiconductor Materials & Equipment,14654.4,324.5631662929044,0.0,1169.7968337070956,0.0,,13579476000.0,6284343000.0,3767134000.0,4237573000.0,,,unclassified,,,180.64,1306546783.0,235448181546.65228,category-split-imputed
+KHC,Kraft Heinz,Consumer Staples,Packaged Foods & Meats,,,,,,,24900000000.0,5351000000.0,3816000000.0,16582000000.0,,,unclassified,,,24.6,1185823758.0,21057278034.23902,
+KR,Kroger,Consumer Staples,Food Retail,,,,,,,148645000000.0,5776000000.0,2832000000.0,12505000000.0,,,unclassified,,,58.49,596000000.0,34860040000.0,float-cap-fallback-market-cap+capped-listed-line
+LHX,L3Harris,Industrials,Aerospace & Defense,,,,,,,22932000000.0,3998000000.0,2808000000.0,9478000000.0,,,unclassified,,,245.54,186214616.0,45723136000.0,float-cap-fallback-market-cap
+LH,Labcorp,Health Care,Health Care Services,,,,,,,14348000000.0,2157200000.0,1155200000.0,5716700000.0,,,unclassified,,,311.54,81100000.0,25146640397.59872,
+LRCX,Lam Research,Information Technology,Semiconductor Materials & Equipment,,,,,,,23232690000.0,8860890000.0,4891252000.0,-1844608000.0,,,unclassified,,,298.22,1251321000.0,371724767134.2615,
+LVS,Las Vegas Sands,Consumer Discretionary,Casinos & Gaming,,,,,,,13719000000.0,4618000000.0,2700000000.0,11886000000.0,,,unclassified,,,42.83,647701184.0,27741041710.719997,float-cap-fallback-market-cap+capped-listed-line
+LDOS,Leidos,Industrials,Diversified Support Services,,,,,,,17634000000.0,2318000000.0,2163000000.0,5283000000.0,,,unclassified,,,128.86,125492209.0,16050129236.568895,
+LEN,Lennar,Consumer Discretionary,Homebuilding,,,,,,,32737235000.0,2177897000.0,716773000.0,3919538000.0,,,unclassified,,,79.6,210506003.0,16756277838.8,float-cap-capped-listed-line
+LII,Lennox International,Industrials,Building Products,,,,,,,5302200000.0,1173600000.0,738700000.0,1455100000.0,,,unclassified,,,366.04,34560675.0,11432844239.193932,
+LLY,Lilly (Eli),Health Care,Pharmaceuticals,990000.0,483000.0,0.0,0.0,0.0,,79665800000.0,43304800000.0,13560000000.0,45958000000.0,,,unclassified,,,1115.7,891741406.0,991801854619.88,category-split-imputed
+LIN,Linde plc,Materials,Industrial Gases,20832000.0,219435.52,,8567886.8,0.0,2023.0,35449000000.0,13633000000.0,4975000000.0,23115000000.0,,,unclassified,,,466.22,460980163.0,214187446595.00073,
+LYV,Live Nation Entertainment,Communication Services,Movies & Entertainment,,,,,,,26272535000.0,1690167000.0,1374870000.0,129516000.0,,,unclassified,,,170.15,232959505.0,26754499291.003227,
+LMT,Lockheed Martin,Industrials,Aerospace & Defense,508459.0,95794.134,,0.0,0.0,2023.0,77014000000.0,10221000000.0,8729000000.0,16747000000.0,,,unclassified,,,524.19,230790753.0,103472656682.86784,
+L,Loews Corporation,Financials,Multi-line Insurance,27685.922246095724,1682203.016,,0.0,366866.3269698,2023.0,18399000000.0,,1766000000.0,8428000000.0,,,unclassified,,,108.79,204427720.0,17887605617.261696,scope2-imputed
+LOW,Lowe's,Consumer Discretionary,Home Improvement Retail,,,,,,,90432000000.0,12837000000.0,7000000000.0,34384000000.0,,,unclassified,,,196.82,561054019.0,110183714004.98466,
+LULU,Lululemon Athletica,Consumer Discretionary,"Apparel, Accessories & Luxury Goods",32.0,4232.0,0.0,0.0,0.0,,11093955000.0,2518426000.0,1354336000.0,751390000.0,,,unclassified,,,98.97,105594064.0,10450644514.08,category-split-imputed|float-cap-capped-listed-line
+LITE,Lumentum,Information Technology,Communications Equipment,,,,,,,3014000000.0,-6884000000.0,300100000.0,664000000.0,,,unclassified,,,927.03,89700000.0,82558373321.19553,
+LYB,LyondellBasell,Materials,Specialty Chemicals,7000000.0,6678716.312,,1362423.496,0.0,2023.0,31192000000.0,1909000000.0,1578000000.0,10280000000.0,,,unclassified,,,63.69,323037952.0,16409433120.65948,
+MTB,M&T Bank,Financials,Regional Banks,,,,,,,9823000000.0,,3595000000.0,680000000.0,,,unclassified,,,239.83,144416262.0,34469446664.23642,
+MPC,Marathon Petroleum,Energy,Oil & Gas Refining & Marketing,6700000.0,20175014.894,,8274011.95,353502.1816,2023.0,153577000000.0,17612000000.0,12899000000.0,25048000000.0,,,unclassified,,,395.93,280824763.0,110855614992.80331,
+MAR,Marriott International,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",4152757.0,972725.0,0.0,0.0,0.0,,26904000000.0,5031000000.0,3132000000.0,16453000000.0,,,unclassified,,,334.69,260766288.0,75407226222.27516,category-split-imputed|fleet-fuel-not-disclosed
+MRSH,Marsh McLennan,Financials,Insurance Brokers,,,,,,,27947000000.0,7217000000.0,4767000000.0,18861000000.0,,,unclassified,,,176.91,477211268.0,84257128285.43005,
+MLM,Martin Marietta Materials,Materials,Construction Materials,626000.0,573438.742,,3425605.42,0.0,2023.0,6688000000.0,2085000000.0,810000000.0,5839000000.0,,,unclassified,,,509.96,71019382.0,25718241687.51708,
+MRVL,Marvell Technology,Information Technology,Semiconductors,,,,,,,9450300000.0,4759600000.0,1722800000.0,1030100000.0,,,unclassified,,,236.1,876926613.0,207042373329.3,float-cap-capped-listed-line
+MAS,Masco,Industrials,Building Products,,,,,,,7620000000.0,1337000000.0,1126000000.0,2699000000.0,,,unclassified,,,68.52,197187430.0,13452102246.433449,
+MA,Mastercard,Financials,Transaction & Payment Processing Services,52141.0,4718.333747405862,0.0,0.0,39.66625259413797,,35083000000.0,22116000000.0,15975000000.0,13352000000.0,,,unclassified,,,569.19,869464115.0,494890279616.8501,category-split-imputed|float-cap-capped-listed-line
+MKC,McCormick & Company,Consumer Staples,Packaged Foods & Meats,,,,,,,7385800000.0,1390700000.0,1019900000.0,4602300000.0,,,unclassified,,,51.32,254055150.0,13038110298.0,float-cap-fallback-market-cap+capped-listed-line
+MCD,McDonald's,Consumer Discretionary,Restaurants,,,,,,,27702000000.0,15075000000.0,7761000000.0,39041000000.0,,,unclassified,,,252.53,707641531.0,178432662987.89914,
+MCK,McKesson Corporation,Health Care,Health Care Distributors,,,,,,,410983000000.0,7500000000.0,6145000000.0,4565000000.0,,,unclassified,,,881.51,116590363.0,102602907306.0463,
+MDT,Medtronic,Health Care,Health Care Equipment,312991.41689210496,197000.0,0.0,0.0,0.0,,37541000000.0,10267000000.0,6132000000.0,26410000000.0,,,unclassified,,,90.96,1279137890.0,116121175882.78784,category-split-imputed|scope2-imputed
+MRK,Merck & Co.,Health Care,Pharmaceuticals,316630.0,365529.704,,0.0,0.0,2023.0,66569000000.0,14405000000.0,16063000000.0,47057000000.0,,,unclassified,,,143.93,2467171638.0,354503432306.21027,
+META,Meta Platforms,Communication Services,Interactive Media & Services,3921611.0,66934.0,0.0,0.0,0.0,,228247000000.0,112282000000.0,40976000000.0,68202000000.0,,,unclassified,,,648.03,2205128509.0,1428989427687.27,category-split-no-peers|category-split-imputed|float-cap-capped-listed-line
+MET,MetLife,Financials,Life & Health Insurance,14610.0,11904.917326104955,0.0,0.0,100.08267389504547,,77665000000.0,,15558000000.0,2044000000.0,,,unclassified,,,97.14,635476927.0,51604003308.38859,category-split-imputed
+MTD,Mettler Toledo,Health Care,Life Sciences Tools & Services,,,,,,,4133875000.0,1297702000.0,863969000.0,2060580000.0,,,unclassified,,,1293.52,20036559.0,25775922100.478428,
+MGM,MGM Resorts,Consumer Discretionary,Casinos & Gaming,77583.1808507925,110103.336,,0.0,0.0,2023.0,17761442000.0,1990430000.0,1494547000.0,3521062000.0,,,unclassified,,,39.89,255851235.0,7231565506.070127,scope2-imputed
+MCHP,Microchip Technology,Information Technology,Semiconductors,20842.876650115097,35880.216,,437057.985976,0.0,2023.0,5122300000.0,1460000000.0,1110900000.0,5089000000.0,,,unclassified,,,74.2,543008691.0,39530144454.38466,scope2-imputed
+MU,Micron Technology,Information Technology,Semiconductors,367329.0995670871,89146.564,,214737.7844487,0.0,2023.0,90274000000.0,68305000000.0,26172000000.0,1891000000.0,,,unclassified,,,975.26,1129393151.0,1097773168046.266,scope2-imputed
+MSFT,Microsoft,Information Technology,Systems Software,6381250.0,30279.400346899467,0.0,109133.59965310055,0.0,,331839000000.0,212433000000.0,66987000000.0,19359000000.0,,,unclassified,,,495.63,7425545491.0,3674765951690.75,category-split-imputed
+MAA,Mid-America Apartment Communities,Real Estate,Multi-Family Residential REITs,,,,,,,2218781000.0,1259087000.0,644606000.0,5640065000.0,,,unclassified,,,124.79,116021957.0,14478380014.03,float-cap-capped-listed-line
+MRNA,Moderna,Health Care,Biotechnology,,,,,,,2210000000.0,-2804000000.0,-1244000000.0,-436000000.0,,,unclassified,,,143.97,399235889.0,53592480172.39391,
+TAP,Molson Coors Beverage Company,Consumer Staples,Brewers,268284.0,339474.436,,0.0,0.0,2023.0,11083500000.0,-1671000000.0,1326000000.0,5581500000.0,,,unclassified,,,38.93,174117990.0,6509582208.640529,
+MDLZ,Mondelez International,Consumer Staples,Packaged Foods & Meats,589644.0,838069.0,0.0,0.0,0.0,,39304000000.0,5231000000.0,2575000000.0,19500000000.0,,,unclassified,,,62.44,1276308057.0,79465552987.86337,category-split-imputed
+MPWR,Monolithic Power Systems,Information Technology,Semiconductors,,,,,,,3273158000.0,1000282000.0,582609000.0,-986653000.0,,,unclassified,,,1234.46,49143000.0,58461103877.94963,
+MNST,Monster Beverage,Consumer Staples,Soft Drinks & Non-alcoholic Beverages,4677.0,4671.0,0.0,0.0,0.0,,9218956000.0,2858003000.0,2081494000.0,-1993365000.0,,,unclassified,,,43.4,1959051764.0,60947780583.9025,category-split-imputed
+MCO,Moody's Corporation,Financials,Financial Exchanges & Data,,,,,,,8160000000.0,4357000000.0,2967000000.0,5479000000.0,,,unclassified,,,474.95,173180984.0,75290480819.59366,
+MS,Morgan Stanley,Financials,Investment Banking & Brokerage,295792.0,31007.32652666803,0.0,0.0,260.6734733319685,,73053000000.0,,-18582000000.0,299338000000.0,,,unclassified,,,214.38,1570566292.0,255126187375.98276,category-split-imputed
+MOS,Mosaic Company (The),Materials,Fertilizers & Agricultural Chemicals,1300000.0,2632598.34072241,0.0,597401.6592775903,0.0,,12247900000.0,1168700000.0,-947100000.0,5561700000.0,,,unclassified,,,25.19,317895646.0,7501699181.515968,category-split-imputed
+MSI,Motorola Solutions,Information Technology,Communications Equipment,,,,,,,12236000000.0,3757000000.0,2677000000.0,8322000000.0,,,unclassified,,,466.16,165493788.0,76787855559.05307,
+MSCI,MSCI,Financials,Financial Exchanges & Data,,,,,,,3333754000.0,2070029000.0,1492485000.0,6027700000.0,,,unclassified,,,554.61,72700000.0,38279947994.7264,
+NDAQ,"Nasdaq, Inc.",Financials,Financial Exchanges & Data,,,,,,,8751000000.0,3425000000.0,1951000000.0,8241000000.0,,,unclassified,,,91.19,558977372.0,45277917385.84565,
+NTAP,NetApp,Information Technology,"Technology Hardware, Storage & Peripherals",,,,,,,7391000000.0,2119000000.0,1650000000.0,915000000.0,,,unclassified,,,199.28,196419005.0,38919268022.19948,
+NFLX,Netflix,Communication Services,Movies & Entertainment,,,,,,,48370764000.0,35008877000.0,11152005000.0,5210074000.0,,,unclassified,,,77.4,4163939676.0,320026474686.6852,
+NEM,Newmont,Materials,Gold,1580000.0,2.5347928296119795,0.0,0.5752071703880204,0.0,,25767000000.0,16038000000.0,9733000000.0,947000000.0,,,unclassified,,,126.81,1053692271.0,133319406620.1433,category-split-imputed
+NWSA,News Corp (Class A),Communication Services,Publishing,,,,,,,9028000000.0,1627000000.0,811000000.0,216000000.0,,,unclassified,,,29.44,358881847.0,10565481575.68,float-cap-fallback-market-cap+capped-listed-line
+NWS,News Corp (Class B),Communication Services,Publishing,,,,,,,9028000000.0,1627000000.0,811000000.0,216000000.0,,,unclassified,,,32.71,177488312.0,5805642685.52,float-cap-fallback-market-cap+capped-listed-line
+NEE,NextEra Energy,Utilities,Multi-Utilities,141431.0,40497897.718,,0.0,466371.0076,2023.0,28701000000.0,17698000000.0,3048000000.0,107331000000.0,,,unclassified,,,82.31,2085978209.0,171301324330.61053,
+NKE,"Nike, Inc.",Consumer Discretionary,"Apparel, Accessories & Luxury Goods",222647.0,59672.0,0.0,0.0,0.0,,46398000000.0,4594000000.0,2184000000.0,379000000.0,,,unclassified,,,36.8,1202110951.0,44237682996.799995,category-split-imputed|float-cap-capped-listed-line
+NI,NiSource,Utilities,Multi-Utilities,183868.92451467022,4456754.266000001,,0.0,570836.736,2023.0,6881500000.0,3202400000.0,-1460000000.0,17333000000.0,,,unclassified,,,41.41,479560100.0,19782922347.88009,scope2-imputed
+NDSN,Nordson Corporation,Industrials,Industrial Machinery & Supplies & Components,,,,,,,2979795000.0,912691000.0,724013000.0,1617574000.0,,,unclassified,,,314.47,55699366.0,15608661949.738577,
+NSC,Norfolk Southern,Industrials,Rail Transportation,266815.0,1621889.999999999,3736860.000000001,0.0,0.0,,12540000000.0,5560000000.0,1631000000.0,15547000000.0,,,unclassified,,,320.27,224608373.0,71820223678.98073,category-split-imputed
+NTRS,Northern Trust,Financials,Asset Management & Custody Banks,47570.0,2900.6150086511448,0.0,0.0,24.384991348855312,,8526800000.0,,-217900000.0,-43886300000.0,,,unclassified,,,189.19,182955653.0,34014221547.129097,category-split-imputed
+NOC,Northrop Grumman,Industrials,Aerospace & Defense,460577.0,110192.278,,0.0,0.0,2023.0,42892000000.0,7444000000.0,3646000000.0,12121000000.0,,,unclassified,,,518.97,142063026.0,73489781798.97713,
+NCLH,Norwegian Cruise Line Holdings,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",,,,,,,10154307000.0,2831440000.0,-1185394000.0,14816685000.0,,,unclassified,,,14.82,459187846.0,6748272358.790539,
+NRG,NRG Energy,Utilities,Independent Power Producers & Energy Traders,189000.0,22878264.124,,0.0,0.0,2023.0,33125000000.0,3735000000.0,316000000.0,23094000000.0,,,unclassified,,,113.46,210210483.0,23741246459.356285,
+NUE,Nucor,Materials,Steel,3637108.819496603,2019446.266,,3702734.86,39589.5,2023.0,36101000000.0,5763000000.0,1583000000.0,4621000000.0,,,unclassified,,,259.43,226875676.0,57969007086.18795,scope2-imputed
+NVDA,Nvidia,Information Technology,Semiconductors,48659.0,595.757893105702,0.0,2147.242106894298,0.0,,302969000000.0,233894000000.0,127006000000.0,10923000000.0,,,unclassified,,,218.29,24147000000.0,5049199866576.593,category-split-imputed
+NVR,"NVR, Inc.",Consumer Discretionary,Homebuilding,,,,,,,9546731000.0,1537919000.0,1046421000.0,-93972000.0,,,unclassified,,,6160.76,2678153.0,16147326482.869314,
+NXPI,NXP Semiconductors,Information Technology,Semiconductors,53650.37749287772,8099.12,,69428.932339,0.0,2023.0,13185000000.0,5064000000.0,2649000000.0,8113000000.0,,,unclassified,,,236.62,252164174.0,59555509907.90982,scope2-imputed
+ORLY,O'Reilly Automotive,Consumer Discretionary,Automotive Retail,,,,,,,18572562000.0,4189022000.0,2156259000.0,6752362000.0,,,unclassified,,,85.82,808960792.0,68759226863.4567,fleet-fuel-not-disclosed
+OXY,Occidental Petroleum,Energy,Oil & Gas Exploration & Production,4900000.0,7246175.43,,437025.062,3685293.974,2023.0,21671000000.0,13859000000.0,4793000000.0,8650000000.0,,,unclassified,,,61.46,999637371.0,61187044506.9415,ct-basin-aggregate-excluded
+ODFL,Old Dominion,Industrials,Cargo Ground Transportation,,,,,,,5602507000.0,1820165000.0,1114770000.0,38401000.0,,,unclassified,,,179.79,207968283.0,33390039668.078938,fleet-fuel-not-disclosed
+OMC,Omnicom Group,Communication Services,Advertising,,,,,,,22371300000.0,1735900000.0,2389200000.0,6665800000.0,,,unclassified,,,79.01,274345967.0,21467334378.984173,
+ON,ON Semiconductor,Information Technology,Semiconductors,,,,,,,6197800000.0,1567200000.0,1500400000.0,944900000.0,,,unclassified,,,76.14,389318613.0,29514436580.19477,
+OKE,Oneok,Energy,Oil & Gas Storage & Transportation,947432.5430138148,2021410.988,,5964.794,1631063.1805607,2023.0,39366000000.0,8083000000.0,2906000000.0,32861000000.0,,,unclassified,,,96.62,630369667.0,60730300640.191734,scope2-imputed
+ORCL,Oracle Corporation,Information Technology,Application Software,647826.0,2060.935708231865,0.0,7428.064291768136,0.0,,67358000000.0,33447000000.0,-23686000000.0,98252000000.0,,,unclassified,,,150.28,2880471000.0,265124942462.7021,category-split-imputed
+OTIS,Otis Worldwide,Industrials,Industrial Machinery & Supplies & Components,,,,,,,14911000000.0,2547000000.0,1712000000.0,7623000000.0,,,unclassified,,,69.1,380669339.0,26252958627.37075,
+PCAR,Paccar,Industrials,Construction Machinery & Heavy Transportation Equipment,154791.0,123990.0,0.0,0.0,0.0,,27815800000.0,3622000000.0,2963100000.0,9121700000.0,,,unclassified,,,122.73,526364953.0,63326845356.603165,category-split-imputed
+PKG,Packaging Corporation of America,Materials,Paper & Plastic Packaging Products & Materials,960603.3478644432,1118727.436,,245930.54,133686.25,2023.0,9534700000.0,1813300000.0,742400000.0,3526100000.0,,,unclassified,,,234.4,89098299.0,20384977973.68254,scope2-imputed
+PLTR,Palantir Technologies,Information Technology,Application Software,,,,,,,6155941000.0,2662630000.0,3358272000.0,-1818647000.0,,,unclassified,,,167.23,2300713329.0,368540092132.13806,
+PANW,Palo Alto Networks,Information Technology,Systems Software,,,,,,,11480000000.0,1391000000.0,4113000000.0,-14000000.0,,,unclassified,,,330.65,818000000.0,268226777242.0096,
+PSKY,Paramount Skydance Corporation,Communication Services,Movies & Entertainment,,,,,,,28301000000.0,2944000000.0,591000000.0,13529000000.0,,,unclassified,,,10.6,1090445692.0,11558724335.2,float-cap-fallback-market-cap+capped-listed-line
+PH,Parker Hannifin,Industrials,Industrial Machinery & Supplies & Components,,,,,,,21499000000.0,5901000000.0,3905000000.0,8019000000.0,,,unclassified,,,950.23,126047469.0,119420751600.7762,
+PAYX,Paychex,Industrials,Human Resource & Employment Services,,,,,,,6512000000.0,3023000000.0,2321800000.0,3467900000.0,,,unclassified,,,115.8,355980473.0,41222538773.4,float-cap-fallback-market-cap+capped-listed-line
+PYPL,PayPal,Financials,Transaction & Payment Processing Services,,,,,,,34128000000.0,7287000000.0,6586000000.0,5094000000.0,,,unclassified,,,53.72,855460874.0,45851040065.589005,
+PNR,Pentair,Industrials,Industrial Machinery & Supplies & Components,,,,,,,4011800000.0,929300000.0,673000000.0,1514200000.0,,,unclassified,,,56.58,159600000.0,8964121775.927126,
+PEP,PepsiCo,Consumer Staples,Soft Drinks & Non-alcoholic Beverages,2056000.0,317942.602,,0.0,0.0,2023.0,96904000000.0,18639000000.0,9282000000.0,42963000000.0,,,unclassified,,,136.32,1366000000.0,185641519058.6734,
+PFE,Pfizer,Health Care,Pharmaceuticals,1172000.0,225796.41,,0.0,0.0,2023.0,63695000000.0,13491000000.0,10985000000.0,62218000000.0,,,unclassified,,,27.72,5699673589.0,157783229230.26694,
+PCG,PG&E Corporation,Utilities,Multi-Utilities,690346.7852482067,322375.688,,0.0,348814.014906,2023.0,25837000000.0,10553000000.0,-4263000000.0,63246000000.0,,,unclassified,,,13.8,2202366906.0,28737783506.15266,scope2-imputed
+PM,Philip Morris International,Consumer Staples,Tobacco,,,,,,,42545000000.0,18716000000.0,12722000000.0,43114000000.0,,,unclassified,,,191.06,1558613439.0,297041220339.1954,
+PSX,Phillips 66,Energy,Oil & Gas Refining & Marketing,6400000.0,18080429.512,,12030400.465460833,5401261.677999999,2023.0,152167000000.0,12874000000.0,6394000000.0,16466000000.0,,,unclassified,,,259.47,400935020.0,103295828771.1944,ct-equal-split
+PNW,Pinnacle West Capital,Utilities,Multi-Utilities,148405.828592793,13239664.866,,0.0,9852.5184,2023.0,5554254000.0,2219247000.0,-878537000.0,11360284000.0,,,unclassified,,,96.1,121197234.0,11583111480.695066,scope2-imputed
+PNC,PNC Financial Services,Financials,Diversified Banks,,,,,,,24554000000.0,,7488000000.0,56978000000.0,,,unclassified,,,244.24,398943667.0,96736453741.75098,
+PPG,PPG Industries,Materials,Specialty Chemicals,1654385.3058074214,168784.698,,29818.3,0.0,2023.0,16421000000.0,2824000000.0,1407000000.0,5366000000.0,,,unclassified,,,105.5,222300000.0,23401522696.15104,scope2-imputed
+PPL,PPL Corporation,Utilities,Electric Utilities,251108.0654782926,26771409.22,,0.0,147737.1832,2023.0,9398000000.0,3946000000.0,-1992000000.0,19991000000.0,,,unclassified,,,34.08,752544841.0,25572097250.588966,scope2-imputed
+PFG,Principal Financial Group,Financials,Life & Health Insurance,,,,,,,15693200000.0,,4852200000.0,288100000.0,,,unclassified,,,116.165,214104641.0,24718754222.73323,
+PG,Procter & Gamble,Consumer Staples,Personal Care Products,2323446.0,1663971.994,,0.0,12131.75,2023.0,87033000000.0,24413000000.0,15147000000.0,24197000000.0,,,unclassified,,,145.27,2322672312.0,337038959327.8859,
+PGR,Progressive Corporation,Financials,Property & Casualty Insurance,,,,,,,91019000000.0,,15951000000.0,8209000000.0,,,unclassified,,,217.62,581100000.0,126025973603.68507,
+PLD,Prologis,Real Estate,Industrial REITs,5097.0,2461.0,0.0,0.0,0.0,,9189768000.0,8522234000.0,5240975000.0,34677042000.0,,,unclassified,,,135.75,950333372.0,128947055520.1749,category-split-imputed
+PRU,Prudential Financial,Financials,Life & Health Insurance,57055.0,13458.853640141311,0.0,0.0,113.14635985868864,,64864000000.0,,10969000000.0,9473000000.0,,,unclassified,,,119.24,345000000.0,41006569588.65408,category-split-imputed
+PEG,Public Service Enterprise Group,Utilities,Electric Utilities,335140.2921147291,131.3,,0.0,462904.042,2023.0,12543000000.0,4778000000.0,276000000.0,24349000000.0,,,unclassified,,,72.39,498420030.0,35985014054.31821,scope2-imputed
+PTC,PTC Inc.,Information Technology,Application Software,,,,,,,2953972000.0,1729689000.0,935484000.0,1071861000.0,,,unclassified,,,130.78,108506261.0,14112401229.434689,
+PSA,Public Storage,Real Estate,Self-Storage REITs,,,,,,,4890457000.0,3539599000.0,2861325000.0,9920279000.0,,,unclassified,,,296.5,186852295.0,47024356007.67971,
+PHM,PulteGroup,Consumer Discretionary,Homebuilding,,,,,,,16407076000.0,2608197000.0,1512443000.0,962472000.0,,,unclassified,,,118.26,190486353.0,21995891471.22121,
+PWR,Quanta Services,Industrials,Construction & Engineering,,,,,,,32905140000.0,3080445000.0,2391158000.0,5598453000.0,,,unclassified,,,650.58,150343393.0,96919354814.1968,
+QCOM,Qualcomm,Information Technology,Semiconductors,203047.0,48566.816,,0.0,0.0,2023.0,44069000000.0,13474000000.0,10416000000.0,10737000000.0,,,unclassified,,,181.97,1068060487.0,190725025896.11176,
+DGX,Quest Diagnostics,Health Care,Health Care Services,,,,,,,11560000000.0,2253000000.0,1349000000.0,5016000000.0,,,unclassified,,,235.02,110373360.0,25808172508.759773,
+Q,Qnity Electronics,Information Technology,Semiconductor Materials & Equipment,,,,,,,5210000000.0,1450000000.0,825000000.0,3059000000.0,,,unclassified,,,126.4,209208543.0,26380494752.43648,
+RL,Ralph Lauren Corporation,Consumer Discretionary,"Apparel, Accessories & Luxury Goods",62381.0,12206.0,0.0,0.0,0.0,,8355200000.0,1534000000.0,1002000000.0,1284900000.0,,,unclassified,,,339.09,37700963.0,12784019543.669998,category-split-imputed|float-cap-capped-listed-line
+RJF,Raymond James Financial,Financials,Investment Banking & Brokerage,,,,,,,15000000000.0,,1442000000.0,-5505000000.0,,,unclassified,,,173.46,192100000.0,29790447438.794743,
+RDDT,Reddit,Communication Services,Interactive Media & Services,,,,,,,2778834000.0,801517000.0,1018649000.0,-1465971000.0,,,unclassified,,,157.77,146103200.0,23050701864.0,float-cap-capped-listed-line
+RTX,RTX Corporation,Industrials,Aerospace & Defense,936100.0,154646.258,,0.0,0.0,2023.0,93500000000.0,16084000000.0,10985000000.0,29078000000.0,,,unclassified,,,197.68,1347758144.0,247071713128.19324,
+O,Realty Income,Real Estate,Retail REITs,,,,,,,5970124000.0,5103703000.0,4166154000.0,30099005000.0,,,unclassified,,,59.5,946218033.0,56171610720.6411,
+REG,Regency Centers,Real Estate,Retail REITs,,,,,,,1585065000.0,1188000000.0,,4862836000.0,,,unclassified,,,74.62,183120547.0,12522821603.244955,
+REGN,Regeneron Pharmaceuticals,Health Care,Biotechnology,,,,,,,15534700000.0,5750000000.0,3575200000.0,250800000.0,,,unclassified,,,781.49,101137842.0,76203832194.40213,
+RF,Regions Financial Corporation,Financials,Regional Banks,,,,,,,7617000000.0,,1750000000.0,-2498000000.0,,,unclassified,,,30.13,851929506.0,25549020840.112015,
+RSG,Republic Services,Industrials,Environmental & Facilities Services,174493.0850718682,6818.294,,0.0,10714894.0,2023.0,16890000000.0,5138000000.0,2653000000.0,13962000000.0,,,unclassified,,,222.74,306212978.0,68060604780.88803,fleet-fuel-not-disclosed|scope2-imputed
+RMD,ResMed|,Health Care,Health Care Equipment,47134.57646010369,19193.0,0.0,0.0,0.0,,5653443000.0,2152616000.0,1628656000.0,150821000.0,,,unclassified,,,218.27,144252306.0,31291683616.79492,category-split-imputed|scope2-imputed
+RVTY,Revvity,Health Care,Health Care Equipment,,,,,,,2911811000.0,738746000.0,558113000.0,2182307000.0,,,unclassified,,,124.31,111586401.0,12739961075.629524,
+HOOD,Robinhood Markets,Financials,Investment Banking & Brokerage,,,,,,,4932000000.0,2361000000.0,178000000.0,17344000000.0,,,unclassified,,,112.57,790630234.0,89001245441.37999,float-cap-capped-listed-line
+ROK,Rockwell Automation,Industrials,Electrical Components & Equipment,91051.0,18649.0,0.0,0.0,0.0,,8973000000.0,1775000000.0,1504000000.0,2779000000.0,,,unclassified,,,428.39,111273953.0,47421815514.9942,category-split-imputed
+ROL,"Rollins, Inc.",Industrials,Environmental & Facilities Services,,,,,,,3924019000.0,862519000.0,619169000.0,593940000.0,,,unclassified,,,34.73,481145404.0,10733951131.97463,fleet-fuel-not-disclosed
+ROP,Roper Technologies,Information Technology,Electronic Equipment & Instruments,,,,,,,8280300000.0,4291900000.0,2561000000.0,10954500000.0,,,unclassified,,,388.52,98900874.0,38212090751.8335,
+ROST,Ross Stores,Consumer Discretionary,Apparel Retail,235693.0,29832.0,0.0,0.0,0.0,,24511798000.0,4074467000.0,2790186000.0,451027000.0,,,unclassified,,,230.74,320781076.0,71923132810.99187,category-split-imputed
+RCL,Royal Caribbean Group,Consumer Discretionary,"Hotels, Resorts & Cruise Lines",10608.0,4404403.0,0.0,0.0,0.0,,18681000000.0,7394000000.0,-416000000.0,21961000000.0,,,unclassified,,,260.14,267452084.0,62945886532.88992,category-split-imputed
+SPGI,S&P Global,Financials,Financial Exchanges & Data,18869.0,18711.69387973964,0.0,0.0,157.30612026035928,,16121000000.0,8388000000.0,5573000000.0,11036000000.0,,,unclassified,,,410.71,294800000.0,120784302351.1552,category-split-imputed
+CRM,Salesforce,Information Technology,Application Software,280000.0,868.7683457611404,0.0,3131.23165423886,0.0,,43938000000.0,,15154000000.0,30978000000.0,,,unclassified,,,247.72,823000000.0,197571834772.6848,category-split-imputed
+SNDK,Sandisk,Information Technology,"Technology Hardware, Storage & Peripherals",,,,,,,20248000000.0,13239000000.0,11494000000.0,368000000.0,,,unclassified,,,1633.35,146419001.0,235884251194.09775,
+SBAC,SBA Communications,Real Estate,Telecom Tower REITs,,,,,,,2870622000.0,2012722000.0,1050721000.0,12402171000.0,,,unclassified,,,185.47,106088110.0,19529771316.749928,
+SLB,Schlumberger,Energy,Oil & Gas Equipment & Services,,,,,,,36366000000.0,6663000000.0,4554000000.0,10055000000.0,,,unclassified,,,56.06,1484143231.0,82948973899.78491,ct-basin-aggregate-excluded
+STX,Seagate Technology,Information Technology,"Technology Hardware, Storage & Peripherals",,,,,,,12195000000.0,4250000000.0,3105000000.0,1861000000.0,,,unclassified,,,830.17,227393014.0,187609699702.32144,
+SRE,Sempra,Utilities,Multi-Utilities,362100.07484164945,3823267.528,,0.0,1541303.693,2023.0,13552000000.0,5630000000.0,-5243000000.0,36616000000.0,,,unclassified,,,83.34,653900348.0,54383789310.93278,scope2-imputed
+NOW,ServiceNow,Information Technology,Systems Software,,,,,,,14732000000.0,3500000000.0,4571000000.0,5014000000.0,,,unclassified,,,132.53,1033862000.0,136677925024.21329,
+SHW,Sherwin-Williams,Materials,Specialty Chemicals,,,,,,,24410300000.0,4734600000.0,3213200000.0,11778600000.0,,,unclassified,,,323.31,242758151.0,72643438020.19415,
+SPG,Simon Property Group,Real Estate,Retail REITs,,,,,,,6940725000.0,8317888000.0,3217536000.0,27680516000.0,,,unclassified,,,204.83,323551515.0,66273056817.450005,float-cap-capped-listed-line
+SWKS,Skyworks Solutions,Information Technology,Semiconductors,16333.559370053883,4053.384,,20063.33597,0.0,2023.0,4014100000.0,815900000.0,408600000.0,-108900000.0,,,unclassified,,,88.35,150472782.0,13229793251.604645,scope2-imputed
+SJM,J.M. Smucker Company (The),Consumer Staples,Packaged Foods & Meats,,,,,,,9156900000.0,1334600000.0,1588400000.0,6694600000.0,,,unclassified,,,121.14,106823183.0,12661173627.279743,
+SW,Smurfit Westrock,Materials,Paper & Plastic Packaging Products & Materials,691.0,2186.7682192440325,0.0,496.2317807559674,0.0,,31326000000.0,4277000000.0,1015000000.0,13487000000.0,,,unclassified,,,43.22,524522908.0,22501262351.20631,category-split-imputed
+SNA,Snap-on,Industrials,Industrial Machinery & Supplies & Components,68432.0,33705.0,0.0,0.0,0.0,,5274900000.0,1504100000.0,1108500000.0,-365400000.0,,,unclassified,,,375.44,51727124.0,18928706953.320175,category-split-imputed
+SOLV,Solventum,Health Care,Health Care Technology,,,,,,,8309000000.0,2468000000.0,-118000000.0,4676000000.0,,,unclassified,,,87.45,170223729.0,12600606712.342363,
+SO,Southern Company,Utilities,Electric Utilities,200000.0,75753644.338,,0.0,460263.2444,2023.0,30178000000.0,14818000000.0,-3269000000.0,72598000000.0,,,unclassified,,,87.17,1150362966.0,100040487415.16164,
+LUV,Southwest Airlines,Industrials,Passenger Airlines,310678.2743801789,,21147750.0,,,,30072000000.0,2779000000.0,-455000000.0,2155000000.0,,,unclassified,,,39.24,489208201.0,18997078742.328903,scope1-fleet-only|scope2-imputed
+SWK,Stanley Black & Decker,Industrials,Industrial Machinery & Supplies & Components,,,,,,,15247700000.0,1814000000.0,1289100000.0,4165500000.0,,,unclassified,,,89.24,151016641.0,13432386289.209503,
+SBUX,Starbucks,Consumer Discretionary,Restaurants,789349.0,372020.0,0.0,0.0,0.0,,38338300000.0,5299300000.0,3642100000.0,9828800000.0,,,unclassified,,,98.74,1140000000.0,112333971661.12769,category-split-imputed
+STT,State Street Corporation,Financials,Asset Management & Custody Banks,108887.0,8294.271429866041,0.0,0.0,69.72857013395755,,15056000000.0,,2019000000.0,-119437000000.0,,,unclassified,,,193.4,274701765.0,53127319552.0,category-split-imputed|float-cap-fallback-market-cap
+STLD,Steel Dynamics,Materials,Steel,2069233.7302180233,935188.18,,1634708.4,0.0,2023.0,20538678000.0,2751991000.0,955563000.0,3614434000.0,,,unclassified,,,239.79,143328088.0,32023670661.721752,scope2-imputed
+STE,Steris,Health Care,Health Care Equipment,,,,,,,6037600000.0,1640500000.0,925600000.0,1411300000.0,,,unclassified,,,210.76,97500110.0,20461171904.860363,
+SYK,Stryker Corporation,Health Care,Health Care Equipment,,,,,,,25837000000.0,7005000000.0,4702000000.0,11551000000.0,,,unclassified,,,275.56,383573046.0,95933061928.60065,
+SMCI,Supermicro,Information Technology,"Technology Hardware, Storage & Peripherals",,,,,,,39063072000.0,3074105000.0,-6971885000.0,1198813000.0,,,unclassified,,,40.1,656965384.0,22360787538.908424,
+SYF,Synchrony Financial,Financials,Consumer Finance,,,,,,,15032000000.0,,9694000000.0,239000000.0,,,unclassified,,,75.99,325370840.0,24554081252.16975,
+SNPS,Synopsys,Information Technology,Application Software,,,,,,,9416465000.0,3733984000.0,2747706000.0,6431074000.0,,,unclassified,,,397.38,191636646.0,75710884770.74258,
+SYY,Sysco,Consumer Staples,Food Distributors,,,,,,,84553000000.0,4122000000.0,1938000000.0,11730000000.0,,,unclassified,,,83.21,479096016.0,39745582084.48827,fleet-fuel-not-disclosed
+TMUS,T-Mobile US,Communication Services,Wireless Telecommunication Services,,,,,,,92189000000.0,32262000000.0,16236000000.0,81796000000.0,,,unclassified,,,182.33,1072671613.0,195580215198.29,float-cap-fallback-market-cap+capped-listed-line
+TROW,T. Rowe Price,Financials,Asset Management & Custody Banks,,,,,,,7592000000.0,3222600000.0,1673800000.0,-2804900000.0,,,unclassified,,,106.29,213315850.0,22237107350.103306,
+TTWO,Take-Two Interactive,Communication Services,Interactive Home Entertainment,,,,,,,6686500000.0,1254100000.0,337500000.0,1154800000.0,,,unclassified,,,215.47,186980443.0,40107781765.0218,
+TPR,"Tapestry, Inc.",Consumer Discretionary,"Apparel, Accessories & Luxury Goods",11779.0,5559.0,0.0,0.0,0.0,,8004200000.0,2133000000.0,1812500000.0,1404300000.0,,,unclassified,,,118.49,199391678.0,23499049355.684364,category-split-imputed
+TRGP,Targa Resources,Energy,Oil & Gas Storage & Transportation,402922.36749646347,2824318.080649854,,0.0,6122981.562186852,2023.0,16741500000.0,5491900000.0,740900000.0,18651600000.0,,,unclassified,,,290.25,214431021.0,61243410020.54666,scope2-imputed
+TGT,Target Corporation,Consumer Staples,Consumer Staples Merchandise Retail,3174028.0,701558.0,0.0,0.0,0.0,,107705000000.0,9261000000.0,4456000000.0,9946000000.0,,,unclassified,,,155.83,454296736.0,70558027417.11269,category-split-imputed
+TEL,TE Connectivity,Information Technology,Electronic Manufacturing Services,,,,,,,19322000000.0,4895000000.0,3315000000.0,4393000000.0,,,unclassified,,,211.96,289513228.0,61253538733.25684,
+TDY,Teledyne Technologies,Information Technology,Electronic Equipment & Instruments,,,,,,,6374400000.0,1586000000.0,1142100000.0,1686900000.0,,,unclassified,,,603.79,46355673.0,27659378716.330776,
+TER,Teradyne,Information Technology,Semiconductor Materials & Equipment,,,,,,,4464031000.0,1490927000.0,799932000.0,-249411000.0,,,unclassified,,,379.72,156340750.0,59244605869.14472,
+TSLA,"Tesla, Inc.",Consumer Discretionary,Automobile Manufacturers,408000.0,80515.196,,0.0,0.0,2023.0,103619000000.0,12028000000.0,5755000000.0,861000000.0,,,unclassified,,,365.44,3949547394.0,1030243713922.3544,
+TXN,Texas Instruments,Information Technology,Semiconductors,1300000.0,98603.226,,959171.109383,0.0,2023.0,19453000000.0,9676000000.0,5355000000.0,10392000000.0,,,unclassified,,,268.7,913247686.0,244790905398.28064,
+TPL,Texas Pacific Land Corporation,Energy,Oil & Gas Exploration & Production,,,,,,,897541000.0,763997000.0,75998000.0,-233099000.0,,,unclassified,,,369.1,68974683.0,21727858265.16606,
+TXT,Textron,Industrials,Aerospace & Defense,158056.22904171178,55579.572,,0.0,0.0,2023.0,15299000000.0,1698000000.0,759000000.0,2199000000.0,,,unclassified,,,81.0,171986917.0,13822138740.91185,scope2-imputed
+TMO,Thermo Fisher Scientific,Health Care,Life Sciences Tools & Services,386318.16662082996,28392.342,,0.0,0.0,2023.0,46336000000.0,12046000000.0,7318000000.0,38485000000.0,,,unclassified,,,609.82,369747286.0,224915596869.6713,scope2-imputed
+TJX,TJX Companies,Consumer Discretionary,Apparel Retail,441194.0,128450.0,0.0,0.0,0.0,,62363000000.0,9439000000.0,5876000000.0,8313000000.0,,,unclassified,,,126.02,1099974061.0,138297120716.01675,category-split-imputed
+TKO,TKO Group Holdings,Communication Services,Movies & Entertainment,,,,,,,5301863000.0,1548113000.0,1672370000.0,4036740000.0,,,unclassified,,,190.31,73111098.0,13913773060.38,float-cap-capped-listed-line
+TTD,Trade Desk (The),Communication Services,Advertising,,,,,,,2990138000.0,725666000.0,848637000.0,-688869000.0,,,unclassified,,,14.34,426771565.0,6119904242.1,float-cap-capped-listed-line
+TSCO,Tractor Supply,Consumer Discretionary,Other Specialty Retail,,,,,,,15750724000.0,1850267000.0,306981000.0,1922212000.0,,,unclassified,,,33.01,521040137.0,17145871541.178194,
+TT,Trane Technologies,Industrials,Building Products,,,,,,,22209900000.0,4342000000.0,3546500000.0,3298500000.0,,,unclassified,,,442.52,220023177.0,97096903207.15462,
+TDG,TransDigm Group,Industrials,Aerospace & Defense,,,,,,,10007000000.0,5051000000.0,1927000000.0,30712000000.0,,,unclassified,,,1140.32,55276525.0,62710193331.84514,
+TRV,Travelers Companies (The),Financials,Property & Casualty Insurance,,,,,,,48979000000.0,,11026000000.0,8586000000.0,,,unclassified,,,375.2,208575022.0,77802673366.74559,
+TRMB,Trimble Inc.,Information Technology,Application Software,,,,,,,3782900000.0,278100000.0,773100000.0,1244900000.0,,,unclassified,,,57.66,233179848.0,13374562671.74332,
+TFC,Truist Financial,Financials,Diversified Banks,,,,,,,20572000000.0,,5672000000.0,32866000000.0,,,unclassified,,,50.4,1221626188.0,61405574266.63319,
+TYL,Tyler Technologies,Information Technology,Application Software,,,,,,,2429657000.0,580809000.0,705783000.0,513338000.0,,,unclassified,,,336.67,40952274.0,12798294049.34539,
+TSN,Tyson Foods,Consumer Staples,Packaged Foods & Meats,1202429.5220156147,1131168.736,,0.0,743738.75,2023.0,55694000000.0,2612000000.0,1161000000.0,7266000000.0,,,unclassified,,,52.98,281792507.0,14929367020.86,float-cap-capped-listed-line|scope2-imputed
+USB,U.S. Bancorp,Financials,Diversified Banks,,,,,,,29583000000.0,,12525000000.0,29517000000.0,,,unclassified,,,62.84,1558051446.0,97611296640.53313,
+UBER,Uber,Industrials,Passenger Ground Transportation,,,,,,,55227000000.0,7920000000.0,10116000000.0,7853000000.0,,,unclassified,,,71.67,2042560121.0,145917445724.8115,fleet-fuel-not-disclosed
+UDR,"UDR, Inc.",Real Estate,Multi-Family Residential REITs,,,,,,,1716218000.0,1424916000.0,629417000.0,5812639000.0,,,unclassified,,,35.12,321264222.0,11282799476.64,float-cap-capped-listed-line
+ULTA,Ulta Beauty,Consumer Discretionary,Other Specialty Retail,,,,,,,12955517000.0,1942782000.0,1149452000.0,181127000.0,,,unclassified,,,546.78,42757471.0,23301547573.251377,
+UNP,Union Pacific Corporation,Industrials,Rail Transportation,,,,,,,25410000000.0,13308000000.0,6504000000.0,28713000000.0,,,unclassified,,,284.4,594075498.0,168571540518.8985,fleet-fuel-not-disclosed
+UAL,United Airlines Holdings,Industrials,Passenger Airlines,649839.5230376307,,45464250.0,,,,62901000000.0,5582000000.0,2544000000.0,16298000000.0,,,unclassified,,,109.82,324569728.0,35374525856.97132,scope1-fleet-only|scope2-imputed
+UPS,United Parcel Service,Industrials,Air Freight & Logistics,870.0,12000.0,0.0,0.0,0.0,,89930000000.0,10822000000.0,5457000000.0,19831000000.0,,,unclassified,,,100.28,749349405.0,75144758333.4,category-split-imputed|fleet-fuel-not-disclosed|float-cap-capped-listed-line
+URI,United Rentals,Industrials,Trading Companies & Distributors,39139.0,57952.0,0.0,0.0,0.0,,16832000000.0,7447000000.0,632000000.0,14118000000.0,,,unclassified,,,989.12,62242489.0,61213750267.37131,category-split-imputed|fleet-fuel-not-disclosed
+UNH,UnitedHealth Group,Health Care,Managed Health Care,383896.0,122356.0,0.0,0.0,0.0,,450129000000.0,25619000000.0,23617000000.0,44743000000.0,,,unclassified,,,379.09,897594847.0,339285825498.88947,category-split-imputed
+UHS,Universal Health Services,Health Care,Health Care Facilities,,,,,,,18114487000.0,2820938000.0,810741000.0,4713047000.0,,,unclassified,,,174.83,51687770.0,9036572829.1,float-cap-capped-listed-line
+VLO,Valero Energy,Energy,Oil & Gas Refining & Marketing,4900000.0,13717542.522,,14783566.587273452,0.0,2023.0,139397000000.0,13663000000.0,10120000000.0,3475000000.0,,,unclassified,,,390.42,287927461.0,111812355598.62926,ct-equal-split
+VEEV,Veeva Systems,Health Care,Health Care Technology,,,,,,,3458098000.0,1075341000.0,1665459000.0,-1660317000.0,,,unclassified,,,262.4,161908850.0,38911901080.607994,
+VTR,Ventas,Real Estate,Health Care REITs,,,,,,,6441571000.0,2388243000.0,1091827000.0,12488833000.0,,,unclassified,,,89.99,512946359.0,45942168607.474014,
+VLTO,Veralto,Industrials,Environmental & Facilities Services,,,,,,,5696000000.0,1394000000.0,1047000000.0,1260000000.0,,,unclassified,,,94.1,243793344.0,22889335434.9624,fleet-fuel-not-disclosed
+VRSN,Verisign,Information Technology,Internet Services & Infrastructure,,,,,,,1707900000.0,1206700000.0,1066100000.0,1493500000.0,,,unclassified,,,292.71,90400000.0,24848452730.201714,
+VRSK,Verisk Analytics,Industrials,Research & Consulting Services,,,,,,,3136000000.0,1680100000.0,1236500000.0,3904000000.0,,,unclassified,,,176.2,130156012.0,22863542491.73372,
+VZ,Verizon,Communication Services,Integrated Telecommunication Services,,,,,,,138895000000.0,48033000000.0,20160000000.0,163479000000.0,,,unclassified,,,50.61,4154775202.0,209972482842.551,
+VRTX,Vertex Pharmaceuticals,Health Care,Biotechnology,,,,,,,12587200000.0,5266000000.0,3796100000.0,-4165900000.0,,,unclassified,,,515.44,253460924.0,130244132342.77985,
+VRT,Vertiv,Industrials,Electrical Components & Equipment,,,,,,,11479600000.0,2553100000.0,2924000000.0,129200000.0,,,unclassified,,,257.06,384988173.0,98673106560.71857,
+VTRS,Viatris,Health Care,Pharmaceuticals,122869.62009973146,26031.806,,0.0,0.0,2023.0,14737300000.0,2621500000.0,1812200000.0,12464800000.0,,,unclassified,,,16.51,1148590864.0,18850972464.483948,scope2-imputed
+VICI,Vici Properties,Real Estate,Hotel & Resort REITs,,,,,,,4097604000.0,3655736000.0,2636974000.0,16643092000.0,,,unclassified,,,24.83,1101077562.0,27231214648.758068,
+V,Visa Inc.,Financials,Transaction & Payment Processing Services,8821.0,5059.465905688253,0.0,0.0,42.53409431174694,,44488000000.0,29074000000.0,21013000000.0,11499000000.0,,,unclassified,,,370.45,1704112694.0,631288547492.2999,category-split-imputed|float-cap-capped-listed-line
+VST,Vistra Corp.,Utilities,Electric Utilities,513331.36347828875,86398643.138,,0.0,0.0,2023.0,19212000000.0,6548000000.0,2255000000.0,19460000000.0,,,unclassified,,,148.38,335635195.0,46425504651.16676,ct-equal-split|scope2-imputed
+VMRK,Vivmark Residential,Real Estate,Multi-Family Residential REITs,,,,,,,3082699000.0,2240530000.0,1368855000.0,8944098000.0,,,unclassified,,,65.54,773779120.0,50713483524.8,float-cap-fallback-market-cap+capped-listed-line
+VMC,Vulcan Materials Company,Materials,Construction Materials,,,,,,,8115800000.0,2362300000.0,1027200000.0,4170100000.0,,,unclassified,,,252.74,129578739.0,32642638296.01835,
+WRB,W. R. Berkley Corporation,Financials,Property & Casualty Insurance,,,,,,,14917907000.0,,3469696000.0,233802000.0,,,unclassified,,,69.9,371227529.0,17022331508.13965,
+GWW,W. W. Grainger,Industrials,Industrial Machinery & Supplies & Components,,,,,,,18845000000.0,3023000000.0,1510000000.0,1819000000.0,,,unclassified,,,1280.0,47100942.0,55171257382.681595,
+WAB,Wabtec,Industrials,Construction Machinery & Heavy Transportation Equipment,123767.14974310131,35202.768,,0.0,0.0,2023.0,11980000000.0,2491000000.0,1714000000.0,5901000000.0,,,unclassified,,,283.22,168910851.0,47253858712.82521,scope2-imputed
+WMT,Walmart,Consumer Staples,Consumer Staples Merchandise Retail,,,,,,,735840000000.0,46764000000.0,13509000000.0,38882000000.0,,,unclassified,,,107.15,7958079155.0,466127321063.00854,
+DIS,Walt Disney Company (The),Communication Services,Movies & Entertainment,,,,,,,98861000000.0,20074000000.0,8293000000.0,40856000000.0,,,unclassified,,,106.55,1726686902.0,183678606924.93167,
+WBD,Warner Bros. Discovery,Communication Services,Broadcasting,,,,,,,36115000000.0,13588000000.0,2180000000.0,28654000000.0,,,unclassified,,,28.04,2507136702.0,66856180563.123886,
+WM,Waste Management,Industrials,Environmental & Facilities Services,265169.56865243585,176183.606,,0.0,11474276.0,2023.0,25667000000.0,7464000000.0,3573000000.0,22799000000.0,,,unclassified,,,213.46,399715184.0,85069800836.66118,fleet-fuel-not-disclosed|scope2-imputed
+WAT,Waters Corporation,Health Care,Life Sciences Tools & Services,21445.0,17344.0,0.0,0.0,0.0,,4644249000.0,967461000.0,398810000.0,4547000000.0,,,unclassified,,,408.34,98185855.0,40044013826.31305,category-split-imputed
+WEC,WEC Energy Group,Utilities,Electric Utilities,270864.3225132628,19285988.33,,0.0,324176.878,2023.0,10137400000.0,4235100000.0,-1373300000.0,22513900000.0,,,unclassified,,,105.33,325849383.0,34223211848.853687,scope2-imputed
+WFC,Wells Fargo,Financials,Diversified Banks,,,,,,,86796000000.0,,19170000000.0,3932000000.0,,,unclassified,,,90.29,3023999336.0,272291495334.08585,
+WELL,Welltower,Real Estate,Health Care REITs,,,,,,,11584251000.0,2637318000.0,2922002000.0,13229793000.0,,,unclassified,,,235.62,720572011.0,169587576331.4736,
+WST,West Pharmaceutical Services,Health Care,Health Care Supplies,,,,,,,3326800000.0,879500000.0,436900000.0,-123700000.0,,,unclassified,,,346.23,70375762.0,24185647421.08738,
+WDC,Western Digital,Information Technology,"Technology Hardware, Storage & Peripherals",,,,,,,12919000000.0,10445000000.0,3511000000.0,2680000000.0,,,unclassified,,,447.18,360540944.0,160101324098.17996,
+WY,Weyerhaeuser,Real Estate,Timber REITs,4805.349679193401,41144.524,,0.0,0.0,2023.0,6852000000.0,1163000000.0,-447000000.0,4898000000.0,,,unclassified,,,22.06,720736000.0,15823436729.53184,scope2-imputed
+WSM,"Williams-Sonoma, Inc.",Consumer Discretionary,Homefurnishing Retail,,,,,,,8005156000.0,1768400000.0,1343494000.0,499010000.0,,,unclassified,,,226.23,117779173.0,26295064841.807404,
+WMB,Williams Companies,Energy,Oil & Gas Storage & Transportation,,,,,,,12204000000.0,8061000000.0,-174000000.0,30590000000.0,,,unclassified,,,72.85,1223167472.0,88573995495.49496,
+WTW,Willis Towers Watson,Financials,Insurance Brokers,,,,,,,10102000000.0,2715000000.0,1689000000.0,4903000000.0,,,unclassified,,,315.61,92871937.0,29168856736.373096,
+WDAY,"Workday, Inc.",Information Technology,Application Software,,,,,,,10155000000.0,1760000000.0,2844000000.0,2328000000.0,,,unclassified,,,185.7,196000000.0,36397200000.0,float-cap-capped-listed-line
+WYNN,Wynn Resorts,Consumer Discretionary,Casinos & Gaming,,,,,,,7413425000.0,1949749000.0,791867000.0,9151307000.0,,,unclassified,,,87.7,102973891.0,6704753890.624394,
+XEL,Xcel Energy,Utilities,Multi-Utilities,390529.4195606219,38878344.107999995,,0.0,379186.0908,2023.0,14616000000.0,6533000000.0,-7692000000.0,37447000000.0,,,unclassified,,,75.5,624634306.0,47064626964.86966,scope2-imputed
+XYL,Xylem Inc.,Industrials,Industrial Machinery & Supplies & Components,,,,,,,9126000000.0,1861000000.0,960000000.0,1650000000.0,,,unclassified,,,106.96,233486812.0,24909068242.011356,
+YUM,Yum! Brands,Consumer Discretionary,Restaurants,,,,,,,8724000000.0,2946000000.0,1679000000.0,11601000000.0,,,unclassified,,,140.87,272901085.0,38337853419.27886,
+ZBRA,Zebra Technologies,Information Technology,Electronic Equipment & Instruments,,,,,,,5847000000.0,1055000000.0,904000000.0,2611000000.0,,,unclassified,,,350.37,47310660.0,16420750427.598995,
+ZBH,Zimmer Biomet,Health Care,Health Care Equipment,,,,,,,8508800000.0,2331000000.0,1401800000.0,7069000000.0,,,unclassified,,,93.49,190737689.0,17774826134.98708,
+ZTS,Zoetis,Health Care,Pharmaceuticals,,,,,,,9517000000.0,3992000000.0,2316000000.0,7575000000.0,,,unclassified,,,72.97,413223602.0,30090812174.182236,

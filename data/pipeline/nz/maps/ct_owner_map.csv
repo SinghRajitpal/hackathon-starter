@@ -1,0 +1,39 @@
+ticker,owner_ids,checked_by,note
+VST,E100000001322,Claude Code session (user pre-approved),Vistra Corp exact match
+DUK,E100000002838|E100000002839|E100000002840|E100000002841|E100000002842|E100001001274,Claude Code session (user pre-approved),Duke Energy Carolinas/Florida/Indiana/Kentucky/Progress/Ohio wholly owned operating subsidiaries
+NEE,E100002008853,Claude Code session (user pre-approved),NextEra Energy Point Beach LLC wholly owned subsidiary
+XEL,E100000001329,Claude Code session (user pre-approved),Xcel Energy Inc exact match
+ETR,E100000001209|E100000002987|E100000002988|E100000002989|E100000002991|E100000002990,Claude Code session (user pre-approved),Entergy Corp plus Arkansas/Louisiana/Mississippi/Texas/New Orleans wholly owned operating subsidiaries
+PSX,E100000001282|E100000003813,Claude Code session (user pre-approved),Phillips 66 plus Phillips 66 - Los Angeles refinery entity
+MPC,E100000001254|E100000003533,Claude Code session (user pre-approved),Marathon Petroleum Corp plus Marathon Petroleum Company LP
+D,E100000002818,Claude Code session (user pre-approved),Dominion Energy South Carolina Inc wholly owned subsidiary
+EVRG,E100000003004|E100000003002|E100000003003|E100000003005,Claude Code session (user pre-approved),Evergy Metro/Kansas Central/Kansas South/Missouri West wholly owned operating subsidiaries
+VLO,E100000001321|E100000004291,Claude Code session (user pre-approved),Valero Energy Corp plus Valero Energy Ltd
+NRG,E100000001262|E100002008560,Claude Code session (user pre-approved),NRG Energy Inc plus NRG Energy Center Phoenix LLC subsidiary
+DTE,E100001001266,Claude Code session (user pre-approved),DTE Energy Services Inc wholly owned subsidiary
+CF,E100002017908|E100002008475,Claude Code session (user pre-approved),CF Industries Inc plus CF Industries Nitrogen LLC subsidiary
+CVX,E100000001179|E100000134914|E100000191479|E100000189589|E100002014021,Claude Code session (user pre-approved),Chevron Corp plus Nigeria/Argentina/Saudi Arabia/Brasil non-US subsidiaries; Chevron Phillips 50/50 JV (not controlled) and Chevron USA Inc (US-only asset) excluded per controller ruling
+CMS,E100000132396|E100000132395|E100000132397|E100001001219|E100000002589,Claude Code session (user pre-approved),CMS Generation Grayling/Genesee/Holdings/Filer City/Michigan Power non-utility subsidiaries; CMS Cepcor Group Utah and Shuweihat CMS International Power (divested JV) excluded as not clearly controlled
+XOM,E100000001213,Claude Code session (user pre-approved),"Exxon Mobil Corp; not in the scope1-ranked top 20 because universe scope1_tco2e is null for XOM, but a major emitter; id confirmed by direct owner search this session"
+AES,E100000001305,Claude Code session (exact name match),AES Corp exact match beyond top 20
+APD,E100000150846,Claude Code session (exact name match),Air Products LLC exact match beyond top 20
+ALB,E100002002690,Claude Code session (exact name match),Albemarle exact match beyond top 20
+APA,E100000001768,Claude Code session (exact name match),APA Corporation exact match beyond top 20
+ADM,E100001000641,Claude Code session (exact name match),Archer Daniels Midland exact match beyond top 20
+CAT,E100001011003,Claude Code session (exact name match),Caterpillar Inc exact match beyond top 20
+COP,E100001011247,Claude Code session (exact name match),ConocoPhillips exact match beyond top 20
+DAL,E100002013851,Claude Code session (exact name match),Delta Air Lines exact match beyond top 20
+FCX,E100000001220,Claude Code session (exact name match),Freeport-McMoRan exact match beyond top 20
+IP,E100000001241,Claude Code session (exact name match),International Paper exact match beyond top 20
+KMB,E100001000680,Claude Code session (exact name match),Kimberly-Clark exact match beyond top 20
+MLM,E100002007205,Claude Code session (exact name match),Martin Marietta Materials exact match beyond top 20
+NEM,E100000001597,Claude Code session (exact name match),Newmont exact match beyond top 20
+NUE,E100001010181,Claude Code session (exact name match),Nucor exact match beyond top 20
+OXY,E100000001270,Claude Code session (exact name match),Occidental Petroleum exact match beyond top 20
+OKE,E100001015278,Claude Code session (exact name match),Oneok exact match beyond top 20
+PKG,E100000132450,Claude Code session (exact name match),Packaging Corporation of America exact match beyond top 20
+PM,E100002008906,Claude Code session (exact name match),Philip Morris International exact match beyond top 20
+PG,E100000001307,Claude Code session (exact name match),Procter & Gamble exact match beyond top 20
+SLB,E100000188395,Claude Code session (exact name match),Schlumberger exact match beyond top 20
+SW,E100001011030,Claude Code session (exact name match),Smurfit Westrock exact match beyond top 20
+STLD,E100001010336,Claude Code session (exact name match),Steel Dynamics exact match beyond top 20

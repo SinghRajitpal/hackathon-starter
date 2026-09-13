@@ -1,0 +1,6 @@
+category,low,mid,high,source,source_date
+scope2,0,20,50,McKinsey Global Energy Perspective 2025 (power-sector decarbonization cost curve),2025-01-01
+combustion,50,120,150,Final_Part_2.pdf §4 indicative range (unconfirmed; see decisions-log D9),2026-09-13
+fleet,100,200,300,Final_Part_2.pdf §4 indicative range (no public confirmation found),2026-09-13
+process,100,150,250,Final_Part_2.pdf §4 indicative range (unconfirmed; see decisions-log D9),2026-09-13
+fugitive,0,20,30,IEA Global Methane Tracker 2025,2025-01-01

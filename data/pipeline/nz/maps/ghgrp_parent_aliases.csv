@@ -1,0 +1,4 @@
+ticker,ghgrp_parent_name,evidence
+APD,AIR PRODUCTS & CHEMICALS INC,"EPA GHGRP parent-company file (2019 and 2023 sheets): 100% ownership of e.g. facility ID 1002121; sole 'AIR PRODUCTS'-prefixed parent in either year, no other Air Products entity present."
+DD,DUPONT DE NEMOURS INC,"EPA GHGRP parent-company file (2019 and 2023 sheets): 100% ownership of e.g. facility ID 1001715. 'DUPONT TEIJIN FILMS' (also 100% in the same file) is deliberately excluded: it was a co-owned JV that DuPont sold its stake in to Teijin in 2019, so it is not DuPont de Nemours' facility in either year."
+WAB,WABTEC US RAIL INC,"EPA GHGRP parent-company file (2023 sheet): 100% ownership of facility ID 1010650; sole 'WABTEC'-prefixed parent in the file, unambiguously Westinghouse Air Brake Technologies Corp's US rail subsidiary."
