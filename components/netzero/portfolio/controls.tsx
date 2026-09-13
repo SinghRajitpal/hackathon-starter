@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { MacPoint } from "@/lib/netzero/config";
-import type { PortfolioControls } from "@/lib/netzero/portfolio";
+import { parseCapitalInput, type PortfolioControls } from "@/lib/netzero/portfolio";
 import type { Mandate } from "@/lib/netzero/types";
 
 export function Controls({
@@ -30,8 +30,8 @@ export function Controls({
             step={1_000_000}
             value={value.capital}
             onChange={(e) => {
-              const n = Number(e.target.value);
-              if (Number.isFinite(n) && n >= 0) set("capital", n);
+              const n = parseCapitalInput(e.target.value);
+              if (n !== null) set("capital", n);
             }}
           />
         </div>

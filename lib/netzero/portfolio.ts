@@ -35,8 +35,13 @@ export const DEFAULT_CONTROLS: PortfolioControls = {
 
 export const TOP_N = 10;
 
-/** Parses the capital control's raw input (PDF §10); null means keep the previous value. */
+/**
+ * Parses the capital control's raw input (PDF §10); null means keep the previous value.
+ * Empty/whitespace input is ignored rather than falling through to `Number("") === 0`,
+ * which would silently zero the capital while the user is mid-edit.
+ */
 export function parseCapitalInput(raw: string): number | null {
+  if (raw.trim() === "") return null;
   const n = Number(raw);
   return Number.isFinite(n) && n >= 0 ? n : null;
 }
