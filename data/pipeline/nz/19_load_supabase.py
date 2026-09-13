@@ -105,6 +105,7 @@ def main():
         ("nz_company_inputs", "ticker"),
         ("nz_emissions_sources", "ticker"),
         ("nz_mac_costs", "category"),
+        ("nz_validation_2019", "ticker"),
     ]:
         print(f"{table}: {count(session, base_url, headers, table, key)} rows")
 

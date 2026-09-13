@@ -77,3 +77,10 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 Record each check as: date, what was checked, sample, result, action.
 
 - 2026-09-13, `maps/ct_owner_candidates.csv` top 20 candidate-sector Scope 1 emitters (checked by: Claude Code session, user pre-approved), 15/20 accepted (Vistra, Duke Energy, NextEra, Xcel, Entergy, Phillips 66, Marathon Petroleum, Dominion, Evergy, Valero, NRG, DTE, CF Industries, Chevron, CMS Energy) and 5/20 rejected for no valid owner match (Southern Company, American Electric Power, PPL, Ameren, WEC Energy Group — candidates were either absent or unrelated look-alike companies, e.g. "Southern Kuzbass Coal Company PJSC" for Southern Company); action: Chevron Phillips / Chevron Phillips Chemical (50/50 JV) and Chevron USA Inc excluded from CVX's owner ids, and "CMS Cepcor Group Utah" / "Shuweihat CMS International Power" (divested JV) excluded from CMS's; 22 further tickers added beyond the top 20 only where `suggested_owner_ids` was a single exact normalised-name match; XOM added via a separately controller-verified owner id (E100000001213) since its `scope1_tco2e` is null in the universe file.
+
+## §11 validation (P8, 13 Sep 2026)
+
+2019 TBR (GHGRP Scope 1 categories × mid MAC ÷ FY2019 EBITDA from SEC companyfacts) against the change in
+GHGRP Scope 1 intensity from 2019 to 2023 (latest revenue = TTM). n = 67, Spearman = -0.203.
+Hypothesis (low burden → faster decarbonisation) predicts a positive correlation. Result: not supported.
+Scope: US facilities only; companies without GHGRP rows in both years are excluded.
