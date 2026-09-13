@@ -61,6 +61,12 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Fleet with GHGRP | GHGRP has no mobile sources, so 10-K fleet emissions are added on top of GHGRP categories. |
 | Climate TRACE sources | v7, year 2024, gas co2e_100yr; non-US only; verified owner; equal split over distinct owners (D13). |
 | Climate TRACE owner map | Top 20 candidate-sector emitters (by `scope1_tco2e`) hand-checked on 2026-09-13 by Claude Code session (user pre-approved); 15 of 20 accepted (with named JV/subsidiary exclusions for CVX and CMS), 5 (SO, AEP, PPL, AEE, WEC) had no valid Climate TRACE owner match; XOM added via a controller-verified owner id; other rows only for a single exact normalised-name match. |
+| Emissions precedence | GHGRP categories (+ Climate TRACE non-US, + 10-K fleet) → reported Scope 1 total split by sector-median GHGRP shares after fleet (no Climate TRACE) → Climate TRACE only (+ fleet) → fleet only → none. |
+| Scope 2 imputation scope | Only companies with some Scope 1 data get imputed Scope 2; companies with no emissions in any source keep every category empty so the engine applies the sector-median TBR (D11). |
+| Total without sector peers | A reported Scope 1 total in a sector with no GHGRP-split companies goes entirely to combustion, flag `category-split-no-peers`. |
+| GHGRP reconciliation check (Task 12 ruling) | The tautological "GHGRP categories sum to GHGRP total within 0.1%" check is replaced by a per-ticker check: `\|reported_total − total\| ÷ reported_total ≤ 0.5%` using `ghgrp_categories.csv` year-2023 rows (extra `reported_total` column = EPA's own total). Exceptions are printed; `check_inputs.py` fails only when more than 5 tickers exceed the threshold. |
+| Optional emissions inputs (Task 12) | `ct_categories.csv` and `fleet.csv` (and `ghgrp_categories.csv`) are optional inputs to `17_build_inputs.py`: a missing file is treated as an empty source (no Climate TRACE non-US emissions, no 10-K fleet) and logged as "missing optional input", not a failure. |
+| Supabase loader (Task 13 ruling) | Loader uses Supabase REST with the service key (no DB password); child tables refreshed by delete then insert (not transactional). |
 
 ## Hand checks
 
