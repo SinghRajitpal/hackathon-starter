@@ -1,7 +1,7 @@
 import { median, quantile } from "./stats";
 import { CATEGORIES, type CompanyInput, type Emissions, type MacVector } from "./types";
 
-/** EBITDA margin below this counts as near-zero EBITDA (PDF §4). */
+/** [gap] EBITDA margin below this counts as near-zero EBITDA (PDF §4). */
 export const NEAR_ZERO_EBITDA_MARGIN = 0.01;
 
 /** PDF §4: Bill = Σ E_category × MAC_category, MAC floored at zero. Null when no emissions at all. */

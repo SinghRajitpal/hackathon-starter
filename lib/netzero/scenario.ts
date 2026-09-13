@@ -116,7 +116,8 @@ export function prepareScenario(companies: CompanyInput[], config: ScenarioConfi
 export function scoreScenario(prepared: PreparedScenario, weightOverride?: Map<string, number[]>): ScenarioResult {
   const scores = new Map<string, CompanyScore>();
   for (const model of prepared.sectors) {
-    const weights = weightOverride?.get(model.sector) ?? model.weights;
+    const override = weightOverride?.get(model.sector);
+    const weights = override && override.length === model.variables.length ? override : model.weights;
     const results = topsis(model.matrix, weights);
     const order = results
       .map((r, i) => ({ r, i }))
