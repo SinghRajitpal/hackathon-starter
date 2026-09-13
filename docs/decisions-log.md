@@ -123,3 +123,73 @@ Scope: US facilities only; companies without GHGRP rows in both years are exclud
 ### [decision] Engine fallback MAC mid-points match maps/mac_costs.csv
 - **Rule:** When `nz_mac_costs` is missing a category, the engine falls back to scope2 20, combustion 120, fleet 200, process 150, fugitive 20 USD/t — the confirmed mid-points in `data/pipeline/nz/maps/mac_costs.csv`.
 - **Why:** The earlier placeholders (scope2 30, fugitive 15) predated the MAC research; keeping them would make bills differ depending on whether the Supabase load succeeded.
+
+## Hand checks (spec §9)
+
+2026-09-13, checked by: Claude Code session (task-scoped, no web access). These three checks are reasonableness
+checks against general knowledge of each company's business type, not reconciliations to company-reported
+figures. The DE/BEN classification hand check (~10% sample) is deferred to the controller.
+
+### Top 20 Scope 1 emitters — category-split plausibility
+
+Ranked by Scope 1 total (combustion + fleet + process + fugitive) from `company_inputs.csv`; sources cross-checked against `emissions_sources.csv`.
+
+| Rank | Ticker | Company | Sector / sub-industry | Combustion Mt | Fleet Mt | Process Mt | Fugitive Mt | Total Mt | Main source(s) | Verdict |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | VST | Vistra | Utilities / Electric Utilities | 86.40 | 0 | 0 | 0 | 86.40 | GHGRP | Generator: combustion-dominant plausible |
+| 2 | SO | Southern Company | Utilities / Electric Utilities | 75.75 | 0 | 0 | 0.46 | 76.21 | GHGRP | Generator: combustion-dominant plausible |
+| 3 | DUK | Duke Energy | Utilities / Electric Utilities | 73.27 | 0 | 0 | 0.47 | 73.74 | GHGRP | Generator: combustion-dominant plausible |
+| 4 | XOM | ExxonMobil | Energy / Integrated Oil & Gas | 25.10 | 0 | 32.85 | 7.38 | 65.33 | GHGRP + Climate TRACE | Integrated major with large non-US upstream: process/fugitive-heavy plausible |
+| 5 | BRK-B | Berkshire Hathaway | Financials / Multi-Sector Holdings | 58.99 | 0 | 0.05 | 0.50 | 59.53 | GHGRP | Holding co.: combustion total consistent with consolidated Berkshire Hathaway Energy utility subsidiaries, plausible |
+| 6 | AEP | American Electric Power | Utilities / Electric Utilities | 50.83 | 0 | 0 | 0.19 | 51.03 | GHGRP | Generator: combustion-dominant plausible |
+| 7 | UAL | United Airlines | Industrials / Passenger Airlines | 0 | 45.46 | 0 | 0 | 45.46 | 10-K fleet | Airline: 100% fleet plausible |
+| 8 | DAL | Delta Air Lines | Industrials / Passenger Airlines | 0.84 | 41.62 | 0.41 | 0 | 42.88 | 10-K fleet + GHGRP | Airline with owned refinery: fleet-dominant plus small combustion/process plausible |
+| 9 | NEE | NextEra Energy | Utilities / Multi-Utilities | 40.50 | 0 | 0 | 0.47 | 40.96 | GHGRP | Generator: combustion-dominant plausible |
+| 10 | XEL | Xcel Energy | Utilities / Multi-Utilities | 38.88 | 0 | 0 | 0.38 | 39.26 | GHGRP | Generator: combustion-dominant plausible |
+| 11 | ETR | Entergy | Utilities / Electric Utilities | 35.76 | 0 | 0 | 0.11 | 35.88 | GHGRP | Generator: combustion-dominant plausible |
+| 12 | PSX | Phillips 66 | Energy / Oil & Gas Refining & Marketing | 18.08 | 0 | 12.03 | 5.40 | 35.51 | GHGRP + Climate TRACE | Refiner: combustion + process mix plausible |
+| 13 | D | Dominion Energy | Utilities / Multi-Utilities | 28.39 | 0 | 0 | 1.17 | 29.56 | GHGRP | Generator: combustion-dominant plausible |
+| 14 | MPC | Marathon Petroleum | Energy / Oil & Gas Refining & Marketing | 20.18 | 0 | 8.27 | 0.35 | 28.80 | GHGRP | Refiner: combustion + process mix plausible |
+| 15 | VLO | Valero Energy | Energy / Oil & Gas Refining & Marketing | 13.72 | 0 | 14.78 | 0 | 28.50 | GHGRP + Climate TRACE | Refiner: process-heavy split plausible |
+| 16 | CVX | Chevron | Energy / Integrated Oil & Gas | 11.67 | 0 | 11.51 | 4.82 | 28.00 | GHGRP + Climate TRACE | Integrated major: balanced combustion/process/fugitive plausible |
+| 17 | PPL | PPL Corporation | Utilities / Electric Utilities | 26.77 | 0 | 0 | 0.15 | 26.92 | GHGRP | Generator: combustion-dominant plausible |
+| 18 | EVRG | Evergy | Utilities / Electric Utilities | 23.65 | 0 | 0 | 0.07 | 23.72 | GHGRP | Generator: combustion-dominant plausible |
+| 19 | DTE | DTE Energy | Utilities / Multi-Utilities | 22.64 | 0 | 0.21 | 0.34 | 23.19 | GHGRP | Generator with small gas-midstream arm: combustion-dominant plus minor process plausible |
+| 20 | CSCO | Cisco | Information Technology / Communications Equipment | 5.00 | 0 | 18.00 | 0 | 23.00 | Wikirate/GRI (`category-split-imputed`) | ⚠ Fabless networking-equipment vendor with a 78% "process" share is implausible. Likely cause: D14's `category-split-imputed` applied the sector-median GHGRP category shares of the few Information Technology peers that are semiconductor **fabs** (ADI, AVGO, AMD — real process emissions from chip manufacture) to Cisco's Wikirate global Scope 1 total; Cisco outsources manufacturing and should not carry a fab-like process share. Only the Wikirate *total* (~23 Mt) is trustworthy, not this split. |
+
+Rows 1–19 read as plausible against each company's known business type; only row 20 (CSCO) is flagged.
+
+### Climate TRACE owner map spot-check (10 of `ct_owner_map.csv`'s 39 rows)
+
+| Ticker | Owner id(s) / name(s) | Same corporate parent? | Note |
+|---|---|---|---|
+| VST | Vistra Corp | Yes | Exact name match |
+| DUK | Duke Energy Carolinas/Florida/Indiana/Kentucky/Progress/Ohio | Yes | All wholly owned Duke Energy operating subsidiaries |
+| NEE | NextEra Energy Point Beach LLC | Yes, but thin | Only a single nuclear-plant subsidiary matched; NextEra's much larger fossil fleet has no Climate TRACE owner id here. Benign — GHGRP already covers NEE's domestic combustion and `company_inputs.csv` shows no ClimateTRACE line for NEE — but flagged as a coverage-completeness doubt, not a wrong-parent doubt |
+| XEL | Xcel Energy Inc | Yes | Exact name match |
+| ETR | Entergy Corp + Arkansas/Louisiana/Mississippi/Texas/New Orleans | Yes | All Entergy operating companies |
+| PSX | Phillips 66 + Phillips 66 – Los Angeles refinery entity | Yes | Refinery entity is a Phillips 66 subsidiary |
+| MPC | Marathon Petroleum Corp + Marathon Petroleum Company LP | Yes | LP is MPC's operating subsidiary |
+| D | Dominion Energy South Carolina Inc | Yes | Former SCE&G, acquired by Dominion in 2019 |
+| CVX | Chevron Corp + Nigeria/Argentina/Saudi Arabia/Brasil subsidiaries | Yes | JV (Chevron Phillips, 50/50) and US-only entity (Chevron USA) correctly excluded per prior controller ruling |
+| CMS | CMS Generation Grayling/Genesee/Holdings/Filer City/Michigan Power | Yes | Non-utility subsidiaries; divested JVs (CMS Cepcor Group Utah, Shuweihat CMS International Power) correctly excluded |
+
+Result: 10/10 confirmed same corporate parent. One doubt (NEE — thin coverage, not a wrong match); no wrong-parent matches found in this sample.
+
+### MAC sources (`mac_costs.csv`, all 5 rows)
+
+| Category | Low | Mid | High | Ordered (low≤mid≤high)? | Source | Date | Mid inside PDF §4 range? |
+|---|---|---|---|---|---|---|---|
+| scope2 | 0 | 20 | 50 | Yes | McKinsey Global Energy Perspective 2025 | 2025-01-01 | Yes (D9: confirmed 2026-09-13, in range) |
+| combustion | 50 | 120 | 150 | Yes | Final_Part_2.pdf §4 indicative range (unconfirmed) | 2026-09-13 | Yes — value is the PDF §4/§12 mid-point itself (120) |
+| fleet | 100 | 200 | 300 | Yes | Final_Part_2.pdf §4 indicative range (no public confirmation found) | 2026-09-13 | Yes — value is the PDF §4/§12 mid-point itself (200) |
+| process | 100 | 150 | 250 | Yes | Final_Part_2.pdf §4 indicative range (unconfirmed) | 2026-09-13 | Yes — value is the PDF §4/§12 mid-point itself (150) |
+| fugitive | 0 | 20 | 30 | Yes | IEA Global Methane Tracker 2025 | 2025-01-01 | Yes (D9: confirmed 2026-09-13, in range) |
+
+Result: all 5 rows have low ≤ mid ≤ high, a named source and a date. Combustion, fleet and process mids
+(120/200/150) are the PDF §4/§12 indicative mid-points themselves, so they trivially fall inside the PDF's
+own range; scope2 and fugitive mids (20/20) were independently sourced and already confirmed in-range per D9.
+
+Action: no data or code change made from this check. The CSCO category split (⚠ above) is a pre-existing
+D14 mechanism limitation, not a data-entry error — flagged for the team to consider whether IT-sector median
+shares should exclude fabless sub-industries when splitting Wikirate-only Scope 1 totals.
