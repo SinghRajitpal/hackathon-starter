@@ -25,7 +25,14 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-from nzlib.climate_trace import SUBSECTOR_CATEGORY, US_COUNTRY_CODE, aggregate, attribute
+from nzlib.climate_trace import (
+    BASIN_AGGREGATE_SUBSECTORS,
+    SUBSECTOR_CATEGORY,
+    US_COUNTRY_CODES,
+    aggregate,
+    attribute,
+    is_basin_aggregate,
+)
 from nzlib.ghgrp import normalize_name
 
 API = "https://api.climatetrace.org/v7"
@@ -131,17 +138,29 @@ def sources_for_owner(session: requests.Session, owner_id: str) -> list[dict]:
 def compute(session: requests.Session) -> None:
     owner_map = pd.read_csv(OWNER_MAP_PATH, dtype=str).fillna("")
     results = []
+    excluded_ids: set[str] = set()
+    excluded_tonnage = 0.0
     for entry in owner_map.itertuples():
         owner_ids = {i for i in entry.owner_ids.split("|") if i}
         if not owner_ids:
             continue
         seen, attributions = set(), []
+        ticker_lost_a_source = False
         for owner_id in sorted(owner_ids):
             for source in sources_for_owner(session, owner_id):
                 if source["id"] in seen:
                     continue
                 seen.add(source["id"])
-                if source.get("country") == US_COUNTRY_CODE or source.get("subsector") not in SUBSECTOR_CATEGORY:
+                if source.get("country") in US_COUNTRY_CODES or source.get("subsector") not in SUBSECTOR_CATEGORY:
+                    continue
+                # Country-basin aggregates (e.g. "Qatar_Rub al Khali_LNG") are not a single verified
+                # owned asset -- spec D13's equal split assumes the latter -- so exclude them before
+                # spending an API call confirming ownership.
+                if source.get("subsector") in BASIN_AGGREGATE_SUBSECTORS and is_basin_aggregate(source.get("name")):
+                    ticker_lost_a_source = True
+                    if source["id"] not in excluded_ids:
+                        excluded_ids.add(source["id"])
+                        excluded_tonnage += float(source.get("emissionsQuantity") or 0.0)
                     continue
                 detail = api_get(session, f"/sources/{source['id']}", gas=GAS, start=YEAR, end=YEAR) or {}
                 attributions.append(attribute(source, detail.get("owners", []), owner_ids))
@@ -152,12 +171,14 @@ def compute(session: requests.Session) -> None:
                 "year": YEAR,
                 "assets_counted": sum(a is not None for a in attributions),
                 **{c: totals.get(c) for c in ["combustion", "fleet", "process", "fugitive"]},
+                "flags": "ct-basin-aggregate-excluded" if ticker_lost_a_source else "",
             }
         )
         print(f"{entry.ticker}: {results[-1]['assets_counted']} verified non-US assets")
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(results).to_csv(OUT_PATH, index=False)
     print(f"Wrote {len(results)} rows to {OUT_PATH}")
+    print(f"Basin aggregates excluded: {len(excluded_ids)} sources, {excluded_tonnage / 1e6:.2f} Mt")
 
 
 def main():
