@@ -45,11 +45,32 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Quantiles | linear interpolation |
 | Names per side (long/short) | ceil(N ÷ 5), min 2, max 5; sectors under 4 names split in half |
 | Long/short cap excess | name cap → within leg; sector cap → other sectors ∝ score IQR; remainder cash |
+| Long/short zero-dispersion sector | skips tradeable sectors whose score IQR is 0 (no dispersion to trade); their allotment stays in cash and is logged |
+| Long/short name and sector caps | measured against the 200% target gross, not the book's actual gross; unallocated capital stays in cash, so actual gross can be lower and a name can exceed 3% of actual gross |
 | Long-only quintile / decile | ceil(N ÷ 5) / ceil(N ÷ 10) |
+| Small sectors | quintile q = ceil(N/5) reduced to floor(N/2) when 2q > N; decile d = min(ceil(N/10), q) |
+| Long-only tilt excess | excess that cannot be placed in the top quintile within limits goes to middle names by benchmark weight, then back to the bottom quintile (spec D15 says pro-rata within sector) |
 | Benchmark name above 5% | kept at benchmark (sector weight must hold), logged |
+| Exclusion comparison missing emissions | never removes companies without emissions data (they cannot be ranked by emissions) |
 | Dirichlet concentration | α = 100 × entropy weight, seed 42, 1,000 draws |
 | Survival | all = same direction in every MAC run; most = at least half; few = fewer |
 | Robust pick | survives all MAC runs and ≥ 90% of weight draws |
+| Long-only pick threshold | a position counts as a pick for the sensitivity test only once its active weight reaches 1bp (0.0001); smaller tilts are treated as noise |
+| Halving flipped positions | trims the opposite leg to keep neutrality (gross falls) rather than re-scaling the halved leg up |
+| Stress-test weight draws | Dirichlet weight draws in the stress test are not re-capped at 0.40 (they perturb the capped entropy weights) |
+
+## P9 portfolio page (13 Sep 2026)
+
+| Rule | Value |
+|---|---|
+| Active share (long-only) | Σ \|portfolio − benchmark\| ÷ 2 |
+| Stress results and the book | When a stress result exists for the current costs, mandate and thresholds, positions that flip under ±50% costs are halved in both books and the CSV (PDF §11); capital changes do not invalidate the result |
+| Stress run | 1,000 Dirichlet draws, seed 42, run on button press in the browser (~0.5 s for 503 companies) |
+| Cost scenario control | low / mid / high columns of `nz_mac_costs`; missing categories fall back to PDF §12 mid-points with a warning |
+| DE/BEN banner | Shown only when every company is unclassified (P4 not loaded) |
+| Book-limit basis | Long/short name/sector limits are measured against the 200% target gross; fewer tradeable sectors means more cash and lower actual gross, stated on the method tab |
+| Validation card | Shows "not available" when the 2019 validation check has n = 0 or spearman = null (P4/validation data not loaded), instead of implying a check was run |
+| CSV | `toCsv` columns; file `nz-portfolio-<mandate>.csv`; long/short weights and dollars negative for shorts |
 
 ## P1 data rules (13 Sep 2026)
 
@@ -98,3 +119,7 @@ Scope: US facilities only; companies without GHGRP rows in both years are exclud
 - 2026-09-13, float-cap ÷ (price × shares_outstanding) checked across all 503 rows of `financials_ttm.csv` before and after `10_ttm_financials.py --recap-only` (checked by: Claude Code session), before: 57 rows above 1.2× (up to 3.9x for GOOGL) — sample GOOGL 4.14T, GOOG 4.10T, BRK-B 1.09T, IBKR 151B, NKE 53.4B; result: after recap the max ratio across all 503 rows is 1.0000000000000002 (float rounding only), 0 rows remaining above 1.0; action: none further needed, CSV committed as `data:`.
 - 2026-09-13, UNP, CSX, FDX, UPS 10-Ks fetched directly from EDGAR and searched for `gallons`/`fuel consum`/`metric ton` (checked by: Claude Code session), sample: full filing text (330k-600k characters each); result: none discloses an absolute fuel-consumption amount (UNP/CSX: ratio only; FDX: SAF offtake + savings figure only; UPS: price/cost narrative only) — the existing `not-disclosed` status is correct; action: none, no code change.
 - 2026-09-13, `13_fleet_fuel.py --tickers CCL,RCL,NCLH` rerun after the metric-ton fix (checked by: Claude Code session), sample: 3 tickers, 15 Gemini calls (5 retries each); result: all 3 failed with 429 `RESOURCE_EXHAUSTED` (free-tier daily quota for gemini-3.5-flash, limit 20/day, already spent), reproduced independently outside the pipeline; action: left `fleet.csv` status as `error` for these 3 (not fabricated, not reverted); rerun once the daily quota resets.
+
+### [decision] Engine fallback MAC mid-points match maps/mac_costs.csv
+- **Rule:** When `nz_mac_costs` is missing a category, the engine falls back to scope2 20, combustion 120, fleet 200, process 150, fugitive 20 USD/t — the confirmed mid-points in `data/pipeline/nz/maps/mac_costs.csv`.
+- **Why:** The earlier placeholders (scope2 30, fugitive 15) predated the MAC research; keeping them would make bills differ depending on whether the Supabase load succeeded.
