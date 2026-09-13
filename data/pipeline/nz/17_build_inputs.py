@@ -64,11 +64,13 @@ def build_frames() -> tuple[pd.DataFrame, pd.DataFrame]:
         shares = sector_category_shares(latest.merge(universe[["ticker", "sector"]], on="ticker"))
 
     ct_df = read_optional(CT_PATH)
-    ct = {}
+    ct, ct_flags = {}, {}
     if ct_df is not None:
         for r in ct_df.to_dict("records"):
             values = {c: present(r.get(c)) for c in SCOPE1_CATEGORIES}
             ct[r["ticker"]] = {c: v for c, v in values.items() if v}
+            if isinstance(r.get("flags"), str) and r["flags"]:
+                ct_flags[r["ticker"]] = [f for f in r["flags"].split("|") if f]
 
     fleet_df = read_optional(FLEET_PATH)
     fleet_status = {} if fleet_df is None else fleet_df.set_index("ticker")["status"].to_dict()
@@ -85,6 +87,7 @@ def build_frames() -> tuple[pd.DataFrame, pd.DataFrame]:
             scope1_source=u["scope1_source"] if isinstance(u["scope1_source"], str) else None,
             sector_shares=shares.get(u["sector"]),
         )
+        flags.extend(ct_flags.get(ticker, []))
         if fleet_status.get(ticker) == "not-disclosed":
             flags.append("fleet-fuel-not-disclosed")
 
