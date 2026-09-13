@@ -17,7 +17,6 @@ from score_engine import (
     entropy_divergence,
     entropy_weights,
     topsis_scores,
-    rank_stability,
     weight_vs_equal_delta,
 )
 
@@ -290,32 +289,6 @@ def test_topsis_scores_worst_company_scores_0():
     w = pd.Series({"a": 0.5, "b": 0.5})
     result = topsis_scores(X, w)
     assert result["score"].iloc[0] == pytest.approx(0.0)
-
-
-def test_rank_stability_returns_valid_rank_bounds():
-    n = 20
-    rng = np.random.default_rng(1)
-    X = pd.DataFrame(rng.uniform(0, 1, size=(n, 4)), columns=list("abcd"))
-    w = pd.Series({"a": 0.4, "b": 0.3, "c": 0.2, "d": 0.1})
-
-    result = rank_stability(X, w, n_draws=50)
-
-    assert list(result.columns) == ["min_rank", "max_rank"]
-    assert len(result) == n
-    assert (result["min_rank"] <= result["max_rank"]).all()
-    assert (result["min_rank"] >= 1).all()
-    assert (result["max_rank"] <= n).all()
-
-
-def test_rank_stability_is_deterministic_given_seed():
-    n = 10
-    rng = np.random.default_rng(2)
-    X = pd.DataFrame(rng.uniform(0, 1, size=(n, 3)), columns=list("abc"))
-    w = pd.Series({"a": 0.5, "b": 0.3, "c": 0.2})
-
-    r1 = rank_stability(X, w, n_draws=20, seed=7)
-    r2 = rank_stability(X, w, n_draws=20, seed=7)
-    pd.testing.assert_frame_equal(r1, r2)
 
 
 def test_weight_vs_equal_delta_zero_when_weights_already_equal():

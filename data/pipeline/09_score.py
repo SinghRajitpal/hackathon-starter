@@ -8,6 +8,9 @@ ranking (blueprint section 9) -- not a second weighting pass. No
 `imputed` column is written here: per this plan's Global Constraints
 (docs/superpowers/plans/2026-09-13-sustainability-evaluator.md), no
 company is excluded and no imputation is ever surfaced downstream.
+Rank stability (section 10's 1,000-draw robustness check) is dropped
+per a 2026-09-13 user decision -- see score_engine.py's module
+docstring; weight_vs_equal_delta (2 scoring passes) is kept.
 
 Input: data/out/sp500_esg_financials_raw.csv (output of 05_merge.py,
 08_fetch_epa_scope1.py)
@@ -19,7 +22,6 @@ from score_engine import (
     REFERENCE_RANGES,
     entropy_weights,
     normalize_all,
-    rank_stability,
     topsis_scores,
     weight_vs_equal_delta,
 )
@@ -51,7 +53,6 @@ def main():
     X, imputed = normalize_all(df)
     w, _d = entropy_weights(X)
     scored = topsis_scores(X, w)
-    stability = rank_stability(X, w)
     rank_delta = weight_vs_equal_delta(X, w)
 
     out = df[ID_COLUMNS].copy()
@@ -71,8 +72,6 @@ def main():
         filled = df[raw_col].where(~imputed[var], df.groupby("sector")[raw_col].transform("median"))
         out[f"{var}_raw"] = filled
 
-    out["rank_min"] = stability["min_rank"]
-    out["rank_max"] = stability["max_rank"]
     out["rank_delta_vs_equal"] = rank_delta
 
     out = out.sort_values("rank")

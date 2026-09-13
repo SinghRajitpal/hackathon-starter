@@ -6,11 +6,15 @@ database or the real dataset.
 
 Blueprint: sustainability-evaluator-blueprint-v1.4.pdf, sections 3, 5-10.
 Sections 3, 5, 6, 7, 8 of that document are marked "Locked" -- any change
-to the math here needs a decisions-log entry. Three such changes are
+to the math here needs a decisions-log entry. Four such changes are
 already made and recorded in this plan's Global Constraints
 (docs/superpowers/plans/2026-09-13-sustainability-evaluator.md): no
 company is ever excluded from the ranking, no imputation is surfaced to
-the user, and the 0.05 disclosure penalty is kept but applied silently.
+the user, the 0.05 disclosure penalty is kept but applied silently, and
+(2026-09-13, user decision) rank stability -- section 10's 1,000-draw
+Dirichlet re-weighting/re-ranking robustness check -- is dropped
+entirely, not computed. weight_vs_equal_delta (section 10's other
+robustness output, 2 scoring passes not 1,000) is kept.
 
 Reference ranges below are frozen constants, checked against the real
 503-company dataset (data/out/sp500_esg_financials_raw.csv) on
@@ -258,33 +262,6 @@ def topsis_scores(X: pd.DataFrame, w: pd.Series) -> pd.DataFrame:
         out[f"contrib_{col}"] = (gaps_to_ideal[col] / total_gap).fillna(0.0)
 
     return out
-
-
-def rank_stability(
-    X: pd.DataFrame,
-    w: pd.Series,
-    n_draws: int = 1000,
-    concentration: float = 200.0,
-    seed: int = 42,
-) -> pd.DataFrame:
-    """Section 10: perturbs w via n_draws Dirichlet draws centred on the
-    entropy weights (higher `concentration` = tighter draws around w)
-    and recomputes the ranking each time. Companies whose rank barely
-    moves are robustly placed; companies whose rank swings widely are
-    weight-sensitive. Computed once per pipeline run, not per request."""
-    rng = np.random.default_rng(seed)
-    alpha = w.reindex(X.columns).to_numpy() * concentration
-    ranks = np.empty((n_draws, len(X)), dtype=int)
-
-    for i in range(n_draws):
-        w_draw = pd.Series(rng.dirichlet(alpha), index=X.columns)
-        draw_scores = topsis_scores(X, w_draw)["score"]
-        ranks[i] = draw_scores.rank(ascending=False, method="min").to_numpy()
-
-    return pd.DataFrame(
-        {"min_rank": ranks.min(axis=0), "max_rank": ranks.max(axis=0)},
-        index=X.index,
-    )
 
 
 def weight_vs_equal_delta(X: pd.DataFrame, w: pd.Series) -> pd.Series:
