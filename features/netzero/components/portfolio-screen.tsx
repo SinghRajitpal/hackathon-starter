@@ -2,6 +2,7 @@
 
 import { ExplanationPanel } from "@/features/netzero/components/explanation";
 import { KpiTiles, Panel, ScreenHeader, Takeaways } from "@/features/netzero/components/frame";
+import { LongShortDonut } from "@/features/netzero/components/long-short-donut";
 import { Onboarding } from "@/features/netzero/components/onboarding";
 import { formatPercent, formatUsd, formatYears } from "@/features/netzero/engine/format";
 import { buildPortfolioDashboard, type ComparisonFormat } from "@/features/netzero/engine/dashboard/portfolio";
@@ -83,6 +84,9 @@ export function PortfolioScreen({ data, model, nav, onAnswers, onAdjust }: Portf
             ))}
           </ul>
         )}
+      </Panel>
+      <Panel title="Long and short positions · Utilities, $1B gross active">
+        <LongShortDonut />
       </Panel>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <Panel title="Top overweights">
