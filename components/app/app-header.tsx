@@ -12,9 +12,9 @@ const LINKS = [
 
 export function AppHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
-        <Link href="/" className="shrink-0 text-xl font-semibold tracking-tight">
+        <Link href="/" className="shrink-0 text-2xl font-semibold tracking-tight text-white">
           meridian
         </Link>
         {/* usePathname is runtime data on dynamic routes, so the active state streams in. */}
@@ -41,8 +41,8 @@ function NavLinks({ pathname }: { pathname: string | null }) {
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
-            className={`whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-              active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
+            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              active ? "bg-primary text-primary-foreground" : "text-slate-300 hover:bg-white/10 hover:text-white"
             }`}
           >
             {label}

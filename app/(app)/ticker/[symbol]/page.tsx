@@ -39,7 +39,7 @@ async function TickerContent({ params }: { params: Params }) {
   return (
     <>
       <header className="shrink-0 text-center">
-        <h1 className="text-3xl font-semibold tracking-tight">{name}</h1>
+        <h1 className="font-serif text-4xl">{name}</h1>
         <p className="mt-1 font-mono text-sm text-muted-foreground">
           {ticker}
           {sector ? ` · ${sector}` : ""}

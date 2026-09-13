@@ -21,7 +21,7 @@ export default function TickersPage({ searchParams }: { searchParams: SearchPara
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <h1 className="text-3xl font-semibold tracking-tight">Tickers overview</h1>
+        <h1 className="font-serif text-4xl">Tickers overview</h1>
         <p className="mt-1 text-muted-foreground">Every S&amp;P 500 company from A to Z, and the rankings from both tools.</p>
       </header>
       <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">

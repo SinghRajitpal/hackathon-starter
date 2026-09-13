@@ -76,8 +76,8 @@ The unified functions do not exist yet in either branch:
   - The landing page's Get started buttons open `/dashboard`.
   - `supabase/schema.sql` and `.env.example` now document both tools.
 - **Checks:** `npm test` (the live Supabase tests read `.env.local`), `npx tsc --noEmit`, `npm run lint` and `npm run build` all pass. A headless-Chromium walk through every flow also passes.
+- **Phase 4 done:** the dark navy Meridian look now covers every page (user's choice). `app/globals.css` holds one navy token palette, and the root layout forces the `dark` class.
 - **Open:**
-  - Phase 4 restyle: pick the app theme.
   - Market Overview has no spec yet.
   - Tool 1's AI analysis card returns a 502 locally. `GEMINI_MODEL` is unset, so it uses `gemini-2.5-flash`.
   - Tool 1's anonymous-write policies on the cache table are still in place.
