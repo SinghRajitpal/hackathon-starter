@@ -95,11 +95,18 @@ const CSV_COLUMNS: (keyof AllocationRow)[] = [
   "dollars", "shares", "price", "score", "drivers", "reason",
 ];
 
-function csvCell(value: unknown): string {
-  const text = value === null || value === undefined ? "" : Array.isArray(value) ? value.join("|") : String(value);
-  return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+/** Free-text columns that can carry user- or vendor-supplied strings; only these get the formula-injection guard. */
+const TEXT_COLUMNS = new Set<keyof AllocationRow>(["companyName", "reason", "drivers"]);
+
+function csvCell(value: unknown, guardFormula: boolean): string {
+  let text = value === null || value === undefined ? "" : Array.isArray(value) ? value.join("|") : String(value);
+  if (guardFormula && /^[=+\-@]/.test(text)) text = `'${text}`;
+  return /["\r\n,]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 }
 
 export function toCsv(rows: AllocationRow[]): string {
-  return [CSV_COLUMNS.join(","), ...rows.map((r) => CSV_COLUMNS.map((k) => csvCell(r[k])).join(","))].join("\n");
+  return [
+    CSV_COLUMNS.join(","),
+    ...rows.map((r) => CSV_COLUMNS.map((k) => csvCell(r[k], TEXT_COLUMNS.has(k))).join(",")),
+  ].join("\n");
 }

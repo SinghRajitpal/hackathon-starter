@@ -19,7 +19,11 @@ const years = (v: number) => `${v.toFixed(2)} years`;
 export function reasonSentence(s: CompanyScore, position: PositionLabel, sectorMedianTbr: number): string {
   const lead = position.charAt(0).toUpperCase() + position.slice(1);
   const drivers = topDrivers(s.shares).map((v) => VARIABLE_LABEL[v]);
-  const leverage = s.ndEbitda === null ? "n/a" : `${s.ndEbitda.toFixed(1)}x`;
+  const leverage = s.flags?.includes("leverage-negative-ebitda")
+    ? "negative EBITDA"
+    : s.ndEbitda === null
+      ? "n/a"
+      : `${s.ndEbitda.toFixed(1)}x`;
   const driverText = drivers.length ? `; largest gaps to the sector ideal: ${drivers.join(" and ")}` : "";
   return `${lead}: burden ${years(s.tbr)} of earnings (sector median ${years(sectorMedianTbr)}), fossil revenue ${percent(s.de)}, beneficiary revenue ${percent(s.ben)}, net debt/EBITDA ${leverage}${driverText}.`;
 }

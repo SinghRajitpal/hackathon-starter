@@ -1,13 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { runEngine } from "./engine";
 import { DEFAULT_TEST_CONFIG, MID_MAC, syntheticUniverse } from "./fixtures";
+import { LS_LIMITS } from "./longShort";
+import type { LongOnlyBook } from "./longOnly";
 import { groupBySector } from "./scenario";
 import {
   DRAW_SURVIVAL_THRESHOLD,
   flippedTickers,
   halveLongOnly,
   halveLongShort,
+  longOnlySigns,
   macScenarios,
+  PICK_ACTIVE_THRESHOLD,
   runSensitivity,
 } from "./sensitivity";
 
@@ -73,6 +77,24 @@ describe("runSensitivity", () => {
   });
 });
 
+describe("longOnlySigns pick threshold (finding 3)", () => {
+  it("excludes a ticker whose active weight is below the 1bp threshold", () => {
+    const book = {
+      weights: new Map([
+        ["BELOW", { ticker: "BELOW", sector: "S", benchmark: 0.1, portfolio: 0.10005, active: 0.00005 }],
+        ["AT", { ticker: "AT", sector: "S", benchmark: 0.1, portfolio: 0.1001, active: PICK_ACTIVE_THRESHOLD }],
+        ["ABOVE", { ticker: "ABOVE", sector: "S", benchmark: 0.1, portfolio: 0.099, active: -0.001 }],
+      ]),
+      sectorWeights: new Map(),
+      events: [],
+    } as unknown as LongOnlyBook;
+    const signs = longOnlySigns(book);
+    expect(signs.has("BELOW")).toBe(false);
+    expect(signs.get("AT")).toBe(1);
+    expect(signs.get("ABOVE")).toBe(-1);
+  });
+});
+
 describe("halving flipped positions", () => {
   const result = runEngine(companies, DEFAULT_TEST_CONFIG);
 
@@ -86,6 +108,12 @@ describe("halving flipped positions", () => {
       const short = members.filter((p) => p.side === "short").reduce((a, p) => a + p.weight, 0);
       expect(long).toBeCloseTo(short, 9);
     }
+  });
+
+  it("keeps cash consistent with the LS_LIMITS.gross target, not a hardcoded 2 (finding 4)", () => {
+    const flipped = new Set(result.longShort.positions.slice(0, 3).map((p) => p.ticker));
+    const book = halveLongShort(result.longShort, flipped);
+    expect(book.cash).toBeCloseTo(LS_LIMITS.gross - book.gross, 12);
   });
 
   it("keeps long-only sector weights at benchmark and halves the flipped active weights", () => {

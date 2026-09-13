@@ -40,7 +40,7 @@ export interface TiltMember {
  */
 export function tiltSector(members: TiltMember[], limits = LO_LIMITS): { weights: Map<string, number>; events: string[] } {
   const events: string[] = [];
-  const sorted = [...members].sort((a, b) => a.score - b.score);
+  const sorted = [...members].sort((a, b) => a.score - b.score || a.ticker.localeCompare(b.ticker));
   const n = sorted.length;
   let q = Math.ceil(n / 5);
   if (2 * q > n) q = Math.floor(n / 2);
@@ -95,7 +95,7 @@ export function buildLongOnly(
 ): LongOnlyBook {
   const events: string[] = [];
   const bench = benchmarkWeights(companies);
-  const tradeable = new Set(dispersion.filter((d) => d.tradeable).map((d) => d.sector));
+  const tradeable = new Set(dispersion.filter((d) => d.tradeable && d.scoreIqr > 0).map((d) => d.sector));
   const weights = new Map<string, LoWeight>();
 
   for (const c of companies) {

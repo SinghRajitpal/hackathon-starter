@@ -29,4 +29,14 @@ describe("validationSummary (PDF §11)", () => {
     expect(validationSummary([row("A", "X", 0.1, -0.1), row("B", "X", 0.2, 0)]).spearman).toBeNull();
     expect(validationSummary([])).toEqual({ n: 0, spearman: null, bySector: {} });
   });
+
+  it("returns a null correlation when a column has zero variance, even with enough rows", () => {
+    const summary = validationSummary([
+      row("A", "X", 0.3, -0.1),
+      row("B", "X", 0.3, 0.2),
+      row("C", "X", 0.3, 0.4),
+    ]);
+    expect(summary.n).toBe(3);
+    expect(summary.spearman).toBeNull();
+  });
 });
