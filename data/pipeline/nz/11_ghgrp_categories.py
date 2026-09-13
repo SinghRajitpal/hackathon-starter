@@ -25,6 +25,7 @@ from nzlib.ghgrp import (
 UNIVERSE_PATH = Path("../../out/sp500_esg_financials_raw.csv")
 EPA_DIR = Path("../../raw/nz/epa")
 OUT_PATH = Path("../../out/nz/ghgrp_categories.csv")
+ALIASES_PATH = Path("maps/ghgrp_parent_aliases.csv")
 SUMMARY_URL = "https://www.epa.gov/system/files/other-files/2024-10/2023_data_summary_spreadsheets.zip"
 PARENT_URL = "https://www.epa.gov/system/files/other-files/2024-10/ghgp_data_parent_company.xlsb"
 YEARS = [2023, 2019]
@@ -62,6 +63,11 @@ def facilities_for_year(year: int) -> pd.DataFrame:
     return pd.concat(parts, ignore_index=True)
 
 
+def load_aliases(path: Path = ALIASES_PATH) -> pd.DataFrame:
+    """Hand-checked ticker -> literal GHGRP parent-company-name aliases (see docs/decisions-log.md)."""
+    return pd.read_csv(path, dtype=str)
+
+
 def main():
     zip_path = EPA_DIR / "2023_data_summary_spreadsheets.zip"
     parent_path = EPA_DIR / "ghgp_data_parent_company.xlsb"
@@ -74,11 +80,12 @@ def main():
                 archive.extract(member, EPA_DIR)
 
     universe = pd.read_csv(UNIVERSE_PATH, usecols=["ticker", "company_name"])
+    aliases = load_aliases()
     frames = []
     for year in YEARS:
         facilities = facilities_for_year(year)
         parents = pd.read_excel(parent_path, sheet_name=str(year), engine="pyxlsb")
-        out = attribute_to_tickers(facilities, parents, universe)
+        out = attribute_to_tickers(facilities, parents, universe, aliases=aliases)
         out["year"] = year
         frames.append(out)
         print(f"{year}: {len(facilities)} facilities, {len(out)} tickers matched")
