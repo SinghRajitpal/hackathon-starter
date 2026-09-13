@@ -110,6 +110,12 @@ describe("halving flipped positions", () => {
     }
   });
 
+  it("keeps cash consistent with the LS_LIMITS.gross target, not a hardcoded 2 (finding 4)", () => {
+    const flipped = new Set(result.longShort.positions.slice(0, 3).map((p) => p.ticker));
+    const book = halveLongShort(result.longShort, flipped);
+    expect(book.cash).toBeCloseTo(LS_LIMITS.gross - book.gross, 12);
+  });
+
   it("keeps long-only sector weights at benchmark and halves the flipped active weights", () => {
     const tilted = [...result.longOnly.weights.values()].filter((w) => Math.abs(w.active) > EPS).slice(0, 4);
     const book = halveLongOnly(result.longOnly, new Set(tilted.map((w) => w.ticker)));
