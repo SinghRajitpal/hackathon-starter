@@ -40,6 +40,12 @@ export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: Scena
 
   return (
     <div className="flex flex-col gap-6">
+      {company.deBenStatus === "unclassified" && (
+        <div role="status" className="rounded-md border border-amber-500/50 bg-amber-500/10 p-3 text-sm">
+          DE/BEN not yet classified: running with 0 (PDF §15). Demand exposure and beneficiary share count as zero for
+          every company until segment classification is loaded.
+        </div>
+      )}
       <PositionSection
         ticker={ticker}
         score={score}
