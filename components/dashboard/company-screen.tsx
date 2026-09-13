@@ -2,6 +2,7 @@
 
 import { KpiTiles, Panel, Pill, ScreenHeader, Takeaways } from "@/components/dashboard/frame";
 import { buildCompanyView } from "@/lib/netzero/dashboard/company";
+import { formatUsd } from "@/lib/netzero/format";
 import { COMPANY_LABEL_TONE } from "@/lib/netzero/dashboard/labels";
 import type { ScreenProps } from "@/lib/netzero/dashboard/types";
 
@@ -52,7 +53,7 @@ export function CompanyScreen({ data, model, nav, ticker }: ScreenProps & { tick
             {billSplit.map((row) => (
               <tr key={row.category} className="border-b last:border-0">
                 <td className="py-1 pr-3 text-muted-foreground">{row.label}</td>
-                <td className="py-1 text-right font-mono tabular-nums">{row.usd === null ? "n/a" : `$${(row.usd / 1e6).toFixed(1)}M`}</td>
+                <td className="py-1 text-right font-mono tabular-nums">{formatUsd(row.usd)}</td>
               </tr>
             ))}
           </tbody>
