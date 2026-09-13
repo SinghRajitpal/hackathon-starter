@@ -95,12 +95,15 @@ const CSV_COLUMNS: (keyof AllocationRow)[] = [
   "dollars", "shares", "price", "score", "drivers", "reason",
 ];
 
-/** Free-text columns that can carry user- or vendor-supplied strings; only these get the formula-injection guard. */
-const TEXT_COLUMNS = new Set<keyof AllocationRow>(["companyName", "reason", "drivers"]);
+/** Columns that can carry user- or vendor-supplied strings; only these get the formula-injection guard. */
+const TEXT_COLUMNS = new Set<keyof AllocationRow>(["ticker", "sector", "companyName", "reason", "drivers"]);
+
+/** OWASP CSV injection: a leading =, +, -, @, tab or carriage return can launch a formula in a spreadsheet. */
+const FORMULA_PREFIX = /^[=+\-@\t\r]/;
 
 function csvCell(value: unknown, guardFormula: boolean): string {
   let text = value === null || value === undefined ? "" : Array.isArray(value) ? value.join("|") : String(value);
-  if (guardFormula && /^[=+\-@]/.test(text)) text = `'${text}`;
+  if (guardFormula && FORMULA_PREFIX.test(text)) text = `'${text}`;
   return /["\r\n,]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
 }
 
