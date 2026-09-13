@@ -38,4 +38,20 @@ describe("NetZeroRiskPanel SSR smoke test", () => {
     const markup = renderToStaticMarkup(createElement(NetZeroRiskPanel, { ticker: "NOPE", data }));
     expect(markup).toContain("is not in the net-zero scenario universe");
   });
+
+  it("shows the DE/BEN not-yet-classified banner when the selected company is unclassified (finding 2)", () => {
+    const ticker = data.companies[0].ticker;
+    const unclassified: ScenarioData = {
+      ...data,
+      companies: data.companies.map((c) => (c.ticker === ticker ? { ...c, deBenStatus: "unclassified" } : c)),
+    };
+    const markup = renderToStaticMarkup(createElement(NetZeroRiskPanel, { ticker, data: unclassified }));
+    expect(markup).toContain("not yet classified");
+  });
+
+  it("does not show the banner when the selected company is classified", () => {
+    const ticker = data.companies[0].ticker;
+    const markup = renderToStaticMarkup(createElement(NetZeroRiskPanel, { ticker, data }));
+    expect(markup).not.toContain("not yet classified");
+  });
 });
