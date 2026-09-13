@@ -4,7 +4,7 @@
 // the server: this module is only ever imported from
 // app/api/sustainability-analysis/route.ts, never from a client
 // component.
-const DEFAULT_MODEL = "gemini-3.6-flash";
+const DEFAULT_MODEL = "gemini-2.5-flash";
 const TIMEOUT_MS = 25_000;
 
 export class GeminiMissingApiKeyError extends Error {
