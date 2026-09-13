@@ -12,6 +12,8 @@ from score_engine import (
     normalize_log_cost,
     normalize_target_as_cost,
     impute_sector_median,
+    normalize_all,
+    REFERENCE_RANGES,
 )
 
 
@@ -97,3 +99,45 @@ def test_impute_sector_median_never_leaves_nulls_when_sector_has_data():
     filled, missing = impute_sector_median(df, "sector", "val")
     assert not filled.isna().any()
     assert missing.tolist() == [True, False, False]
+
+
+def test_normalize_all_applies_penalty_only_to_imputed_cells():
+    df = pd.DataFrame({
+        "sector": ["Tech", "Tech", "Tech"],
+        "env_intensity_per_million": [10.0, 10.0, None],
+        "total_esg_risk_score": [20.0, 20.0, 20.0],
+        "controversy_score_ordinal": [1.0, 1.0, 1.0],
+        "asset_turnover": [0.3, 0.3, 0.3],
+        "profit_to_revenue": [0.1, 0.1, 0.1],
+        "fcf_to_revenue": [0.1, 0.1, 0.1],
+        "net_debt_to_ebitda": [1.5, 1.5, 1.5],
+    })
+    X, imputed = normalize_all(df)
+
+    assert list(X.columns) == list(REFERENCE_RANGES.keys())
+    # row 2 (index 2) had its env_intensity imputed with the sector
+    # median (10.0, same as rows 0/1) -- so before the penalty its
+    # normalised env value would equal row 0/1's; the penalty must make
+    # it strictly lower.
+    assert X.loc[2, "env_intensity"] < X.loc[0, "env_intensity"]
+    assert X.loc[0, "env_intensity"] == pytest.approx(X.loc[1, "env_intensity"])
+    assert imputed.loc[2, "env_intensity"] == True
+    assert imputed.loc[0, "env_intensity"] == False
+
+
+def test_normalize_all_clips_penalty_at_zero():
+    # a variable that's already at the worst possible normalised value
+    # (0.0) and also imputed must not go negative from the penalty
+    df = pd.DataFrame({
+        "sector": ["Tech", "Tech"],
+        "env_intensity_per_million": [10.0, None],
+        "total_esg_risk_score": [40.0, 999.0],  # 999 clips to hi=40 -> normalised 0, then imputed anyway
+        "controversy_score_ordinal": [1.0, 1.0],
+        "asset_turnover": [0.3, 0.3],
+        "profit_to_revenue": [0.1, 0.1],
+        "fcf_to_revenue": [0.1, 0.1],
+        "net_debt_to_ebitda": [1.5, 1.5],
+    })
+    X, imputed = normalize_all(df)
+    assert (X >= 0).all().all()
+    assert (X <= 1).all().all()

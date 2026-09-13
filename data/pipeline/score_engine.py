@@ -135,3 +135,35 @@ def impute_sector_median(df: pd.DataFrame, sector_col: str, raw_col: str) -> tup
     missing = df[raw_col].isna()
     filled = df[raw_col].where(~missing, sector_median)
     return filled, missing
+
+
+def normalize_all(df: pd.DataFrame, sector_col: str = "sector") -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Runs impute -> direction+range normalise -> silent disclosure
+    penalty for every variable in REFERENCE_RANGES, in that order (fixed
+    per blueprint section 15). Returns (X, imputed): X is the final 0-1
+    matrix that both entropy_weights and topsis_scores read from;
+    imputed is a same-shape boolean DataFrame for internal auditing only
+    -- per this plan's Global Constraints, never written to any output
+    the frontend reads."""
+    X = pd.DataFrame(index=df.index)
+    imputed = pd.DataFrame(index=df.index)
+
+    for name, spec in REFERENCE_RANGES.items():
+        raw_col = RAW_COLUMNS[name]
+        filled, missing = impute_sector_median(df, sector_col, raw_col)
+        imputed[name] = missing
+
+        if spec["kind"] == "benefit":
+            col = normalize_benefit(filled, spec["lo"], spec["hi"])
+        elif spec["kind"] == "cost":
+            col = normalize_cost(filled, spec["lo"], spec["hi"])
+        elif spec["kind"] == "log_cost":
+            col = normalize_log_cost(filled, spec["floor"], spec["lo"], spec["hi"])
+        elif spec["kind"] == "target":
+            col = normalize_target_as_cost(filled, spec["target"], spec["lo"], spec["hi"])
+        else:
+            raise ValueError(f"unknown reference-range kind: {spec['kind']}")
+
+        X[name] = (col - DISCLOSURE_PENALTY * missing.astype(float)).clip(lower=0.0, upper=1.0)
+
+    return X, imputed
