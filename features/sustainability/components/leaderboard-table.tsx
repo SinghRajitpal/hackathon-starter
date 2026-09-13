@@ -18,37 +18,56 @@ export function pillarShares(row: Pick<ScoreRow,
   return { environmental, social, financial };
 }
 
-export function LeaderboardTable({ rows, useSectorRank = false }: { rows: ScoreRow[]; useSectorRank?: boolean }) {
+/**
+ * `compact` fits a half-width pane: sector moves under the company name and
+ * the pillar headers are abbreviated, so the table never scrolls sideways.
+ */
+export function LeaderboardTable({
+  rows,
+  useSectorRank = false,
+  compact = false,
+}: {
+  rows: ScoreRow[];
+  useSectorRank?: boolean;
+  compact?: boolean;
+}) {
   return (
     <div className="w-full overflow-x-auto rounded-md border">
       <table className="w-full text-sm">
         <thead className="bg-muted">
           <tr>
-            <th className="px-3 py-2 text-left">Rank</th>
-            <th className="px-3 py-2 text-left">Ticker</th>
-            <th className="px-3 py-2 text-left">Company</th>
-            <th className="px-3 py-2 text-left">Sector</th>
-            <th className="px-3 py-2 text-right">Environmental</th>
-            <th className="px-3 py-2 text-right">Social</th>
-            <th className="px-3 py-2 text-right">Financial</th>
-            <th className="px-3 py-2 text-right">Score</th>
+            <th className="px-2 py-2 text-left">Rank</th>
+            <th className="px-2 py-2 text-left">Ticker</th>
+            <th className="px-2 py-2 text-left">Company</th>
+            {!compact && <th className="px-2 py-2 text-left">Sector</th>}
+            <th className="px-2 py-2 text-right">
+              {compact ? <abbr title="Environmental" className="no-underline">Env.</abbr> : "Environmental"}
+            </th>
+            <th className="px-2 py-2 text-right">Social</th>
+            <th className="px-2 py-2 text-right">
+              {compact ? <abbr title="Financial" className="no-underline">Fin.</abbr> : "Financial"}
+            </th>
+            <th className="px-2 py-2 text-right">Score</th>
           </tr>
         </thead>
         <tbody className="divide-y">
           {rows.map((row) => (
             <tr key={row.ticker} className="hover:bg-accent">
-              <td className="px-3 py-2 font-mono">{useSectorRank ? row.sector_rank : row.rank}</td>
-              <td className="px-3 py-2">
+              <td className="px-2 py-2 font-mono">{useSectorRank ? row.sector_rank : row.rank}</td>
+              <td className="px-2 py-2">
                 <Link href={`/ticker/${encodeURIComponent(row.ticker)}`}>
                   <Badge>{row.ticker}</Badge>
                 </Link>
               </td>
-              <td className="px-3 py-2">{row.company_name}</td>
-              <td className="px-3 py-2 text-muted-foreground">{row.sector}</td>
-              <td className="px-3 py-2 text-right text-muted-foreground">{row.pillar_environmental_score.toFixed(0)}</td>
-              <td className="px-3 py-2 text-right text-muted-foreground">{row.pillar_social_score.toFixed(0)}</td>
-              <td className="px-3 py-2 text-right text-muted-foreground">{row.pillar_financial_score.toFixed(0)}</td>
-              <td className="px-3 py-2 text-right font-semibold">{row.score.toFixed(1)}</td>
+              <td className="px-2 py-2">
+                {row.company_name}
+                {compact && <span className="block text-xs text-muted-foreground">{row.sector}</span>}
+              </td>
+              {!compact && <td className="px-2 py-2 text-muted-foreground">{row.sector}</td>}
+              <td className="px-2 py-2 text-right text-muted-foreground">{row.pillar_environmental_score.toFixed(0)}</td>
+              <td className="px-2 py-2 text-right text-muted-foreground">{row.pillar_social_score.toFixed(0)}</td>
+              <td className="px-2 py-2 text-right text-muted-foreground">{row.pillar_financial_score.toFixed(0)}</td>
+              <td className="px-2 py-2 text-right font-semibold">{row.score.toFixed(1)}</td>
             </tr>
           ))}
         </tbody>

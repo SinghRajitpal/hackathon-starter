@@ -9,20 +9,26 @@ export function parseRankingView(value: string | string[] | undefined): RankingV
   return typeof value === "string" && RANKING_VIEWS.includes(value) ? (value as RankingView) : null;
 }
 
-/** Search suggestions: the exact ticker, then tickers starting with the query, then ticker or name matches. */
+/**
+ * Search suggestions: the exact ticker, then tickers starting with the query, then company names
+ * starting with it, then any other ticker or name match.
+ */
 export function matchTickers<T extends TickerOption>(options: T[], query: string, limit = 8): T[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
   const exact: T[] = [];
   const prefix: T[] = [];
+  const namePrefix: T[] = [];
   const contains: T[] = [];
   for (const option of options) {
     const ticker = option.ticker.toLowerCase();
+    const name = option.company_name.toLowerCase();
     if (ticker === q) exact.push(option);
     else if (ticker.startsWith(q)) prefix.push(option);
-    else if (ticker.includes(q) || option.company_name.toLowerCase().includes(q)) contains.push(option);
+    else if (name.startsWith(q)) namePrefix.push(option);
+    else if (ticker.includes(q) || name.includes(q)) contains.push(option);
   }
-  return [...exact, ...prefix, ...contains].slice(0, limit);
+  return [...exact, ...prefix, ...namePrefix, ...contains].slice(0, limit);
 }
 
 /** Tickers grouped by first letter, A to Z, sorted inside each group. */

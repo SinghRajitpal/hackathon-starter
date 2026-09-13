@@ -21,6 +21,14 @@ describe("matchTickers", () => {
     expect(tickers(matchTickers(companies, "a"))).toEqual(["A", "AAPL", "PNR"]);
   });
 
+  it("ranks a company name starting with the query above a ticker that only contains it", () => {
+    const options = [
+      { ticker: "INVH", company_name: "Invitation Homes" },
+      { ticker: "NVDA", company_name: "Nvidia" },
+    ];
+    expect(tickers(matchTickers(options, "nvi"))).toEqual(["NVDA", "INVH"]);
+  });
+
   it("matches company names, ignoring case", () => {
     expect(tickers(matchTickers(companies, "MICRO"))).toEqual(["MSFT"]);
   });

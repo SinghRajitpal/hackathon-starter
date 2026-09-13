@@ -28,29 +28,29 @@ export function NetZeroRankingTable({ rows }: { rows: NetZeroRankingRow[] }) {
             <table className="w-full text-sm">
               <thead className="bg-muted">
                 <tr>
-                  <th className="px-3 py-2 text-left">Rank</th>
-                  <th className="px-3 py-2 text-left">Ticker</th>
-                  <th className="px-3 py-2 text-left">Company</th>
-                  <th className="px-3 py-2 text-right">Score</th>
-                  <th className="px-3 py-2 text-left">Position</th>
-                  <th className="px-3 py-2 text-left">Verdict</th>
+                  <th className="px-2 py-2 text-left">Rank</th>
+                  <th className="px-2 py-2 text-left">Ticker</th>
+                  <th className="px-2 py-2 text-left">Company</th>
+                  <th className="px-2 py-2 text-right">Score</th>
+                  <th className="px-2 py-2 text-left">Position</th>
+                  <th className="px-2 py-2 text-left">Verdict</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
                 {sectorRows.map((r) => (
                   <tr key={r.ticker} className="hover:bg-accent">
-                    <td className="px-3 py-2 font-mono tabular-nums">
+                    <td className="px-2 py-2 font-mono tabular-nums">
                       {r.rank}/{r.sectorSize}
                     </td>
-                    <td className="px-3 py-2">
+                    <td className="px-2 py-2">
                       <Link href={`/ticker/${encodeURIComponent(r.ticker)}`} className="font-mono font-semibold hover:underline">
                         {r.ticker}
                       </Link>
                     </td>
-                    <td className="px-3 py-2">{r.companyName}</td>
-                    <td className="px-3 py-2 text-right font-semibold tabular-nums">{r.score.toFixed(1)}</td>
-                    <td className={`px-3 py-2 ${TONE_CLASS[COMPANY_LABEL_TONE[r.label]]}`}>{COMPANY_LABEL_TEXT[r.label]}</td>
-                    <td className={`px-3 py-2 font-mono ${r.verdict ? VERDICT_CLASS[r.verdict] : "text-muted-foreground"}`}>
+                    <td className="px-2 py-2">{r.companyName}</td>
+                    <td className="px-2 py-2 text-right font-semibold tabular-nums">{r.score.toFixed(1)}</td>
+                    <td className={`px-2 py-2 ${TONE_CLASS[COMPANY_LABEL_TONE[r.label]]}`}>{COMPANY_LABEL_TEXT[r.label]}</td>
+                    <td className={`px-2 py-2 font-mono ${r.verdict ? VERDICT_CLASS[r.verdict] : "text-muted-foreground"}`}>
                       {r.verdict ?? "—"}
                     </td>
                   </tr>

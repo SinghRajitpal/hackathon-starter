@@ -58,7 +58,7 @@ export function TickerSearch() {
   }
 
   return (
-    <div className="flex w-full max-w-2xl flex-col items-center gap-4">
+    <div className="flex w-full max-w-5xl flex-col items-center gap-6">
       <form role="search" onSubmit={onSubmit} className="relative w-full">
         <input
           type="search"
@@ -77,13 +77,13 @@ export function TickerSearch() {
           onKeyDown={onKeyDown}
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
-          className="h-16 w-full rounded-full border bg-card px-7 text-lg shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-20 w-full rounded-full border bg-card px-8 text-2xl shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-24 sm:px-10 sm:text-3xl"
         />
         {showList && (
           <ul
             id={listId}
             role="listbox"
-            className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border bg-popover text-popover-foreground shadow-lg"
+            className="absolute inset-x-0 top-full z-20 mt-3 overflow-hidden rounded-3xl border bg-popover text-popover-foreground shadow-lg"
           >
             {results.map((c, i) => (
               <li
@@ -96,27 +96,27 @@ export function TickerSearch() {
                   go(c.ticker);
                 }}
                 onMouseEnter={() => setActive(i)}
-                className={`flex cursor-pointer items-center gap-4 px-6 py-3 ${i === active ? "bg-accent" : ""}`}
+                className={`flex cursor-pointer items-center gap-6 px-8 py-4 sm:px-10 ${i === active ? "bg-accent" : ""}`}
               >
-                <span className="w-16 shrink-0 font-mono text-sm font-semibold">{c.ticker}</span>
-                <span className="truncate text-sm text-muted-foreground">{c.company_name}</span>
+                <span className="w-24 shrink-0 font-mono text-lg font-semibold sm:text-xl">{c.ticker}</span>
+                <span className="truncate text-lg text-muted-foreground sm:text-xl">{c.company_name}</span>
               </li>
             ))}
           </ul>
         )}
       </form>
-      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+      <div className="flex items-center gap-4 text-lg text-muted-foreground">
         <span>Try</span>
         <button
           type="button"
           onClick={() => go("NVDA")}
-          className="rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-medium text-foreground transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="rounded-full border border-white/15 bg-white/5 px-6 py-2 text-lg font-medium text-foreground transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           Nvidia
         </button>
       </div>
       {loadFailed && (
-        <p className="text-center text-sm text-destructive">Could not load the ticker list. Type a ticker and press Enter.</p>
+        <p className="text-center text-base text-destructive">Could not load the ticker list. Type a ticker and press Enter.</p>
       )}
     </div>
   );

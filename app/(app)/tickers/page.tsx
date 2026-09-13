@@ -24,10 +24,11 @@ export default function TickersPage({ searchParams }: { searchParams: SearchPara
         <h1 className="font-serif text-4xl">Tickers overview</h1>
         <p className="mt-1 text-muted-foreground">Every S&amp;P 500 company from A to Z, and the rankings from both tools.</p>
       </header>
-      <div className="grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
+      {/* The A–Z index only sits beside the leaderboard on wide screens; below that it moves under it so the rankings get the full width. */}
+      <div className="grid gap-6 2xl:grid-cols-[14rem_minmax(0,1fr)]">
         <nav
           aria-label="All tickers A to Z"
-          className="max-h-[50dvh] overflow-y-auto rounded-lg border bg-card p-4 lg:sticky lg:top-20 lg:max-h-[calc(100dvh-7rem)]"
+          className="order-2 max-h-[50dvh] overflow-y-auto rounded-lg border bg-card p-4 2xl:sticky 2xl:top-20 2xl:order-none 2xl:max-h-[calc(100dvh-7rem)]"
         >
           <Suspense fallback={loading}>
             <TickerIndex />
@@ -100,7 +101,7 @@ async function Leaderboard({ searchParams }: { searchParams: SearchParams }) {
       className="h-[75dvh] min-h-[28rem]"
       leftLabel="Current sustainability ranking"
       rightLabel="Net-zero scenario ranking"
-      left={<LeaderboardTable rows={sustainability} />}
+      left={<LeaderboardTable rows={sustainability} compact />}
       right={<NetZeroRankingTable rows={netZero} />}
     />
   );
