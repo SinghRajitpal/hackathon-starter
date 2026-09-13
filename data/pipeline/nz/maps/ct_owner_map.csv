@@ -1,0 +1,17 @@
+ticker,owner_ids,checked_by,note
+VST,E100000001322,Claude Code session (pending user approval),Vistra Corp exact match
+DUK,E100000002838|E100000002839|E100000002840|E100000002841|E100000002842|E100001001274,Claude Code session (pending user approval),Duke Energy Carolinas/Florida/Indiana/Kentucky/Progress/Ohio wholly owned operating subsidiaries
+NEE,E100002008853,Claude Code session (pending user approval),NextEra Energy Point Beach LLC wholly owned subsidiary
+XEL,E100000001329,Claude Code session (pending user approval),Xcel Energy Inc exact match
+ETR,E100000001209|E100000002987|E100000002988|E100000002989|E100000002991|E100000002990,Claude Code session (pending user approval),Entergy Corp plus Arkansas/Louisiana/Mississippi/Texas/New Orleans wholly owned operating subsidiaries
+PSX,E100000001282|E100000003813,Claude Code session (pending user approval),Phillips 66 plus Phillips 66 - Los Angeles refinery entity
+MPC,E100000001254|E100000003533,Claude Code session (pending user approval),Marathon Petroleum Corp plus Marathon Petroleum Company LP
+D,E100000002818,Claude Code session (pending user approval),Dominion Energy South Carolina Inc wholly owned subsidiary
+EVRG,E100000003004|E100000003002|E100000003003|E100000003005,Claude Code session (pending user approval),Evergy Metro/Kansas Central/Kansas South/Missouri West wholly owned operating subsidiaries
+VLO,E100000001321|E100000004291,Claude Code session (pending user approval),Valero Energy Corp plus Valero Energy Ltd
+NRG,E100000001262|E100002008560,Claude Code session (pending user approval),NRG Energy Inc plus NRG Energy Center Phoenix LLC subsidiary
+DTE,E100001001266,Claude Code session (pending user approval),DTE Energy Services Inc wholly owned subsidiary
+CF,E100002017908|E100002008475,Claude Code session (pending user approval),CF Industries Inc plus CF Industries Nitrogen LLC subsidiary
+CVX,E100000001179|E100000134914|E100000191479|E100000189589|E100002014021,Claude Code session (pending user approval),Chevron Corp plus Nigeria/Argentina/Saudi Arabia/Brasil non-US subsidiaries; Chevron Phillips 50/50 JV (not controlled) and Chevron USA Inc (US-only asset) excluded per controller ruling
+CMS,E100000132396|E100000132395|E100000132397|E100001001219|E100000002589,Claude Code session (pending user approval),CMS Generation Grayling/Genesee/Holdings/Filer City/Michigan Power non-utility subsidiaries; CMS Cepcor Group Utah and Shuweihat CMS International Power (divested JV) excluded as not clearly controlled
+XOM,E100000001213,Claude Code session (pending user approval),Exxon Mobil Corp; not in the scope1-ranked top 20 because universe scope1_tco2e is null for XOM, but a major emitter; id confirmed by direct owner search this session
