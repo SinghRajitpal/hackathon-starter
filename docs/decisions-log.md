@@ -350,3 +350,22 @@ would have the model return only the raw per-fuel figures it found (schema: cate
 no share fields) and compute fossil/renewable/nuclear shares deterministically in Python; not done here
 to stay within the scope of this fix (touching only `16_segment_notes.py`/`nzlib/edgar.py`) and because
 the manual sanity-check step already catches the resulting errors before they reach `generation_mix.csv`.
+
+## Dashboard: risk presets engine (Task C, 13 Sep 2026)
+
+User-approved risk presets (dashboard onboarding), PDF §8/§9 behaviour change — logged per the rule above:
+
+| | Conservative | Balanced (PDF defaults) | Aggressive |
+|---|---|---|---|
+| TBR IQR threshold | 0.25 yrs | 0.25 yrs | 0.05 yrs |
+| Score IQR threshold | 25 | 25 | 25 |
+| Active weight limit per name | ±1pp | ±2pp | ±3pp |
+| Robust picks only | from answer | from answer | from answer |
+| Long/short book | no | no | if shorting allowed |
+
+| Rule | Value |
+|---|---|
+| Preset active limit | `buildLongOnly`/`tiltSector` now take a `limits` argument (default `LO_LIMITS`, unchanged for every existing caller); the dashboard model rebuilds the long-only book at `{ activeLimit: preset.activeLimit, nameMax: LO_LIMITS.nameMax }` so Conservative/Aggressive actually trade at ±1pp/±3pp instead of the PDF's fixed ±2pp |
+| Robust-only filter | `neutraliseLongOnly` (`lib/netzero/dashboard/robust.ts`) holds each non-robust pick at benchmark (active = 0) and redistributes its freed active to the rest of that sector's names in proportion to benchmark weight, capped at the preset's active limit; any amount that cannot be placed within the limit is left at benchmark rather than breaching it. Every sector's total portfolio weight still equals its total benchmark weight before and after |
+| Stress draw count on the dashboard | 300 Dirichlet draws, seed 42 (down from the PDF §11 default of 1,000) so a preset or onboarding-answer change re-runs the stress test inline without a noticeable stall; measured ~17.5 ms average for `buildDashboardModel` on the 60-company synthetic universe, well inside the ~200 ms budget for the full 503-company S&P set |
+| Stress test book | `runSensitivity`/`bookSigns` take an optional `limits` argument threaded to their internal `buildLongOnly` rebuilds, so the stress test's long-only signs are computed at the preset's active limit, not the PDF default |

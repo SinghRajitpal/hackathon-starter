@@ -1,5 +1,5 @@
 import { sectorDispersion } from "./dispersion";
-import { buildLongOnly, type LongOnlyBook, type LoWeight } from "./longOnly";
+import { buildLongOnly, type LongOnlyBook, type LongOnlyLimits, type LoWeight } from "./longOnly";
 import { buildLongShort, LS_LIMITS, type LongShortBook } from "./longShort";
 import { dirichletSample, mulberry32 } from "./rng";
 import { groupBySector, prepareScenario, scoreScenario, type PreparedScenario } from "./scenario";
@@ -48,6 +48,7 @@ export function bookSigns(
   companies: CompanyInput[],
   config: ScenarioConfig,
   weightOverride?: Map<string, number[]>,
+  limits?: LongOnlyLimits,
 ): Signs {
   const { scores } = scoreScenario(prepared, weightOverride);
   const dispersion = sectorDispersion(scores.values(), config);
@@ -55,7 +56,7 @@ export function bookSigns(
   if (config.mandate === "long-short") {
     for (const p of buildLongShort(scores, dispersion).positions) signs.set(p.ticker, p.side === "long" ? 1 : -1);
   } else {
-    for (const [ticker, sign] of longOnlySigns(buildLongOnly(scores, companies, dispersion))) signs.set(ticker, sign);
+    for (const [ticker, sign] of longOnlySigns(buildLongOnly(scores, companies, dispersion, limits))) signs.set(ticker, sign);
   }
   return signs;
 }
@@ -86,16 +87,16 @@ export interface SensitivityResult {
 export function runSensitivity(
   companies: CompanyInput[],
   config: ScenarioConfig,
-  { draws = 1000, seed = 42 }: { draws?: number; seed?: number } = {},
+  { draws = 1000, seed = 42, limits }: { draws?: number; seed?: number; limits?: LongOnlyLimits } = {},
 ): SensitivityResult {
   const scenarios = macScenarios(config.mac);
   const prepared = prepareScenario(companies, config);
-  const baseSigns = bookSigns(prepared, companies, config);
+  const baseSigns = bookSigns(prepared, companies, config, undefined, limits);
   const picks = [...baseSigns.entries()];
 
   const runs = scenarios.slice(1).map((s) => {
     const cfg = { ...config, mac: s.mac };
-    return { id: s.id, signs: bookSigns(prepareScenario(companies, cfg), companies, cfg) };
+    return { id: s.id, signs: bookSigns(prepareScenario(companies, cfg), companies, cfg, undefined, limits) };
   });
 
   const rng = mulberry32(seed);
@@ -104,7 +105,7 @@ export function runSensitivity(
     const override = new Map(
       prepared.sectors.map((s) => [s.sector, dirichletSample(s.weights.map((w) => w * DIRICHLET_CONCENTRATION), rng)]),
     );
-    const signs = bookSigns(prepared, companies, config, override);
+    const signs = bookSigns(prepared, companies, config, override, limits);
     for (const [ticker, sign] of picks) if ((signs.get(ticker) ?? 0) === sign) drawSame.set(ticker, drawSame.get(ticker)! + 1);
   }
 

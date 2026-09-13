@@ -7,6 +7,8 @@ import { waterfill } from "./waterfill";
 /** PDF §9.2 limits as fractions of the portfolio. */
 export const LO_LIMITS = { activeLimit: 0.02, nameMax: 0.05 };
 
+export type LongOnlyLimits = { activeLimit: number; nameMax: number };
+
 export interface LoWeight {
   ticker: string;
   sector: string;
@@ -38,7 +40,10 @@ export interface TiltMember {
  * freed weight to top quintile by distance, clamps ±2pp active and 5% per name,
  * excess to middle names by benchmark weight, anything left returned to the bottom names.
  */
-export function tiltSector(members: TiltMember[], limits = LO_LIMITS): { weights: Map<string, number>; events: string[] } {
+export function tiltSector(
+  members: TiltMember[],
+  limits: LongOnlyLimits = LO_LIMITS,
+): { weights: Map<string, number>; events: string[] } {
   const events: string[] = [];
   const sorted = [...members].sort((a, b) => a.score - b.score || a.ticker.localeCompare(b.ticker));
   const n = sorted.length;
@@ -92,6 +97,7 @@ export function buildLongOnly(
   scores: Map<string, CompanyScore>,
   companies: CompanyInput[],
   dispersion: SectorDispersion[],
+  limits: LongOnlyLimits = LO_LIMITS,
 ): LongOnlyBook {
   const events: string[] = [];
   const bench = benchmarkWeights(companies);
@@ -102,7 +108,7 @@ export function buildLongOnly(
     const b = bench.get(c.ticker);
     if (b === undefined) continue;
     weights.set(c.ticker, { ticker: c.ticker, sector: c.sector, benchmark: b, portfolio: b, active: 0 });
-    if (b > LO_LIMITS.nameMax) {
+    if (b > limits.nameMax) {
       events.push(`${c.ticker}: benchmark weight ${(b * 100).toFixed(2)}% above 5% cap kept to hold sector weight`);
     }
   }
@@ -114,7 +120,7 @@ export function buildLongOnly(
       if (w.sector === sector && s) members.push({ ticker: w.ticker, score: s.score, benchmark: w.benchmark });
     }
     if (members.length < 2) continue;
-    const tilt = tiltSector(members);
+    const tilt = tiltSector(members, limits);
     events.push(...tilt.events.map((e) => `${sector}: ${e}`));
     for (const [ticker, portfolio] of tilt.weights) {
       const w = weights.get(ticker)!;
