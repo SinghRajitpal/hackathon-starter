@@ -45,6 +45,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Quantiles | linear interpolation |
 | Names per side (long/short) | ceil(N ÷ 5), min 2, max 5; sectors under 4 names split in half |
 | Long/short cap excess | name cap → within leg; sector cap → other sectors ∝ score IQR; remainder cash |
+| Long/short zero-dispersion sector | skips tradeable sectors whose score IQR is 0 (no dispersion to trade); their allotment stays in cash and is logged |
 | Long-only quintile / decile | ceil(N ÷ 5) / ceil(N ÷ 10) |
 | Benchmark name above 5% | kept at benchmark (sector weight must hold), logged |
 | Dirichlet concentration | α = 100 × entropy weight, seed 42, 1,000 draws |

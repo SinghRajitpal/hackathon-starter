@@ -25,6 +25,7 @@ describe("NetZeroRiskPanel SSR smoke test", () => {
     expect(markup).toContain("Net-zero scenario score");
     expect(markup).toContain("Transition burden");
     expect(markup).toContain("Sector context");
+    expect(markup).toContain("Long/short book:");
   });
 
   it("shows ENE1's TBR-fallback flag (engine flags, not just company.flags)", () => {

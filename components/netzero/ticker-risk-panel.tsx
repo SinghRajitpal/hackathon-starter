@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { BurdenSection } from "@/components/netzero/sections/burden-section";
 import { InputsSection } from "@/components/netzero/sections/inputs-section";
+import { PositionSection } from "@/components/netzero/sections/position-section";
 import { ScoreSection } from "@/components/netzero/sections/score-section";
 import { SectorContextSection } from "@/components/netzero/sections/sector-context-section";
 import { defaultConfig, macVector } from "@/lib/netzero/config";
@@ -37,6 +38,7 @@ export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: Scena
 
   return (
     <div className="flex flex-col gap-6">
+      <PositionSection ticker={ticker} longShort={run.result.longShort} />
       <ScoreSection score={score} model={model} />
       <BurdenSection company={company} score={score} sectorMedianTbr={dispersion.medianTbr} mac={run.config.mac} />
       <SectorContextSection
