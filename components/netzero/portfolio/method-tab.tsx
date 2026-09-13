@@ -63,7 +63,7 @@ export function MethodTab({ data, view }: { data: ScenarioData; view: PortfolioV
         <h3 className="font-semibold">Abatement costs (USD per tonne, PDF §4)</h3>
         {view.macMissing.length > 0 && (
           <p className="text-amber-600">
-            Missing from the cost table: {view.macMissing.join(", ")}. PDF §12 mid-points are used.
+            Missing from the cost table: {view.macMissing.join(", ")}. Confirmed mid-points (maps/mac_costs.csv) are used.
           </p>
         )}
         <div className="overflow-x-auto">
@@ -89,7 +89,7 @@ export function MethodTab({ data, view }: { data: ScenarioData; view: PortfolioV
                     <TableCell className="text-right tabular-nums">{row ? row.mid : "n/a"}</TableCell>
                     <TableCell className="text-right tabular-nums">{row ? row.high : "n/a"}</TableCell>
                     <TableCell className="text-right font-semibold tabular-nums">{view.config.mac[category]}</TableCell>
-                    <TableCell className="text-xs">{row?.source ?? "PDF §12 mid-point"}</TableCell>
+                    <TableCell className="text-xs">{row?.source ?? "confirmed mid-points (maps/mac_costs.csv)"}</TableCell>
                     <TableCell className="text-xs">{row?.sourceDate ?? "n/a"}</TableCell>
                   </TableRow>
                 );
