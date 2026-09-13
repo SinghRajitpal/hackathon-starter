@@ -46,6 +46,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Names per side (long/short) | ceil(N ÷ 5), min 2, max 5; sectors under 4 names split in half |
 | Long/short cap excess | name cap → within leg; sector cap → other sectors ∝ score IQR; remainder cash |
 | Long/short zero-dispersion sector | skips tradeable sectors whose score IQR is 0 (no dispersion to trade); their allotment stays in cash and is logged |
+| Long/short name and sector caps | measured against the 200% target gross, not the book's actual gross; unallocated capital stays in cash, so actual gross can be lower and a name can exceed 3% of actual gross |
 | Long-only quintile / decile | ceil(N ÷ 5) / ceil(N ÷ 10) |
 | Small sectors | quintile q = ceil(N/5) reduced to floor(N/2) when 2q > N; decile d = min(ceil(N/10), q) |
 | Long-only tilt excess | excess that cannot be placed in the top quintile within limits goes to middle names by benchmark weight, then back to the bottom quintile (spec D15 says pro-rata within sector) |
@@ -56,6 +57,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Robust pick | survives all MAC runs and ≥ 90% of weight draws |
 | Long-only pick threshold | a position counts as a pick for the sensitivity test only once its active weight reaches 1bp (0.0001); smaller tilts are treated as noise |
 | Halving flipped positions | trims the opposite leg to keep neutrality (gross falls) rather than re-scaling the halved leg up |
+| Stress-test weight draws | Dirichlet weight draws in the stress test are not re-capped at 0.40 (they perturb the capped entropy weights) |
 
 ## Hand checks
 
