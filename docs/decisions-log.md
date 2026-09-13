@@ -35,6 +35,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Missing EBITDA | TBR = sector median, flagged |
 | Missing ND/EBITDA or FCF margin | sector median, flagged |
 | Constant normalised column | all 1 (weight 0) |
+| Constant-column divergence below 1e-12 | treated as 0 (`WEIGHT_EPSILON`), so the cap relaxes correctly and dead columns cannot absorb capped excess |
 | Weight cap infeasible | cap relaxed to 1 ÷ number of non-zero variables, logged |
 | Quantiles | linear interpolation |
 | Names per side (long/short) | ceil(N ÷ 5), min 2, max 5; sectors under 4 names split in half |
