@@ -21,14 +21,17 @@ Output: data/out/sp500_esg_scores.csv
 import pandas as pd
 
 from score_engine import (
+    PILLARS,
     REFERENCE_RANGES,
     entropy_weights,
     normalize_all,
+    pillar_scores,
     topsis_scores,
 )
 
 IN_PATH = "../out/sp500_esg_financials_raw.csv"
 OUT_PATH = "../out/sp500_esg_scores.csv"
+CORRELATION_OUT_PATH = "../out/sp500_esg_correlation.csv"
 
 ID_COLUMNS = ["ticker", "company_name", "sector", "sub_industry"]
 
@@ -54,6 +57,7 @@ def main():
     X, imputed = normalize_all(df)
     w, _d = entropy_weights(X)
     scored = topsis_scores(X, w)
+    pillars = pillar_scores(X, w)
 
     out = df[ID_COLUMNS].copy()
     out["score"] = scored["score"]
@@ -68,14 +72,31 @@ def main():
         out[f"weight_{var}"] = w[var]
         out[f"contrib_{var}"] = scored[f"contrib_{var}"]
 
+    for pillar_name in PILLARS:
+        out[f"pillar_{pillar_name}_score"] = pillars[pillar_name]
+
     for var, raw_col in RAW_DISPLAY_COLUMNS.items():
         filled = df[raw_col].where(~imputed[var], df.groupby("sector")[raw_col].transform("median"))
         out[f"{var}_raw"] = filled
 
+    # Section 10: "percentile within the index and within the sector".
+    # rank 1 (best) -> 100th percentile; rank n (worst) -> 0th.
+    n_index = len(out)
+    out["percentile_index"] = 100.0 * (n_index - out["rank"]) / (n_index - 1)
+    sector_size = out.groupby("sector")["sector_rank"].transform("size")
+    out["percentile_sector"] = 100.0 * (sector_size - out["sector_rank"]) / (sector_size - 1).replace(0, 1)
+
     out = out.sort_values("rank")
     out.to_csv(OUT_PATH, index=False)
 
+    # Section 4/10: correlation matrix used to prune the variable set,
+    # computed once against the final normalised+penalised matrix and
+    # frozen here (see score_engine.py's module docstring for the
+    # highest pair on the real first run).
+    X.corr().round(4).to_csv(CORRELATION_OUT_PATH)
+
     print(f"Wrote {len(out)} rows to {OUT_PATH}")
+    print(f"Wrote correlation matrix to {CORRELATION_OUT_PATH}")
     print(f"Weights: {dict(w.round(4))}")
     print(f"Companies with >=1 imputed variable: {imputed.any(axis=1).sum()}/{len(out)} (not surfaced downstream)")
 

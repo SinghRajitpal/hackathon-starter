@@ -130,3 +130,30 @@ alter table public.sp500_esg_scores enable row level security;
 create policy "public read access" on public.sp500_esg_scores
   for select to authenticated, anon
   using (true);
+
+-- sp500_esg_scores: section 10 output-layer additions -- per-company
+-- pillar sub-scores (no formula given in the blueprint; see
+-- score_engine.pillar_scores's docstring for the construction used) and
+-- percentile within the index and within the sector.
+alter table public.sp500_esg_scores add column if not exists pillar_environmental_score double precision;
+alter table public.sp500_esg_scores add column if not exists pillar_social_score double precision;
+alter table public.sp500_esg_scores add column if not exists pillar_financial_score double precision;
+alter table public.sp500_esg_scores add column if not exists percentile_index double precision;
+alter table public.sp500_esg_scores add column if not exists percentile_sector double precision;
+
+-- sp500_esg_correlation: the 7x7 correlation matrix (blueprint section
+-- 4's gate, computed once against the real normalised+penalised
+-- matrix) used to confirm the variable set needed no pruning -- shown
+-- on the leaderboard per section 10. One row per variable pair.
+create table public.sp500_esg_correlation (
+  variable_a text not null,
+  variable_b text not null,
+  r double precision not null,
+  primary key (variable_a, variable_b)
+);
+
+alter table public.sp500_esg_correlation enable row level security;
+
+create policy "public read access" on public.sp500_esg_correlation
+  for select to authenticated, anon
+  using (true);
