@@ -18,6 +18,7 @@ from score_engine import (
     entropy_weights,
     topsis_scores,
     pillar_scores,
+    MANUAL_WEIGHTS,
 )
 
 
@@ -320,3 +321,27 @@ def test_pillar_scores_uses_pillar_local_renormalised_weights():
     w = pd.Series({"a": 0.45, "b": 0.05, "c": 0.50})
     result = pillar_scores(X, w, pillars={"p": ["a", "b"]})
     assert result["p"].iloc[0] == pytest.approx(75.0, abs=0.1)
+
+
+def test_manual_weights_sums_to_one():
+    assert sum(MANUAL_WEIGHTS.values()) == pytest.approx(1.0, abs=1e-3)
+
+
+def test_manual_weights_financial_pillar_is_53_percent():
+    financial = (
+        MANUAL_WEIGHTS["asset_turnover"]
+        + MANUAL_WEIGHTS["profit_margin"]
+        + MANUAL_WEIGHTS["fcf_margin"]
+        + MANUAL_WEIGHTS["leverage"]
+    )
+    assert financial == pytest.approx(0.53, abs=0.001)
+
+
+def test_manual_weights_only_asset_turnover_moved_within_financial():
+    # profit_margin, fcf_margin, leverage must be untouched from their
+    # entropy values -- the whole Financial-pillar cut came out of
+    # asset_turnover alone.
+    assert MANUAL_WEIGHTS["profit_margin"] == pytest.approx(0.0740, abs=1e-4)
+    assert MANUAL_WEIGHTS["fcf_margin"] == pytest.approx(0.1872, abs=1e-4)
+    assert MANUAL_WEIGHTS["leverage"] == pytest.approx(0.1031, abs=1e-4)
+    assert MANUAL_WEIGHTS["asset_turnover"] < 0.1872  # no longer the largest financial variable

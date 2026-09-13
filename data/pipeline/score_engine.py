@@ -6,7 +6,7 @@ database or the real dataset.
 
 Blueprint: sustainability-evaluator-blueprint-v1.4.pdf, sections 3, 5-10.
 Sections 3, 5, 6, 7, 8 of that document are marked "Locked" -- any change
-to the math here needs a decisions-log entry. Five such changes are
+to the math here needs a decisions-log entry. Six such changes are
 already made and recorded in this plan's Global Constraints
 (docs/superpowers/plans/2026-09-13-sustainability-evaluator.md): no
 company is ever excluded from the ranking, no imputation is surfaced to
@@ -15,9 +15,37 @@ the user, the 0.05 disclosure penalty is kept but applied silently, and
 dropped entirely: rank stability (the 1,000-draw Dirichlet
 re-weighting/re-ranking check) and weight-vs-equal-weights delta (the
 "does the weighting even matter" comparison). Neither is computed,
-stored, or displayed. The actual score always uses the real entropy
-weights only -- equal weighting is never applied anywhere, including as
-a comparison.
+stored, or displayed.
+
+Sixth change, 2026-09-13, user decision: the score no longer uses the
+entropy weights directly -- it uses MANUAL_WEIGHTS below, a hand-picked
+override. entropy_weights() is still computed and printed by
+09_score.py for traceability (it's what MANUAL_WEIGHTS was derived
+from), but topsis_scores/pillar_scores in the actual pipeline run on
+MANUAL_WEIGHTS, not the entropy output. This is a direct reversal of
+blueprint section 13's own stated rationale for entropy weighting
+("equal weights assert that every axis matters identically, which is a
+claim... discriminatory power... is a property of the data" -- a
+hand-picked weight is exactly the kind of undefendable assertion
+section 13 argues against). Recorded here because the user explicitly
+requested it after that tradeoff was explained in chat.
+
+Derivation of MANUAL_WEIGHTS from the entropy baseline (env 13.61%, esg
+8.42%, controversy 4.64%, asset_turnover 36.90%, profit_margin 7.40%,
+fcf_margin 18.72%, leverage 10.31%): user wanted the Financial pillar
+(asset_turnover+profit_margin+fcf_margin+leverage, 73.33% under
+entropy) reduced to exactly 53%, with the cut taken primarily from
+asset_turnover, and Environmental+Social (26.67% under entropy) to
+absorb the freed 20.33 points. Construction used: (1) the entire
+20.33-point Financial cut comes out of asset_turnover alone (36.90% ->
+16.57%) since it's large enough to absorb it and the user named it
+specifically -- profit_margin, fcf_margin, leverage are untouched; (2)
+the 20.33 points freed are split between Environmental and Social
+proportional to their existing entropy ratio (13.61 : 13.06), and
+within Social between esg_risk and controversy proportional to their
+existing entropy ratio (8.42 : 4.64) -- preserving the data-driven
+relative balance the entropy computation found, just scaling the totals
+up, rather than inventing a new split with no basis.
 
 Reference ranges below are frozen constants, checked against the real
 503-company dataset (data/out/sp500_esg_financials_raw.csv) on
@@ -102,6 +130,21 @@ RAW_COLUMNS = {
     "profit_margin": "profit_to_revenue",
     "fcf_margin": "fcf_to_revenue",
     "leverage": "net_debt_to_ebitda",
+}
+
+# User-directed manual override of the entropy weights -- see module
+# docstring for the full derivation. Financial pillar reduced from
+# 73.33% (entropy) to exactly 53%, cut entirely from asset_turnover;
+# freed 20.33 points split between Environmental/Social (and within
+# Social, esg_risk/controversy) proportional to their entropy ratios.
+MANUAL_WEIGHTS = {
+    "env_intensity": 0.2398,
+    "esg_risk": 0.1484,
+    "controversy": 0.0818,
+    "asset_turnover": 0.1657,
+    "profit_margin": 0.0740,
+    "fcf_margin": 0.1872,
+    "leverage": 0.1031,
 }
 
 DISCLOSURE_PENALTY = 0.05
