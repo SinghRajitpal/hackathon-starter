@@ -1,32 +1,28 @@
-import Link from "next/link";
 import { Suspense } from "react";
 
-import { TickerSearch } from "@/components/ticker-search";
+import { DashboardApp } from "@/components/dashboard/dashboard-app";
+import { VIEWS, type View } from "@/lib/netzero/dashboard/types";
 import { loadScenarioData } from "@/lib/netzero/load";
 
-type HomeSearchParams = Promise<{ ticker?: string | string[] }>;
+type HomeSearchParams = Promise<{ view?: string | string[]; sector?: string | string[]; ticker?: string | string[] }>;
 
-async function HomeContent({ searchParams }: { searchParams: HomeSearchParams }) {
-  const { ticker } = await searchParams;
-  const scenario = await loadScenarioData();
-  return (
-    <TickerSearch initialTicker={typeof ticker === "string" ? ticker.toUpperCase() : null} scenario={scenario} />
-  );
+function one(value: string | string[] | undefined): string | null {
+  return typeof value === "string" && value.length > 0 ? value : null;
+}
+
+async function DashboardContent({ searchParams }: { searchParams: HomeSearchParams }) {
+  const params = await searchParams;
+  const data = await loadScenarioData();
+  const ticker = one(params.ticker)?.toUpperCase() ?? null;
+  const requested = one(params.view);
+  const view: View = VIEWS.includes(requested as View) ? (requested as View) : ticker ? "company" : "market";
+  return <DashboardApp data={data} initial={{ view, sector: one(params.sector), ticker }} />;
 }
 
 export default function Home({ searchParams }: { searchParams: HomeSearchParams }) {
   return (
-    <main className="min-h-screen flex flex-col items-center gap-8 px-5 py-16">
-      <h1 className="text-4xl font-bold text-center">ETHack</h1>
-      <Link
-        href="/portfolio"
-        className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-      >
-        Open the net-zero portfolio builder →
-      </Link>
-      <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
-        <HomeContent searchParams={searchParams} />
-      </Suspense>
-    </main>
+    <Suspense fallback={<p className="p-6 font-mono text-sm text-muted-foreground">Loading scenario data…</p>}>
+      <DashboardContent searchParams={searchParams} />
+    </Suspense>
   );
 }
