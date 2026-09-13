@@ -83,6 +83,8 @@ begin
   end loop;
 end $$;
 
+begin;
+
 -- nz_*: Part 2 net-zero scenario inputs (docs/superpowers/specs/2026-09-13-net-zero-scenario-design.md §5).
 -- Public reference data, loaded via the session pooler by data/pipeline/nz/19_load_supabase.py,
 -- read-only for regular clients.
@@ -174,3 +176,5 @@ create policy "public read access" on public.nz_segments for select to authentic
 create policy "public read access" on public.nz_mac_costs for select to authenticated, anon using (true);
 create policy "public read access" on public.nz_product_map for select to authenticated, anon using (true);
 create policy "public read access" on public.nz_validation_2019 for select to authenticated, anon using (true);
+
+commit;

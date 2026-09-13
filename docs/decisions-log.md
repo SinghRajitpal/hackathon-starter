@@ -9,7 +9,9 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | ID | Decision | Why |
 |---|---|---|
 | D1 | Min-max normalisation within GICS sector | PDF §7 and §12 reproduce exactly (weights 0.29/0.42/0.29) |
+| D2 | Spec and plan docs live only in `docs/superpowers/` on `part-2`; each phase branch `nz/pN-*` is cut from and merged back into `part-2`, never merged to `main` by us | User requirement |
 | D3 | Python pipeline builds inputs; TypeScript engine runs in the browser | §8 and §10 need live overrides |
+| D4 | Raw emissions data stored in Supabase too (long-format source table) | User requirement; every number traceable |
 | D5 | DE/BEN: SEC bulk segment tags → Gemini classification → segment-note reads → sector median + flag | Cheapest path faithful to §5 |
 | D6 | Gemini 2.5 Flash free tier, temperature 0, JSON schema, cached | $0 |
 | D7 | Utilities: generation revenue × 10-K fuel mix (fossil → DE, renewable → BEN) | Segment revenue cannot split generation by fuel |
