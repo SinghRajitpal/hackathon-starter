@@ -77,8 +77,8 @@ The unified functions do not exist yet in either branch:
   - `supabase/schema.sql` and `.env.example` now document both tools.
 - **Checks:** `npm test` (the live Supabase tests read `.env.local`), `npx tsc --noEmit`, `npm run lint` and `npm run build` all pass. A headless-Chromium walk through every flow also passes.
 - **Phase 4 done:** the dark navy Meridian look now covers every page (user's choice). `app/globals.css` holds one navy token palette, and the root layout forces the `dark` class.
+- **Market Overview:** `/market` now shows Tool 2's MARKET screen, with sectors grouped by net-zero verdict. `/market/[sector]` shows its SECTOR screen, and sector clicks everywhere lead there.
 - **Open:**
-  - Market Overview has no spec yet.
   - Tool 1's AI analysis card returns a 502 locally. `GEMINI_MODEL` is unset, so it uses `gemini-2.5-flash`.
   - Tool 1's anonymous-write policies on the cache table are still in place.
   - `/app` no longer exists and now redirects to login.

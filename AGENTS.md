@@ -17,7 +17,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
     - `/ticker/[symbol]`: sustainability and net-zero panes that scroll on their own.
     - `/tickers`: A–Z index and rankings, chosen with `?ranking=sustainability|netzero|both`.
     - `/portfolio`: the net-zero portfolio screen.
-    - `/market`: a stub with no content spec yet.
+    - `/market`: net-zero MARKET screen, with sectors grouped by verdict.
+    - `/market/[sector]`: net-zero SECTOR screen, showing winners and losers inside one sector.
 - **Tools:**
   - Tool 1 (Sustainability Evaluator) lives in `features/sustainability`, ported from branch `gemini-integration`.
   - Tool 2 (Net-Zero Scorer) lives in `features/netzero`, ported from branch `nz/explain-gemini`.
