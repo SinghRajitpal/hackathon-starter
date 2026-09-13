@@ -193,3 +193,67 @@ own range; scope2 and fugitive mids (20/20) were independently sourced and alrea
 Action: no data or code change made from this check. The CSCO category split (⚠ above) is a pre-existing
 D14 mechanism limitation, not a data-entry error — flagged for the team to consider whether IT-sector median
 shares should exclude fabless sub-industries when splitting Wikirate-only Scope 1 totals.
+
+### [decision] Scope 1 corrections for verified unit errors in the shared Wikirate data
+
+**Rule:** `17_build_inputs.py` applies `data/pipeline/nz/maps/scope1_corrections.csv` to the universe's
+`scope1_tco2e` right after `sp500_esg_financials_raw.csv` is read (`nzlib.corrections.apply_scope1_corrections`),
+by ticker. Every corrected ticker's flags gain `scope1-corrected`. A correction is made only when a citable,
+company-disclosed figure for the same year (or the nearest year available) was found; otherwise the value is
+left alone and the ticker is listed as unverified below.
+
+**Why:** `sp500_esg_financials_raw.csv`'s Wikirate/GRI-sourced `scope1_tco2e` for a handful of tickers is
+implausible by 3+ orders of magnitude against the company's actual business (checked against
+`revenue_ttm`-normalised intensity vs. sub-industry peers and each company's own disclosures) — either a
+unit slip (kg vs. t), a wrong-scope pull (e.g. a Scope 1+2+3 total mistaken for Scope 1), or a near-zero
+placeholder. Left uncorrected, these distort within-sector Scope 1 scores in `company_inputs.csv`.
+
+**Screen:** all 80 non-EPA-GHGRP (`scope1_source` = `Wikirate/GRI`) tickers in `sp500_esg_financials_raw.csv`
+were ranked by `scope1_tco2e` / (`revenue_q`×4 ÷ 1e6) and checked against sub-industry peers and general
+knowledge of each business's fuel/process intensity. 12 candidates were investigated (2026-09-13, checked by:
+Claude Code session, WebSearch/WebFetch):
+
+| Ticker | Year | Pipeline value | Corrected value | Source |
+|---|---|---|---|---|
+| CSCO | 2021 | 23,000,000 t | 34,931 t | tracenable.com, Cisco FY2022 disclosed Scope 1 (nearest year; see note below) |
+| HPE | 2020 | 4,587,653 t | 39,800 t | DitchCarbon, HPE's own FY2020 disclosure (39.80M kg CO2e) |
+| UPS | 2014 | 12,000 t | 14,499,000 t | tracenable.com, UPS FY2023 disclosed Scope 1 (nearest verifiable year; see note below) |
+| ITW | 2022 | 9.40 t | 111,371 t | ITW 2023 CDP Climate Change response, C6.1 (reporting year 2022, exact match) |
+| NEM | 2019 | 3.11 t | 1,591,000 t | Newmont 2021 Climate Report p.40, GRI 305-1 table (2019 column, exact match) |
+
+Full sourcing detail and quotes are in `maps/scope1_corrections.csv`'s `note` column.
+
+Notes on the two nearest-year (not exact-year) corrections:
+- **CSCO supersedes the "Wikirate total (~23 Mt) is trustworthy" assumption** in the Top-20 hand check above.
+  That check only questioned the combustion/process/fugitive *split*; this pass verified the *total* itself
+  against Cisco's own FY2021 TCFD disclosure (total company-wide, all-scope footprint ~75.44 Mt CO2e, of which
+  Scope 3 is 99.75%) and against Cisco's disclosed Scope 1 for FY2022–24 (33,683–39,514 t). 23,000,000 t is not
+  a plausible Scope 1 figure for Cisco in any year; it reads as a wrong-scope or wrong-company pull. Cisco's
+  exact FY2021 Scope 1 could not be extracted (ESG Hub charts are JS-rendered; the FY21 Purpose Report PDF
+  exceeded automated fetch limits), so the correction uses the nearest disclosed year (FY2022).
+- **UPS**: the original 12,000 t is off by roughly three orders of magnitude — UPS's own 2009 report disclosed
+  7.5 Mt Scope 1 (fleet-dominated), and FY2022–24 disclosures show 14.4–15.8 Mt, both confirming a "double-digit
+  million tonnes, mostly fleet fuel" scale for a company this size. The exact FY2014 figure (UPS's 2014
+  Corporate Sustainability Report, Appendix B, p.108) could not be extracted by automated tools (oversized
+  PDF); the correction uses the nearest well-sourced disclosed figure (FY2023) as a same-order-of-magnitude
+  stand-in pending manual verification of the exact FY2014 number.
+
+**Screened but not corrected** (checked against sub-industry peers/company disclosures and found plausible, or
+no citable figure found — left as-is, `scope1_source` unchanged):
+- **KO** (Coca-Cola, 4,400,000 t, 2022) — **verified correct**: matches Coca-Cola's own reported 2022 Scope 1
+  of 4.4 Mt CO2e exactly (manufacturing + large HFC-refrigerant footprint from coolers/vending is a known
+  Coca-Cola characteristic).
+- **NSC** (Norfolk Southern, 5,358,750 t, 2014) and **CSX** (5,212,604 t, 2014) — plausible for Class I rail
+  (diesel-heavy); CSX's own recent disclosures (~4.24 Mt) show a declining trend consistent with a higher 2014
+  figure. No exact 2014 citation found; left unverified.
+- **FDX** (FedEx, 15,406,173 t, 2019) — plausible: ~80% of FedEx's Scope 1 is aircraft jet fuel, and UPS (a
+  comparable air-freight peer) discloses 14–16 Mt in nearby years. No exact 2019 citation found; left unverified.
+- **CCL** (Carnival, 10,319,475 t, 2014) and **RCL** (Royal Caribbean, 4,404,403 t, 2014) — plausible for
+  bunker-fuel-burning cruise lines of this size. No exact 2014 citation found; left unverified.
+- **MOS** (Mosaic, 3,230,000 t, 2021) — plausible: Mosaic's own 2021 CDP response cites ~1.8 Mt for US
+  facilities alone; a higher global total (with Saskatchewan potash operations included) is consistent. Global
+  total not independently confirmed; left unverified.
+
+**Action:** `maps/scope1_corrections.csv` and `nzlib/corrections.py` added (with pytest tests written first);
+`17_build_inputs.py` hooked to apply corrections right after the universe CSV read; `company_inputs.csv` and
+`emissions_sources.csv` regenerated via `17_build_inputs.py` and re-checked with `check_inputs.py`.
