@@ -49,10 +49,13 @@ export interface ScenarioResult {
   sectors: SectorModel[];
 }
 
-export function ratios(c: CompanyInput): { ndEbitda: number | null; fcfMargin: number | null } {
+export function ratios(
+  c: CompanyInput,
+): { ndEbitda: number | null; fcfMargin: number | null; negativeEbitdaWithDebt: boolean } {
   const ndEbitda = c.netDebt !== null && c.ebitdaTtm !== null && c.ebitdaTtm > 0 ? c.netDebt / c.ebitdaTtm : null;
   const fcfMargin = c.fcfTtm !== null && c.revenueTtm !== null && c.revenueTtm > 0 ? c.fcfTtm / c.revenueTtm : null;
-  return { ndEbitda, fcfMargin };
+  const negativeEbitdaWithDebt = c.ebitdaTtm !== null && c.ebitdaTtm <= 0 && c.netDebt !== null && c.netDebt > 0;
+  return { ndEbitda, fcfMargin, negativeEbitdaWithDebt };
 }
 
 export function groupBySector<T extends { sector: string }>(items: Iterable<T>): Map<string, T[]> {

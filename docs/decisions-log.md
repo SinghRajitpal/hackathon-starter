@@ -34,6 +34,7 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 | Near-zero EBITDA | EBITDA ≤ 0 or EBITDA ÷ revenue < 1% → TBR = sector 97.5th percentile, flagged |
 | Missing EBITDA | TBR = sector median, flagged |
 | Missing ND/EBITDA or FCF margin | sector median, flagged |
+| EBITDA ≤ 0 with net debt > 0 | leverage distance = worst (max) among the sector's other rows, flagged `leverage-negative-ebitda` (not median-imputed, so negative EBITDA cannot look average on leverage); EBITDA ≤ 0 with net debt ≤ 0 (net cash) keeps the existing median imputation, flagged `leverage-imputed` |
 | Constant normalised column | all 1 (weight 0) |
 | Constant-column divergence below 1e-12 | treated as 0 (`WEIGHT_EPSILON`), so the cap relaxes correctly and dead columns cannot absorb capped excess |
 | Weight cap infeasible | cap relaxed to 1 ÷ number of non-zero variables, logged |

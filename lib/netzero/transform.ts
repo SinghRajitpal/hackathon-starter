@@ -8,6 +8,8 @@ export interface RawRow {
   ben: number | null;
   ndEbitda: number | null;
   fcfMargin: number | null;
+  /** EBITDA <= 0 with net debt > 0 (PDF gap ruling): leverage scores as the sector's worst, not imputed. */
+  negativeEbitdaWithDebt?: boolean;
 }
 
 export interface NormalisedRow {
@@ -63,10 +65,18 @@ export function normaliseSector(rows: RawRow[], options: EngineOptions): Normali
         return v;
       });
     } else if (variable === "leverage") {
-      const { filled, imputed, median: m } = fillWithMedian(rows.map((r) => r.ndEbitda));
-      imputed.forEach((isImputed, i) => isImputed && flags[i].push("leverage-imputed"));
+      const negativeWithDebt = rows.map((r) => r.negativeEbitdaWithDebt === true);
+      const normalRows = rows.map((r, i) => (negativeWithDebt[i] ? null : r.ndEbitda));
+      const { filled, imputed, median: m } = fillWithMedian(normalRows);
+      imputed.forEach((isImputed, i) => {
+        if (negativeWithDebt[i]) flags[i].push("leverage-negative-ebitda");
+        else if (isImputed) flags[i].push("leverage-imputed");
+      });
       const target = options.leverageTarget ?? m;
-      values = filled.map((v) => Math.abs(v - target));
+      const distances = filled.map((v) => Math.abs(v - target));
+      const normalDistances = distances.filter((_, i) => !negativeWithDebt[i]);
+      const worst = normalDistances.length ? Math.max(...normalDistances) : distances[0] ?? 0;
+      values = distances.map((d, i) => (negativeWithDebt[i] ? worst : d));
     } else {
       const { filled, imputed } = fillWithMedian(rows.map((r) => r.fcfMargin));
       imputed.forEach((isImputed, i) => isImputed && flags[i].push("fcf-margin-imputed"));
