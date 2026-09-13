@@ -92,4 +92,21 @@ describe("toCsv (finding 6: \\r quoting and formula-injection guard)", () => {
     const row = { ...base, companyName: "Foo\rBar" };
     expect(toCsv([row])).toContain('"Foo\rBar"');
   });
+
+  it("guards a leading tab before the formula characters (OWASP CSV injection, finding 5)", () => {
+    const row = { ...base, companyName: "\t=SUM(A1:A9)" };
+    expect(toCsv([row])).toContain("'\t=SUM(A1:A9)");
+  });
+
+  it("guards a leading carriage return before the formula characters (OWASP CSV injection, finding 5)", () => {
+    const row = { ...base, companyName: "\r=SUM(A1:A9)" };
+    expect(toCsv([row])).toContain("'\r=SUM(A1:A9)");
+  });
+
+  it("also guards the ticker and sector columns, not just the free-text ones (finding 5)", () => {
+    const row = { ...base, ticker: "=EVIL()", sector: "+HACK", companyName: "Safe Co" };
+    const cells = toCsv([row]).split("\n")[1].split(",");
+    expect(cells[0]).toBe("'=EVIL()"); // ticker
+    expect(cells[2]).toBe("'+HACK"); // sector
+  });
 });
