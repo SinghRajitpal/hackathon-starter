@@ -1,14 +1,27 @@
 "use client";
 
+import { useMemo } from "react";
+
+import { BurdenSection } from "@/components/netzero/sections/burden-section";
 import { InputsSection } from "@/components/netzero/sections/inputs-section";
+import { ScoreSection } from "@/components/netzero/sections/score-section";
+import { defaultConfig, macVector } from "@/lib/netzero/config";
+import { runEngine } from "@/lib/netzero/engine";
+import { median } from "@/lib/netzero/stats";
 import type { ScenarioData } from "@/lib/netzero/types";
 
 export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: ScenarioData }) {
+  const run = useMemo(() => {
+    if (data.error || data.companies.length === 0) return null;
+    const config = defaultConfig(macVector(data.macRows).mac);
+    return { config, result: runEngine(data.companies, config) };
+  }, [data]);
+
   if (data.error) {
     return <p className="text-sm text-destructive">Net-zero scenario data failed to load: {data.error}</p>;
   }
   const company = data.companies.find((c) => c.ticker === ticker);
-  if (!company) {
+  if (!company || !run) {
     return (
       <p className="text-sm text-muted-foreground">
         {data.companies.length === 0
@@ -17,9 +30,18 @@ export function NetZeroRiskPanel({ ticker, data }: { ticker: string; data: Scena
       </p>
     );
   }
+
+  const score = run.result.scores.get(ticker)!;
+  const model = run.result.sectors.find((s) => s.sector === company.sector)!;
+  const sectorMedianTbr = median(
+    [...run.result.scores.values()].filter((s) => s.sector === company.sector).map((s) => s.tbr),
+  );
+
   return (
     <div className="flex flex-col gap-6">
-      <InputsSection company={company} />
+      <ScoreSection score={score} model={model} />
+      <BurdenSection company={company} score={score} sectorMedianTbr={sectorMedianTbr} mac={run.config.mac} />
+      <InputsSection company={company} flags={score.flags} />
     </div>
   );
 }

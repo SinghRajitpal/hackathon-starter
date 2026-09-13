@@ -31,10 +31,16 @@ changed and why (PDF footer). Newest entries at the bottom; never rewrite old en
 
 | Rule | Value |
 |---|---|
-| Near-zero EBITDA | EBITDA ≤ 0 or EBITDA ÷ revenue < 1% → TBR = sector 97.5th percentile, flagged |
+| Near-zero EBITDA | EBITDA ≤ 0 or EBITDA ÷ revenue < 1% → TBR = sector 97.5th percentile, flagged; the revenue-margin leg only applies when revenue > 0 (EBITDA ≤ 0 alone is always near-zero regardless of revenue) |
+| Sector with no valid TBR | TBR = 0 for every company in the sector, flagged `tbr-no-sector-data` |
 | Missing EBITDA | TBR = sector median, flagged |
 | Missing ND/EBITDA or FCF margin | sector median, flagged |
+| topPercent | `ceil(rank ÷ N × 100)` |
+| Sector with fewer than 2 companies | entropy is undefined (n < 2), so weights fall back to equal shares across variables |
+| MAC category missing from `nz_mac_costs` | falls back to the PDF §12 mid-point for that category (scope2 30 / combustion 120 / fleet 200 / process 150 / fugitive 15) |
+| EBITDA ≤ 0 with net debt > 0 | leverage distance = worst (max) among the sector's other rows, flagged `leverage-negative-ebitda` (not median-imputed, so negative EBITDA cannot look average on leverage); EBITDA ≤ 0 with net debt ≤ 0 (net cash) keeps the existing median imputation, flagged `leverage-imputed` |
 | Constant normalised column | all 1 (weight 0) |
+| Constant-column divergence below 1e-12 | treated as 0 (`WEIGHT_EPSILON`), so the cap relaxes correctly and dead columns cannot absorb capped excess |
 | Weight cap infeasible | cap relaxed to 1 ÷ number of non-zero variables, logged |
 | Quantiles | linear interpolation |
 | Names per side (long/short) | ceil(N ÷ 5), min 2, max 5; sectors under 4 names split in half |
